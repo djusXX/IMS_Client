@@ -1,0 +1,2 @@
+rootProject.name='IMS_mobile_client'
+include ':app'
