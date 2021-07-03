@@ -2,36 +2,43 @@ package com.example.ims_mobile_client;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import com.example.ims_mobile_client.ui.main.SectionsPagerAdapter;
-
 public class MainActivity extends AppCompatActivity {
+    private Toolbar mainToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        mainToolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(mainToolbar);
+
+        mainToolbar.setOnMenuItemClickListener(menuItem -> {
+            int id = menuItem.getItemId();
+            if (R.id.app_bar_search == id) {
+                // TODO: implement
+                return true;
             }
+            if (R.id.app_bar_add_contact == id) {
+                // TODO: implement
+                return true;
+            }
+            if (R.id.app_bar_settings == id) {
+                // TODO: implement
+                return true;
+            }
+            if (R.id.app_bar_search == id) {
+                // TODO: implement
+                return true;
+            }
+
+            return false;
         });
-
-
     }
+
+
 
 }

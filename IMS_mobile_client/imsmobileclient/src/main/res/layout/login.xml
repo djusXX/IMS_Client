@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,20 +34,18 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <LinearLayout
-                android:id="@+id/DisplayNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/DisplayNameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Display Name:" />
+                    android:text="User Name:" />
 
                 <EditText
-                    android:id="@+id/DisplayNameText"
+                    android:id="@+id/NameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -56,56 +53,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/PublicIdentityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/PublicIdentityView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Public Identity:" />
-
-                <EditText
-                    android:id="@+id/PublicIdentityText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/PrivateIdentityLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/PrivateIdentityView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Private Identity:" />
-
-                <EditText
-                    android:id="@+id/PrivateIdentityText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/PasswordLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/PasswordView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Password:" />
@@ -119,14 +72,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/RealmLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/RealmView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Realm:" />
@@ -140,20 +91,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ProxyCSCFHostLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/ProxyCSCFHostView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Proxy-CSCF Host:" />
+                    android:text="PCSCF Host:" />
 
                 <EditText
-                    android:id="@+id/ProxyCSCFHostText"
+                    android:id="@+id/PCSCFHostText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -161,20 +110,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ProxyCSCFPortLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/ProxyCSCFPortView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Proxy-CSCF Port:" />
+                    android:text="PCSCF Port:" />
 
                 <EditText
-                    android:id="@+id/ProxyCSCFPortText"
+                    android:id="@+id/PCSCFPortText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -182,7 +129,6 @@
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/activity_vertical_margin">
