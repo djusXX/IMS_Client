@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client;
+package com.example.ims_mobile_client.contacts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.contacts.Contact;
 import com.example.ims_mobile_client.contacts.ContactAdapter;
 

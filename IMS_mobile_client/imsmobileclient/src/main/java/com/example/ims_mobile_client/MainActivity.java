@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ims_mobile_client.contacts.Contact;
+import com.example.ims_mobile_client.contacts.ContactsViewFragment;
 import com.example.ims_mobile_client.data.model.LoggedInUser;
 
 import java.util.ArrayList;
