@@ -8,6 +8,11 @@ public class Message {
     public long createdAt;
     public MessageType type;
 
+    public Message(String text, MessageType type) {
+        this.text = text;
+        this.type = type;
+    }
+
 
     public String getTimeStamp() {
         // TODO: implement properly

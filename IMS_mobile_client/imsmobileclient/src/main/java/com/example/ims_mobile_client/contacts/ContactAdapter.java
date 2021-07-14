@@ -8,15 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ims_mobile_client.MainActivity;
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.conversation.ConversationAdapter;
+import com.example.ims_mobile_client.conversation.ConversationViewFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+    FragmentManager fragmentManager;
     ArrayList<Contact> contactList;
 
 
@@ -39,7 +45,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     }
     
-    public ContactAdapter(ArrayList<Contact> contacts) {
+    public ContactAdapter(FragmentManager fragmentManager, ArrayList<Contact> contacts) {
+        this.fragmentManager = fragmentManager;
         this.contactList = contacts;
     }
 
@@ -50,6 +57,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact, parent, false);
         v.setOnClickListener(view -> {
             // TODO: open history with current contact
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            ConversationViewFragment fragment = new ConversationViewFragment();
+            transaction.replace(R.id.main_fragment, fragment);
+            transaction.commit();
         });
         return new ViewHolder(v);
     }

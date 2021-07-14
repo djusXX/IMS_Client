@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -30,13 +34,19 @@ public class ContactsViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.contacts_view_fragment, container, false);
 
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.contacts_recycler_viewer);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        contactAdapter = new ContactAdapter(contacts);
+        contactAdapter = new ContactAdapter(getParentFragmentManager(), contacts);
         recyclerView.setAdapter(contactAdapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
     }
 
     private void initData() {
