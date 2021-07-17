@@ -25,9 +25,11 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".contacts.ContactsActivity"
             android:launchMode="singleInstance"
             android:taskAffinity="" />
+
+        <activity android:name=".conversation.ConversationActivity" />
     </application>
 
 </manifest>

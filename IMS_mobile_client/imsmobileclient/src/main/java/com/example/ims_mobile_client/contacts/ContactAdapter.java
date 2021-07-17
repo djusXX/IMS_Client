@@ -1,6 +1,7 @@
 package com.example.ims_mobile_client.contacts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +13,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ims_mobile_client.MainActivity;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.conversation.ConversationAdapter;
-import com.example.ims_mobile_client.conversation.ConversationViewFragment;
+import com.example.ims_mobile_client.conversation.ConversationActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
-    FragmentManager fragmentManager;
+    Context context;
     ArrayList<Contact> contactList;
 
 
@@ -36,17 +36,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         public ViewHolder(View v) {
             super(v);
-            avatar = (ImageView) v.findViewById(R.id.contact_avatar);
-            statusImg = (ImageView) v.findViewById(R.id.contact_status_image);
-            name = (TextView) v.findViewById(R.id.contact_name);
-            sipUri = (TextView) v.findViewById(R.id.contact_sip_uri);
-            statusText = (TextView) v.findViewById(R.id.contact_status_text);
+            avatar = v.findViewById(R.id.contact_avatar);
+            statusImg = v.findViewById(R.id.contact_status_image);
+            name = v.findViewById(R.id.contact_name);
+            sipUri = v.findViewById(R.id.contact_sip_uri);
+            statusText = v.findViewById(R.id.contact_status_text);
         }
 
     }
     
-    public ContactAdapter(FragmentManager fragmentManager, ArrayList<Contact> contacts) {
-        this.fragmentManager = fragmentManager;
+    public ContactAdapter(Context context, ArrayList<Contact> contacts) {
+        this.context = context;
         this.contactList = contacts;
     }
 
@@ -57,10 +57,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact, parent, false);
         v.setOnClickListener(view -> {
             // TODO: open history with current contact
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            ConversationViewFragment fragment = new ConversationViewFragment();
-            transaction.replace(R.id.main_fragment, fragment);
-            transaction.commit();
+            Intent intent = new Intent(view.getContext(), ConversationActivity.class);
+            context.startActivity(intent);
         });
         return new ViewHolder(v);
     }

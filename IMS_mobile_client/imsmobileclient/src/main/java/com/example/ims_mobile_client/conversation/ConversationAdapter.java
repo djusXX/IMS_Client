@@ -1,5 +1,6 @@
 package com.example.ims_mobile_client.conversation;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ public class ConversationAdapter extends RecyclerView.Adapter {
     public static final int VIEW_TYPE_MESSAGE_OUT = 1;
     public static final int VIEW_TYPE_MESSAGE_IN = 2;
 
+    Context context;
     ArrayList<Message> messageList;
 
-    public ConversationAdapter(ArrayList<Message> messageList) {
+    public ConversationAdapter(Context context, ArrayList<Message> messageList) {
+        this.context = context;
         this.messageList = messageList;
     }
 
@@ -42,12 +45,12 @@ public class ConversationAdapter extends RecyclerView.Adapter {
         View v;
 
         if(viewType == VIEW_TYPE_MESSAGE_OUT) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_out_view, parent, false);
+            v = LayoutInflater.from(context).inflate(R.layout.message_out_view, parent, false);
             return new MessageOutHolder(v);
         }
 
         if(viewType == VIEW_TYPE_MESSAGE_IN) {
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_in_view, parent, false);
+            v = LayoutInflater.from(context).inflate(R.layout.message_in_view, parent, false);
             return new MessageInHolder(v);
         }
 

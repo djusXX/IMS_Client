@@ -5,7 +5,6 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,8 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ims_mobile_client.MainActivity;
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.contacts.ContactsActivity;
 import com.example.ims_mobile_client.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -92,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 //Complete and destroy login activity once successful
                 finish();
 
-                Intent loggedIntent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent loggedIntent = new Intent(LoginActivity.this, ContactsActivity.class);
                 LoginActivity.this.startActivity(loggedIntent);
             }
         });

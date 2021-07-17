@@ -2,10 +2,12 @@ package com.example.ims_mobile_client.conversation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +16,7 @@ import com.example.ims_mobile_client.common.MessageType;
 
 import java.util.ArrayList;
 
-public class ConversationViewFragment extends Fragment {
+public class ConversationActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ConversationAdapter conversationAdapter;
     protected RecyclerView.LayoutManager layoutManager;
@@ -23,21 +25,35 @@ public class ConversationViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         initData();
+
+        setContentView(R.layout.activity_conversation);
+        recyclerView = findViewById(R.id.conversation_recycler_viewer);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        conversationAdapter = new ConversationAdapter(ConversationActivity.this, messages);
+        recyclerView.setAdapter(conversationAdapter);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.conversation_view_fragment, container, false);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.conversation_menu, menu);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.conversation_recycler_viewer);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        conversationAdapter = new ConversationAdapter(messages);
-        recyclerView.setAdapter(conversationAdapter);
+        return true;
+    }
 
-        return rootView;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (R.id.option_call_audio == id) {
+            // TODO: implement
+            return true;
+        }
+        if (R.id.option_call_video == id) {
+            // TODO: implement
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initData() {
