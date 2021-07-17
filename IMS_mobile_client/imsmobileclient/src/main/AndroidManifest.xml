@@ -24,11 +24,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".contacts.ContactsActivity"
-            android:launchMode="singleInstance"
-            android:taskAffinity="" />
-
+        <activity android:name=".contacts.ContactsActivity" />
+        <activity android:name=".contacts.AddContactActivity" />
+        
         <activity android:name=".conversation.ConversationActivity" />
     </application>
 
