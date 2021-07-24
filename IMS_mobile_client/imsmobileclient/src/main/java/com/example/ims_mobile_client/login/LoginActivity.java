@@ -14,22 +14,14 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.contacts.ContactsActivity;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
-import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;
 
-import org.pjsip.pjsua2.Account;
-import org.pjsip.pjsua2.AccountConfig;
-import org.pjsip.pjsua2.AuthCredInfo;
-import org.pjsip.pjsua2.Endpoint;
-import org.pjsip.pjsua2.EpConfig;
-import org.pjsip.pjsua2.OnRegStateParam;
-import org.pjsip.pjsua2.TransportConfig;
 import org.pjsip.pjsua2.pjsip_status_code;
-import org.pjsip.pjsua2.pjsip_transport_type_e;
 
 
 public class LoginActivity extends AppCompatActivity {
+    BroadcastEventReceiver eventReceiver = new LoginEventReceiver();
     String accountID;
 
     @Override
@@ -63,11 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         eventReceiver.unregister(this);
@@ -79,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         eventReceiver.register(this);
     }
 
-    public BroadcastEventReceiver eventReceiver = new BroadcastEventReceiver(){
+    private class LoginEventReceiver extends BroadcastEventReceiver {
         @Override
         public void onRegistration(String accountID, int registrationStateCode) {
             super.onRegistration(accountID, registrationStateCode);

@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ims_mobile_client.R;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AddContactActivity extends AppCompatActivity {
 
@@ -37,7 +39,7 @@ public class AddContactActivity extends AppCompatActivity {
 
 
                 if(!contactName.isEmpty() || !contactSipUri.isEmpty()) {
-                    contacts.add(new Contact(contactName, contactSipUri));
+                    contacts.add(new Contact(contactName, Instant.EPOCH.getEpochSecond()));
                 }
                 finish();
             }
