@@ -11,17 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 
+import net.gotev.sipservice.SipServiceCommand;
+
 import java.util.ArrayList;
+
+import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
 
 public class ContactsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ContactAdapter contactAdapter;
     protected RecyclerView.LayoutManager layoutManager;
     protected ArrayList<Contact> contacts;
+    protected String accountID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
         initData();
 
         setContentView(R.layout.activity_contacts);
@@ -31,6 +37,14 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         contactAdapter = new ContactAdapter(ContactsActivity.this, contacts);
         recyclerView.setAdapter(contactAdapter);
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SipServiceCommand.removeAccount(this, accountID);
     }
 
     @Override
@@ -63,10 +77,14 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        contacts = new ArrayList<> ();
+        contacts = new ArrayList<>();
         int num_of_contacts = 20;
         for(int i = 0; i < num_of_contacts; i++) {
             contacts.add(new Contact("contact_" + i ));
         }
+    }
+
+    private void getContacts(String accountID) {
+
     }
 }

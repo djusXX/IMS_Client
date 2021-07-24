@@ -7,6 +7,8 @@ import org.pjsip.pjsua2.AccountConfig;
 import org.pjsip.pjsua2.AuthCredInfo;
 import org.pjsip.pjsua2.pj_constants_;
 import org.pjsip.pjsua2.pj_qos_type;
+import org.pjsip.pjsua2.pjsip_cred_data_type;
+import org.pjsip.pjsua2.pjsip_transport_type_e;
 
 import java.util.Objects;
 
@@ -190,6 +192,15 @@ public class SipAccountData implements Parcelable {
                 username, 0, password);
     }
 
+    AuthCredInfo getIMSAuthCredInfo() {
+        return new AuthCredInfo(AUTH_TYPE_DIGEST,
+                realm,
+                username + "@" + realm,
+                pjsip_cred_data_type.PJSIP_CRED_DATA_PLAIN_PASSWD
+                        | pjsip_cred_data_type.PJSIP_CRED_DATA_EXT_AKA,
+                password);
+    }
+
     String getIdUri() {
         if ("*".equals(realm))
             return "sip:" + username;
@@ -210,7 +221,7 @@ public class SipAccountData implements Parcelable {
     }
 
     String getRegistrarUri() {
-        return "sip:" + host + ":" + port;
+        return "sip:" + realm;
     }
 
     public boolean isValid() {
@@ -234,7 +245,7 @@ public class SipAccountData implements Parcelable {
         accountConfig.getRegConfig().setTimeoutSec(regExpirationTimeout);
 
         // account sip stuff configs
-        accountConfig.getSipConfig().getAuthCreds().add(getAuthCredInfo());
+        accountConfig.getSipConfig().getAuthCreds().add(getIMSAuthCredInfo());
         accountConfig.getSipConfig().getProxies().add(getProxyUri());
         accountConfig.getSipConfig().setContactUriParams(contactUriParams);
 

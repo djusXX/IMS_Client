@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.common.MessageType;
-import com.example.ims_mobile_client.data.model.LoggedInUser;
+
 
 import java.util.ArrayList;
 

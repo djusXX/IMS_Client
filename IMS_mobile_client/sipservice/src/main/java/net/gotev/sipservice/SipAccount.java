@@ -1,6 +1,7 @@
 package net.gotev.sipservice;
 
 import org.pjsip.pjsua2.Account;
+import org.pjsip.pjsua2.AccountConfig;
 import org.pjsip.pjsua2.CallInfo;
 import org.pjsip.pjsua2.CallOpParam;
 import org.pjsip.pjsua2.OnIncomingCallParam;

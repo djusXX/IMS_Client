@@ -14,18 +14,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.common.MessageType;
 
+import net.gotev.sipservice.BroadcastEventReceiver;
+import net.gotev.sipservice.SipServiceCommand;
+
 import java.util.ArrayList;
+
+import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
 
 public class ConversationActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ConversationAdapter conversationAdapter;
     protected RecyclerView.LayoutManager layoutManager;
     protected ArrayList<Message> messages;
+    protected String accountID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
         initData();
+
 
         setContentView(R.layout.activity_conversation);
         recyclerView = findViewById(R.id.conversation_recycler_viewer);
@@ -55,6 +63,10 @@ public class ConversationActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public BroadcastEventReceiver eventReceiver = new BroadcastEventReceiver() {
+
+    };
 
     private void initData() {
         messages = new ArrayList<> ();
