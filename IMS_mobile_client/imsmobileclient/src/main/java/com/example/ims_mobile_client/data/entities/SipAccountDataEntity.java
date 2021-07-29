@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.data;
+package com.example.ims_mobile_client.data.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

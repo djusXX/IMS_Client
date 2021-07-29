@@ -36,7 +36,7 @@ public class AddContactActivity extends AppCompatActivity {
         accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
         userDisplayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
         sipContacts = getIntent().getStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY);
-        setTitle(userDisplayName + " - ddd contact");
+        setTitle(userDisplayName + " - Add contact");
 
 
         add.setOnClickListener(new View.OnClickListener() {
