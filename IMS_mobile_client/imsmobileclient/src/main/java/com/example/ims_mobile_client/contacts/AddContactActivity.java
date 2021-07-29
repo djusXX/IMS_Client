@@ -47,7 +47,7 @@ public class AddContactActivity extends AppCompatActivity {
 
 
                 if(!contactName.isEmpty() || !contactSipUri.isEmpty()) {
-                    SipServiceCommand.addContact(AddContactActivity.this, accountID, contactName, contactSipUri, false);
+                    SipServiceCommand.addContact(AddContactActivity.this, contactName, contactSipUri, false);
                     sipContacts.add(contactSipUri);
                 }
                 Intent intent = new Intent(AddContactActivity.this, ContactsActivity.class);

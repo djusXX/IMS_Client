@@ -608,27 +608,24 @@ public class SipService extends BackgroundService implements SipServiceConstants
     }
 
     private void handleAddContact(Intent intent) {
-        String accountId = intent.getStringExtra(PARAM_ACCOUNT_ID);
         String displayName = intent.getStringExtra(PARAM_DISPLAY_NAME);
         String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
         boolean subscribe = intent.getBooleanExtra(PARAM_CONTACT_SUBSCRIBE, true);
 
-        SipAccount account = mActiveSipAccounts.get(accountId);
-        if (null == account) {
-            Logger.error(TAG, "Account " + accountId + " is not active, contact " + displayName + " not added.");
-            return;
-        }
-
-        SipContactConfig contactConfig = new SipContactConfig(contactUri, subscribe);
         try {
-            SipContact contact = new SipContact(this, displayName, account, contactConfig);
+            SipAccountData accountData = new SipAccountData();
+            accountData.setGuestDisplayName(displayName);
+            accountData.setContactUriParams(contactUri);
+            SipAccount account = new SipAccount(this, accountData);
+            account.createGuest();
+            SipContactConfig contactConfig = new SipContactConfig(contactUri, subscribe);
+            SipContact contact = new SipContact(this, account, contactConfig);
             contact.create();
             contact.setSubscribe(subscribe);
             mConfiguredContacts.add(contact);
         } catch (Exception exc) {
             Logger.error(TAG, "Error while creating/subscribing contact" + displayName, exc);
         }
-
 
     }
 

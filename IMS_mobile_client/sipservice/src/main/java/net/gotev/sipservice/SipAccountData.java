@@ -201,7 +201,7 @@ public class SipAccountData implements Parcelable {
                 password);
     }
 
-    String getIdUri() {
+    public String getIdUri() {
         if ("*".equals(realm))
             return "sip:" + username;
 
@@ -243,6 +243,8 @@ public class SipAccountData implements Parcelable {
         }
         accountConfig.getRegConfig().setRegistrarUri(getRegistrarUri());
         accountConfig.getRegConfig().setTimeoutSec(regExpirationTimeout);
+
+//        accountConfig.get
 
         // account sip stuff configs
         accountConfig.getSipConfig().getAuthCreds().add(getIMSAuthCredInfo());

@@ -22,14 +22,14 @@ public class SipContact extends Buddy implements Comparable<SipContact> {
     private SipAccount account;
     private SipContactConfig cfg;
     private long lastActivity; // last in/out message or call
-    private String displayName;
-    private PresenceStatus presenceStatus;
-    private SipContactInfo contactInfo;
+//    private String displayName;
+    private PresenceStatus presenceStatus = new PresenceStatus();
+    private SipContactInfo contactInfo = new SipContactInfo();
 
-    protected SipContact(SipService service, String displayName, SipAccount acc, SipContactConfig cfg) {
+    protected SipContact(SipService service, SipAccount acc, SipContactConfig cfg) {
         super();
         this.service = service;
-        this.displayName = displayName;
+//        this.displayName = displayName;
         this.account = acc;
         this.cfg = cfg;
     }
@@ -42,7 +42,7 @@ public class SipContact extends Buddy implements Comparable<SipContact> {
 
     public BuddyConfig getConfig() { return cfg; }
 
-    public String getDisplayName() { return displayName; }
+//    public String getDisplayName() { return displayName; }
 
     public long getLastActivity() { return lastActivity; }
 
@@ -53,7 +53,7 @@ public class SipContact extends Buddy implements Comparable<SipContact> {
     }
 
     public void setSubscribe(boolean subscribe) throws Exception {
-        Logger.debug(LOG_TAG, "Changing subscription state of " + displayName + " to: " + subscribe);
+        Logger.debug(LOG_TAG, "Changing subscription state of " + account.getData().getGuestDisplayName() + " to: " + subscribe);
         subscribePresence(subscribe);
     }
 

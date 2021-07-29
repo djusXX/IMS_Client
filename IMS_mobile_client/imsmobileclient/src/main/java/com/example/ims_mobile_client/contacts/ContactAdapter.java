@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -63,10 +64,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         // Create view from core layout and data
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact, parent, false);
         v.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), ConversationActivity.class);
+            Intent intent = new Intent(context, ConversationActivity.class);
             intent.putExtra(PARAM_ACCOUNT_ID, accountID);
             intent.putExtra(PARAM_DISPLAY_NAME, displayName);
-            intent.putExtra(PARAM_CONTACT_URI, sipContactList.get(viewType));
+            String contactUri = ((TextView) v.findViewById(R.id.contact_sip_uri)).getText().toString();
+            intent.putExtra(PARAM_CONTACT_URI, contactUri);
             context.startActivity(intent);
         });
         return new ViewHolder(v);

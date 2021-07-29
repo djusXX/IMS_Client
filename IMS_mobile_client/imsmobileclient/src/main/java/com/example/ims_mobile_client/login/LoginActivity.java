@@ -27,8 +27,8 @@ import org.pjsip.pjsua2.pjsip_status_code;
 public class LoginActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     BroadcastEventReceiver eventReceiver = new LoginEventReceiver();
-    String accountID;
     String displayName;
+    SipAccountData sipAccount = new SipAccountData();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onRegistration(String accountID, int registrationStateCode) {
             super.onRegistration(accountID, registrationStateCode);
-            if(registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
+            if ("" == accountID && 400 == registrationStateCode) {
+                SipServiceCommand.setAccount(LoginActivity.this, sipAccount);
+            } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
                 Intent intent = new Intent(LoginActivity.this, ContactsActivity.class);
                 intent.putExtra(PARAM_ACCOUNT_ID, accountID);
                 intent.putExtra(PARAM_DISPLAY_NAME, displayName);
@@ -91,10 +93,11 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
             }
         }
+
+
     };
 
     private void login(String username, String password, String realm, String pcscf) {
-        SipAccountData sipAccount = new SipAccountData();
         sipAccount.setUsername(username);
         sipAccount.setPassword(password);
         sipAccount.setRealm(realm);
@@ -104,7 +107,8 @@ public class LoginActivity extends AppCompatActivity {
         sipAccount.setHost(host);
         sipAccount.setPort(port);
 
-        accountID = SipServiceCommand.setAccount(this, sipAccount);
+
+        SipServiceCommand.getRegistrationStatus(this, sipAccount.getIdUri());
     }
 
     private void requestPermissions() {

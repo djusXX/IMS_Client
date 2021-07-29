@@ -65,8 +65,7 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        if (eventReceiver.isRegistered)
-            eventReceiver.unregister(this);
+        eventReceiver.unregister(this);
     }
 
     @Override
@@ -109,13 +108,13 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        String contact_1 = SipServiceCommand.addContact(this, accountID, "Bob", "sip:bob@open-ims.test", false);
+        String contact_1 = SipServiceCommand.addContact(this, "Bob", "sip:bob@open-ims.test", true);
         sipContacts.add(contact_1);
 
-        contact_1 = SipServiceCommand.addContact(this, accountID, "Ela", "sip:ela@open-ims.test", false);
+        contact_1 = SipServiceCommand.addContact(this, "Ela", "sip:ela@open-ims.test", true);
         sipContacts.add(contact_1);
 
-        contact_1 = SipServiceCommand.addContact(this, accountID, "Gosia", "sip:gosia@open-ims.test", false);
+        contact_1 = SipServiceCommand.addContact(this, "Gosia", "sip:gosia@open-ims.test", true);
         sipContacts.add(contact_1);
     }
 

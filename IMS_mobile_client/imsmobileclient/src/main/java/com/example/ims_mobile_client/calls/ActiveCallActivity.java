@@ -40,13 +40,13 @@ public class ActiveCallActivity extends AppCompatActivity {
 
         ((Button) findViewById(R.id.mute_button)).setOnClickListener(v -> {
             if(callID >= 0) {
-                SipServiceCommand.toggleCallMute(this, accountID, callID);
+                SipServiceCommand.toggleCallMute(ActiveCallActivity.this, accountID, callID);
             }
         });
 
         ((Button) findViewById(R.id.end_button)).setOnClickListener(v -> {
             if(callID >= 0) {
-                SipServiceCommand.hangUpCall(this, accountID, callID);
+                SipServiceCommand.hangUpCall(ActiveCallActivity.this, accountID, callID);
             }
             finish();
         });
@@ -54,14 +54,13 @@ public class ActiveCallActivity extends AppCompatActivity {
         if (isVideo) {
             ((Button) findViewById(R.id.switch_camera_button)).setOnClickListener(v -> {
                 if(callID >= 0) {
-                    SipServiceCommand.switchVideoCaptureDevice(this, accountID, callID);
+                    SipServiceCommand.switchVideoCaptureDevice(ActiveCallActivity.this, accountID, callID);
                 }
             });
 
             localVideo = findViewById(R.id.local_user_view);
             remoteVideo = findViewById(R.id.remote_user_view);
 
-//            SipServiceCommand.startVideoPreview(ActiveCallActivity.this, accountID, callID, localVideo.getHolder().getSurface());
             localVideo.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -70,7 +69,6 @@ public class ActiveCallActivity extends AppCompatActivity {
 
                 @Override
                 public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-//                    SipServiceCommand.startVideoPreview(ActiveCallActivity.this, accountID, callID, localVideo.getHolder().getSurface());
                 }
 
                 @Override
@@ -82,12 +80,11 @@ public class ActiveCallActivity extends AppCompatActivity {
             remoteVideo.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {
-//                    SipServiceCommand.setupIncomingVideoFeed(ActiveCallActivity.this, accountID, callID, remoteVideo.getHolder().getSurface());
                 }
 
                 @Override
                 public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                    SipServiceCommand.setupIncomingVideoFeed(ActiveCallActivity.this, accountID, callID, remoteVideo.getHolder().getSurface());
+                    SipServiceCommand.setupIncomingVideoFeed(ActiveCallActivity.this, accountID, callID, surfaceHolder.getSurface());
                 }
 
                 @Override

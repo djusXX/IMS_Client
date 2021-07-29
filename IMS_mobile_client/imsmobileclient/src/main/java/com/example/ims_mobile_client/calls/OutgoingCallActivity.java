@@ -15,6 +15,7 @@ import org.pjsip.pjsua2.pjsip_inv_state;
 
 import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_CALL_ID;
+import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_IS_VIDEO;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_REMOTE_URI;
@@ -34,7 +35,7 @@ public class OutgoingCallActivity extends AppCompatActivity {
 
         String call_title = "Outgoing " + (isVideo ? "video" : "voice") + " call to";
         ((TextView) findViewById(R.id.outgoing_call_title)).setText(call_title);
-        ((TextView) findViewById(R.id.caller_name)).setText(displayName + "\n(" + remoteUri + ")");
+        ((TextView) findViewById(R.id.outgoing_contact_name)).setText(remoteUri + "\n(" + remoteUri + ")");
 
         ((Button) findViewById(R.id.cancel_call_button)).setOnClickListener(v -> {
             if(callID >= 0) {
@@ -68,6 +69,7 @@ public class OutgoingCallActivity extends AppCompatActivity {
                 Intent intent = new Intent(OutgoingCallActivity.this, ActiveCallActivity.class);
                 intent.putExtra(PARAM_ACCOUNT_ID, accountID);
                 intent.putExtra(PARAM_CALL_ID, callID);
+                intent.putExtra(PARAM_REMOTE_URI, remoteUri);
                 intent.putExtra(PARAM_IS_VIDEO, isVideo);
                 OutgoingCallActivity.this.startActivity(intent);
                 finish();
@@ -81,6 +83,7 @@ public class OutgoingCallActivity extends AppCompatActivity {
     private void getExtraParams(Intent i) {
         accountID = i.getStringExtra(PARAM_ACCOUNT_ID);
         displayName = i.getStringExtra(PARAM_DISPLAY_NAME);
+        remoteUri = i.getStringExtra(PARAM_CONTACT_URI);
         isVideo = i.getBooleanExtra(PARAM_IS_VIDEO, false);
     }
 }
