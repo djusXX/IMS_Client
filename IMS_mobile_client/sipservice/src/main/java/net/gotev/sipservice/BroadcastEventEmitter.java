@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 import org.pjsip.pjsua2.PresenceStatus;
+import org.pjsip.pjsua2.SipEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +48,11 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         return NAMESPACE + "." + action;
     }
 
-    public void onBuddyState(String accountID, String contactUri, PresenceStatus ps) {
+    public void onSipContactState(SipContactInfo sipContactInfo, PresenceStatus ps) {
         final Intent intent = new Intent();
 
         intent.setAction(getAction(BroadcastAction.CONTACT_PRESENCE_CHANGE));
-        intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-        intent.putExtra(PARAM_CONTACT_URI, contactUri);
+        intent.putExtra(PARAM_CONTACT_URI, sipContactInfo.uri);
         intent.putExtra(PARAM_PRESENCE_STATUS, ps.getStatus());
         intent.putExtra(PARAM_PRESENCE_TEXT, ps.getStatusText());
         intent.putExtra(PARAM_PRESENCE_ACTIVITY_TYPE, ps.getActivity());
@@ -60,6 +60,9 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         intent.putExtra(PARAM_PRESENCE_RPID_ID, ps.getRpidId());
 
         sendExplicitBroadcast(intent);
+    }
+
+    public void onSipContactEvent(SipEvent e) {
     }
 
     /**

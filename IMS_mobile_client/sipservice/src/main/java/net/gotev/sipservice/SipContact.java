@@ -1,35 +1,25 @@
 package net.gotev.sipservice;
 
-import android.os.Build;
-import android.widget.EditText;
-
 import org.pjsip.pjsua2.Buddy;
-import org.pjsip.pjsua2.BuddyConfig;
-import org.pjsip.pjsua2.BuddyInfo;
 import org.pjsip.pjsua2.OnBuddyEvSubStateParam;
 import org.pjsip.pjsua2.PresenceStatus;
 import org.pjsip.pjsua2.SendInstantMessageParam;
 import org.pjsip.pjsua2.SendTypingIndicationParam;
 import org.pjsip.pjsua2.SipTxOption;
 
-import java.time.Instant;
-
-public class SipContact extends Buddy implements Comparable<SipContact> {
+public class SipContact extends Buddy {
 
     private static final String LOG_TAG = SipContact.class.getSimpleName();
 
     private final SipService service;
     private SipAccount account;
     private SipContactConfig cfg;
-    private long lastActivity; // last in/out message or call
-//    private String displayName;
     private PresenceStatus presenceStatus = new PresenceStatus();
     private SipContactInfo contactInfo = new SipContactInfo();
 
     protected SipContact(SipService service, SipAccount acc, SipContactConfig cfg) {
         super();
         this.service = service;
-//        this.displayName = displayName;
         this.account = acc;
         this.cfg = cfg;
     }
@@ -40,11 +30,7 @@ public class SipContact extends Buddy implements Comparable<SipContact> {
 
     public SipAccount getAccount() { return account; }
 
-    public BuddyConfig getConfig() { return cfg; }
-
-//    public String getDisplayName() { return displayName; }
-
-    public long getLastActivity() { return lastActivity; }
+    public SipContactConfig getConfig() { return cfg; }
 
     public boolean isValid() { return isValid(); }
 
@@ -69,19 +55,16 @@ public class SipContact extends Buddy implements Comparable<SipContact> {
         prm.setUserData(msg.userData);
         sendInstantMessage(prm);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            lastActivity = Instant.now().getEpochSecond();
-        }
     }
 
     @Override
     public void onBuddyState() {
-        service.getBroadcastEmitter().onBuddyState(account.getData().getIdUri(), cfg.getUri(), presenceStatus);
+        service.getBroadcastEmitter().onSipContactState(contactInfo, presenceStatus);
     }
 
     @Override
     public void onBuddyEvSubState(OnBuddyEvSubStateParam prm) {
-        super.onBuddyEvSubState(prm);
+        service.getBroadcastEmitter().onSipContactEvent(prm.getE());
     }
 
     public void notifyTyping(boolean isTyping, SipTxOption txOption) throws Exception {
@@ -91,8 +74,4 @@ public class SipContact extends Buddy implements Comparable<SipContact> {
         sendTypingIndication(prm);
     }
 
-    @Override
-    public int compareTo(SipContact that) {
-        return Long.compare(that.lastActivity, this.lastActivity);
-    }
 }
