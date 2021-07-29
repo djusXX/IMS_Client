@@ -1,15 +1,15 @@
 package com.example.ims_mobile_client.data;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class LocalUser {
+public class SipContactEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public String accountID;
-
-    public String displayName;
-
+    public String localUserAccountId;
+    public String contactDisplayName;
+    public String contactSipUri;
 }

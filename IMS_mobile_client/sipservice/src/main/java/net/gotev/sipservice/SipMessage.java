@@ -30,7 +30,8 @@ public class SipMessage extends SendInstantMessageParam {
         setUserData(userData);
     }
 
-    public String getType() { return type; }
+    @Override
+    public String getContentType() { return type; }
 
     @Override
     public String getContent() { return content; }

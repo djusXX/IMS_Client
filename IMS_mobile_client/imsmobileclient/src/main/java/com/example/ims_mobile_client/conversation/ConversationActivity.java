@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,9 @@ import com.example.ims_mobile_client.calls.OutgoingCallActivity;
 import com.example.ims_mobile_client.common.MessageType;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
+import net.gotev.sipservice.SharedPreferencesHelper;
+import net.gotev.sipservice.SipMessage;
+import net.gotev.sipservice.SipService;
 import net.gotev.sipservice.SipServiceCommand;
 
 import org.pjsip.pjsua2.pjsip_inv_state;
@@ -49,6 +54,11 @@ public class ConversationActivity extends AppCompatActivity {
         displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
         contactUri = getIntent().getStringExtra(PARAM_CONTACT_URI);
         initData();
+
+        ((ImageButton) findViewById(R.id.send_button)).setOnClickListener(v -> {
+            SipMessage msg = new SipMessage();
+            // TODO: create and send Instant Message
+        });
 
 
         recyclerView = findViewById(R.id.conversation_recycler_viewer);
