@@ -1,9 +1,13 @@
 package com.example.ims_mobile_client.login;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.view.View;
 import android.widget.Button;
@@ -21,14 +25,18 @@ import org.pjsip.pjsua2.pjsip_status_code;
 
 
 public class LoginActivity extends AppCompatActivity {
+    private static final int PERMISSIONS_REQUEST_CODE = 9999;
     BroadcastEventReceiver eventReceiver = new LoginEventReceiver();
     String accountID;
+    String displayName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        requestPermissions();
 
+        final EditText displayNameEditText = findViewById(R.id.display_name);
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final EditText realmEditText = findViewById(R.id.realm);
@@ -38,11 +46,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // ONLY FOR DEBUGGING
+        displayNameEditText.setText("ALICE");
         usernameEditText.setText("alice");
         passwordEditText.setText("alice");
         realmEditText.setText("open-ims.test");
         pcscfEditText.setText("10.0.0.9:4060");
 
+        displayName = displayNameEditText.getText().toString();
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        eventReceiver.unregister(this);
+        if (eventReceiver != null)
+            eventReceiver.unregister(this);
     }
 
     @Override
@@ -73,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             if(registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
                 Intent intent = new Intent(LoginActivity.this, ContactsActivity.class);
                 intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+                intent.putExtra(PARAM_DISPLAY_NAME, displayName);
                 startActivity(intent);
                 finish();
             } else {
@@ -95,4 +107,36 @@ public class LoginActivity extends AppCompatActivity {
         accountID = SipServiceCommand.setAccount(this, sipAccount);
     }
 
+    private void requestPermissions() {
+        String[] p = {
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        if (!checkPermissionsGranted(p)) {
+            ActivityCompat.requestPermissions(this, p, PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+    protected boolean checkPermissionsGranted(String[] perm) {
+        for (String p : perm) {
+            if(ContextCompat.checkSelfPermission(this, p) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (PERMISSIONS_REQUEST_CODE == requestCode) {
+            for (int res : grantResults) {
+                if(res != PackageManager.PERMISSION_GRANTED)
+                    return;
+            }
+            Toast.makeText(LoginActivity.this, "ALL required permissions granted :)", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

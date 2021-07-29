@@ -34,6 +34,7 @@ public interface SipServiceConstants {
     String ACTION_SWITCH_VIDEO_CAPTURE_DEVICE = "switchVideoCaptureDevice";
     String ACTION_MAKE_DIRECT_CALL = "makeDirectCall";
     String ACTION_RECONNECT_CALL = "reconnectCall";
+    String ACTION_ADD_CONTACT = "addContact";
 
     /*
      * Generic Parameters
@@ -56,6 +57,14 @@ public interface SipServiceConstants {
     String PARAM_GUEST_NAME = "guestName";
     String PARAM_DIRECT_CALL_URI = "sipUri";
     String PARAM_DIRECT_CALL_SIP_SERVER = "sipServer";
+    String PARAM_CONTACT_URI = "contactUri";
+    String PARAM_CONTACT_SUBSCRIBE = "contactSubscribe";
+    String PARAM_PRESENCE_STATUS = "presenceStatus";
+    String PARAM_PRESENCE_TEXT = "presenceText";
+    String PARAM_PRESENCE_ACTIVITY_TYPE = "presenceActivityType";
+    String PARAM_PRESENCE_NOTE = "presenceNote";
+    String PARAM_PRESENCE_RPID_ID = "presenceRpidId";
+    String PARAM_SIP_CONTACTS_ARRAY = "sipContactsArray";
 
     /**
      * Specific Parameters passed in the broadcast intents.
@@ -107,5 +116,5 @@ public interface SipServiceConstants {
     /**
      * Generic Constants
      */
-    int DELAYED_JOB_DEFAULT_DELAY = 5000;
+    int DELAYED_JOB_DEFAULT_DELAY = 10000;// 5000;
 }

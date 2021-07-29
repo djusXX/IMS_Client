@@ -2,6 +2,7 @@
     <string name="app_name">IMS_mobile_client</string>
     <string name="sip_uri">(name@open-ims.test)</string>
     <string name="prompt_username">Username</string>
+    <string name="prompt_display_name">Display name</string>
     <string name="prompt_password">Password</string>
     <string name="action_log_in">Log in</string>
     <string name="action_sign_in_short">Sign in</string>

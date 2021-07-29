@@ -274,7 +274,7 @@ public class SipAccountData implements Parcelable {
     }
 
     private void setVideoConfig(AccountConfig accountConfig) {
-        accountConfig.getVideoConfig().setAutoTransmitOutgoing(false);
+        accountConfig.getVideoConfig().setAutoTransmitOutgoing(true);
         accountConfig.getVideoConfig().setAutoShowIncoming(true);
         accountConfig.getVideoConfig().setDefaultCaptureDevice(SipServiceConstants.FRONT_CAMERA_CAPTURE_DEVICE);
         accountConfig.getVideoConfig().setDefaultRenderDevice(SipServiceConstants.DEFAULT_RENDER_DEVICE);

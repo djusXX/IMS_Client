@@ -1,12 +1,10 @@
 package com.example.ims_mobile_client.contacts;
 
-import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,32 +12,45 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
-import com.example.ims_mobile_client.calls.IncomingCallActivity;
-import com.example.ims_mobile_client.login.LoginActivity;
 
-import net.gotev.sipservice.BroadcastEventReceiver;
-import net.gotev.sipservice.CallReconnectionState;
-import net.gotev.sipservice.RtpStreamStats;
+import net.gotev.sipservice.Logger;
+import net.gotev.sipservice.SipAccountData;
+import net.gotev.sipservice.SipContact;
+import net.gotev.sipservice.SipService;
 import net.gotev.sipservice.SipServiceCommand;
 
 import java.time.Instant;
 import java.util.ArrayList;
 
 import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
+import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
+import static net.gotev.sipservice.SipServiceConstants.PARAM_SIP_CONTACTS_ARRAY;
 
 public class ContactsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ContactAdapter contactAdapter;
     protected RecyclerView.LayoutManager layoutManager;
-    protected ArrayList<Contact> contacts = new ArrayList<>();
+    public ArrayList<String> sipContacts = new ArrayList<>();
     protected String accountID;
-    protected CallEventsReceiver eventReceiver = new CallEventsReceiver();
+    protected String displayName;
+    protected CallEventsReceiver eventReceiver = new CallEventsReceiver() {
+        // TODO add emitter and receiver for onBuddyState
+    };
+    static boolean firstStart = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
-        initData();
+        displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
+        setTitle(displayName);
+
+        if (firstStart) {
+            initData();
+            firstStart = false;
+        } else {
+            sipContacts = getIntent().getStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY);
+        }
         eventReceiver.register(this);
 
         setContentView(R.layout.activity_contacts);
@@ -47,28 +58,21 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contacts_recycler_viewer);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        contactAdapter = new ContactAdapter(ContactsActivity.this, contacts);
+        contactAdapter = new ContactAdapter(ContactsActivity.this, accountID, displayName, sipContacts);
         recyclerView.setAdapter(contactAdapter);
-//        requestPermissions();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        eventReceiver.unregister(this);
+//        if (eventReceiver.isRegistered)
+            eventReceiver.unregister(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         eventReceiver.register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (accountID != null)
-            SipServiceCommand.removeAccount(this, accountID);
     }
 
     @Override
@@ -86,25 +90,33 @@ public class ContactsActivity extends AppCompatActivity {
 //        }
         if (R.id.contacts_menu_add_contact == id) {
             Intent intent = new Intent(ContactsActivity.this, AddContactActivity.class);
+            intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+            intent.putExtra(PARAM_DISPLAY_NAME, displayName);
+            intent.putStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY, sipContacts);
             startActivity(intent);
+            finish();
             return true;
         }
         if (R.id.contacts_menu_settings == id) {
             // TODO: implement
             return true;
         }
-        if (R.id.contacts_menu_log_out == id) {
-            // TODO: implement
-            return true;
-        }
+//        if (R.id.contacts_menu_log_out == id) {
+//            // TODO: implement
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 
     private void initData() {
-        int num_of_contacts = 20;
-        for(int i = 0; i < num_of_contacts; i++) {
-            contacts.add(new Contact("contact_" + i, Instant.EPOCH.getEpochSecond() + (112345 * i)));
-        }
+        String contact_1 = SipServiceCommand.addContact(this, accountID, "Bob", "sip:bob@open-ims.test", false);
+        sipContacts.add(contact_1);
+
+        contact_1 = SipServiceCommand.addContact(this, accountID, "Ela", "sip:ela@open-ims.test", false);
+        sipContacts.add(contact_1);
+
+        contact_1 = SipServiceCommand.addContact(this, accountID, "Gosia", "sip:gosia@open-ims.test", false);
+        sipContacts.add(contact_1);
     }
 
     private void getContactsFromDB() {
@@ -115,21 +127,5 @@ public class ContactsActivity extends AppCompatActivity {
     private void getContacts() {
 
     }
-
-    private void requestPermissions() {
-        String[] p = {
-                Manifest.permission_group.CAMERA,
-                Manifest.permission_group.MICROPHONE,
-                Manifest.permission_group.STORAGE,
-                Manifest.permission.RECORD_AUDIO
-        };
-
-        for (String perm : p) {
-            if(checkSelfPermission(perm) != PackageManager.PERMISSION_GRANTED)
-                requestPermissions(p, 789);
-        }
-    }
-
-
 
 }

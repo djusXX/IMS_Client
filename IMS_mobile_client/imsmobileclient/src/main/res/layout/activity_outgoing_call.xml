@@ -10,8 +10,8 @@
         android:id="@+id/outgoing_call_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:textSize="30dp"
-        android:text="Calling to"
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -20,6 +20,7 @@
         android:id="@+id/outgoing_contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:textSize="30dp"
         android:textAlignment="center"
         android:text="contact name"

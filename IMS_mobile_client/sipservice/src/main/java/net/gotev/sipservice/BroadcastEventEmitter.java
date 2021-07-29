@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
+import org.pjsip.pjsua2.PresenceStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         MISSED_CALL,
         VIDEO_SIZE,
         CALL_STATS,
-        CALL_RECONNECTION_STATE
+        CALL_RECONNECTION_STATE,
+        CONTACT_PRESENCE_CHANGE
     }
 
     public BroadcastEventEmitter(Context context) {
@@ -42,6 +45,21 @@ public class BroadcastEventEmitter implements SipServiceConstants {
 
     public static String getAction(BroadcastAction action) {
         return NAMESPACE + "." + action;
+    }
+
+    public void onBuddyState(String accountID, String contactUri, PresenceStatus ps) {
+        final Intent intent = new Intent();
+
+        intent.setAction(getAction(BroadcastAction.CONTACT_PRESENCE_CHANGE));
+        intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+        intent.putExtra(PARAM_CONTACT_URI, contactUri);
+        intent.putExtra(PARAM_PRESENCE_STATUS, ps.getStatus());
+        intent.putExtra(PARAM_PRESENCE_TEXT, ps.getStatusText());
+        intent.putExtra(PARAM_PRESENCE_ACTIVITY_TYPE, ps.getActivity());
+        intent.putExtra(PARAM_PRESENCE_NOTE, ps.getNote());
+        intent.putExtra(PARAM_PRESENCE_RPID_ID, ps.getRpidId());
+
+        sendExplicitBroadcast(intent);
     }
 
     /**
@@ -63,7 +81,8 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         intent.putExtra(PARAM_IS_VIDEO, isVideo);
         intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
 
-        sendExplicitBroadcast(intent);
+//        sendExplicitBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     /**

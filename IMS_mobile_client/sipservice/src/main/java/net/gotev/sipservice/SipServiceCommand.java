@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.Surface;
 
+import org.pjsip.pjsua2.Account;
+import org.pjsip.pjsua2.BuddyConfig;
+
 import java.util.ArrayList;
 
 /**
@@ -13,6 +16,7 @@ import java.util.ArrayList;
  */
 @SuppressWarnings("unused")
 public class SipServiceCommand implements SipServiceConstants {
+
 
     /**
      * This should be changed on the app side
@@ -579,5 +583,29 @@ public class SipServiceCommand implements SipServiceConstants {
         Intent intent = new Intent(context, SipService.class);
         intent.setAction(ACTION_RECONNECT_CALL);
         context.startService(intent);
+    }
+
+    /**
+     * Create Buddy reference and subscribe for presence status.
+     *
+     * @param context application context
+     * @param accountId id of SipAccount to which add the Contact
+     * @param displayName Contact's display name
+     * @param contactUri public id/uri of Contact
+     * @param subscribe subscribe or not a newly created buddy
+     */
+    public static String addContact(Context context, String accountId, String displayName, String contactUri, boolean subscribe) {
+        checkAccount(accountId);
+        checkAccount(contactUri);
+
+        Intent intent = new Intent(context, SipService.class);
+        intent.setAction(ACTION_ADD_CONTACT);
+        intent.putExtra(PARAM_ACCOUNT_ID, accountId);
+        intent.putExtra(PARAM_DISPLAY_NAME, displayName);
+        intent.putExtra(PARAM_CONTACT_URI, contactUri);
+        intent.putExtra(PARAM_CONTACT_SUBSCRIBE, subscribe);
+
+        context.startService(intent);
+        return contactUri;
     }
 }

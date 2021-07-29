@@ -189,8 +189,10 @@ public class SipAccount extends Account {
             CallInfo callInfo = call.getInfo();
             boolean isVideo = (callInfo.getRemOfferer() && callInfo.getRemVideoCount() > 0);
 
+            Logger.debug(LOG_TAG, "Sending incomingCall broadcast!");
             service.getBroadcastEmitter().incomingCall(data.getIdUri(), prm.getCallId(),
                             displayName, remoteUri, isVideo);
+            Logger.debug(LOG_TAG, "incomingCall broadcast sent!");
 
         } catch (Exception ex) {
             Logger.error(LOG_TAG, "Error while getting caller info", ex);

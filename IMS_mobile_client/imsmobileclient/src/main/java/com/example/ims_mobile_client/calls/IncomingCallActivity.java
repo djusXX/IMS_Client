@@ -33,21 +33,28 @@ public class IncomingCallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_call);
         getExtraParams(getIntent());
-        eventReceiver.register(this);
 
+
+        String call_title = "Incoming " + (isVideo ? "video" : "voice") + " call from";
+        ((TextView) findViewById(R.id.incoming_call_title)).setText(call_title);
 
         ((TextView) findViewById(R.id.caller_name)).setText(displayName + "\n(" + remoteUri + ")");
 
         ((Button) findViewById(R.id.accept_call_button)).setOnClickListener(v -> {
             if(callID >= 0) {
-                SipServiceCommand.acceptIncomingCall(getParent(), accountID, callID, isVideo);
+                SipServiceCommand.acceptIncomingCall(this, accountID, callID, isVideo);
+                Intent intent = new Intent(IncomingCallActivity.this, ActiveCallActivity.class);
+                intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+                intent.putExtra(PARAM_CALL_ID, callID);
+                intent.putExtra(PARAM_IS_VIDEO, isVideo);
+                IncomingCallActivity.this.startActivity(intent);
             }
             finish();
         });
 
         ((Button) findViewById(R.id.reject_call_button)).setOnClickListener(v -> {
             if(callID >= 0) {
-                SipServiceCommand.declineIncomingCall(getParent(), accountID, callID);
+                SipServiceCommand.declineIncomingCall(this, accountID, callID);
             }
             finish();
         });

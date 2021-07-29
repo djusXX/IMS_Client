@@ -9,21 +9,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.conversation.ConversationAdapter;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
+
+import net.gotev.sipservice.SipContact;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
+import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
+import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
+
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
     Context context;
-    ArrayList<Contact> contactList;
+    String accountID;
+    String displayName;
+    ArrayList<String> sipContactList = new ArrayList<>();
 
 
     // class to hold the layout for one row (single contact) of contact list 
@@ -45,9 +50,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     }
     
-    public ContactAdapter(Context context, ArrayList<Contact> contacts) {
+    public ContactAdapter(Context context, String accountID, String displayName, ArrayList<String> sipContacts) {
         this.context = context;
-        this.contactList = contacts;
+        this.accountID = accountID;
+        this.displayName = displayName;
+        this.sipContactList = sipContacts;
     }
 
     @NotNull
@@ -56,8 +63,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         // Create view from core layout and data
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact, parent, false);
         v.setOnClickListener(view -> {
-            // TODO: open history with current contact
             Intent intent = new Intent(view.getContext(), ConversationActivity.class);
+            intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+            intent.putExtra(PARAM_DISPLAY_NAME, displayName);
+            intent.putExtra(PARAM_CONTACT_URI, sipContactList.get(viewType));
             context.startActivity(intent);
         });
         return new ViewHolder(v);
@@ -65,12 +74,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     @Override   // Fill holder with data
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String name = contactList.get(position).getName();
-        holder.name.setText(name);
+        String name = sipContactList.get(position);
+        holder.sipUri.setText(name);
     }
 
     @Override
     public int getItemCount() {
-        return contactList.size();
+        return sipContactList.size();
     }
 }

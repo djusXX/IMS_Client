@@ -43,8 +43,9 @@ public class SipService extends BackgroundService implements SipServiceConstants
     private static final String TAG = SipService.class.getSimpleName();
 
     private List<SipAccountData> mConfiguredAccounts = new ArrayList<>();
+    private List<SipContact> mConfiguredContacts = new ArrayList<>();
     private SipAccountData mConfiguredGuestAccount;
-    private static final ConcurrentHashMap<String, SipAccount> mActiveSipAccounts = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, SipAccount> mActiveSipAccounts = new ConcurrentHashMap<>(); // TODO: maybe add same map for active subscriptions????
     private BroadcastEventEmitter mBroadcastEmitter;
     private Endpoint mEndpoint;
     private SharedPreferencesHelper mSharedPreferencesHelper;
@@ -176,6 +177,9 @@ public class SipService extends BackgroundService implements SipServiceConstants
                     case ACTION_RECONNECT_CALL:
                         handleReconnectCall();
                         break;
+                    case ACTION_ADD_CONTACT:
+                        handleAddContact(intent);
+                        break;
                     default: break;
                 }
 
@@ -186,6 +190,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
             }
         });
 
+//        return START_STICKY;
         return START_NOT_STICKY;
     }
 
@@ -196,6 +201,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
             public void run() {
                 Logger.debug(TAG, "Destroying SipService");
                 stopStack();
+//                stopSelf();
             }
         });
         super.onDestroy();
@@ -590,7 +596,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
             Logger.debug(TAG, "Reconfiguring " + data.getIdUri());
 
             try {
-                //removeAccount(data.getIdUri());
+//                removeAccount(data.getIdUri());
                 handleSetCodecPriorities(intent);
                 addAccount(data);
                 mConfiguredAccounts.set(index, data);
@@ -599,6 +605,31 @@ public class SipService extends BackgroundService implements SipServiceConstants
                 Logger.error(TAG, "Error while reconfiguring " + data.getIdUri(), exc);
             }
         }
+    }
+
+    private void handleAddContact(Intent intent) {
+        String accountId = intent.getStringExtra(PARAM_ACCOUNT_ID);
+        String displayName = intent.getStringExtra(PARAM_DISPLAY_NAME);
+        String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
+        boolean subscribe = intent.getBooleanExtra(PARAM_CONTACT_SUBSCRIBE, true);
+
+        SipAccount account = mActiveSipAccounts.get(accountId);
+        if (null == account) {
+            Logger.error(TAG, "Account " + accountId + " is not active, contact " + displayName + " not added.");
+            return;
+        }
+
+        SipContactConfig contactConfig = new SipContactConfig(contactUri, subscribe);
+        try {
+            SipContact contact = new SipContact(this, displayName, account, contactConfig);
+            contact.create();
+            contact.setSubscribe(subscribe);
+            mConfiguredContacts.add(contact);
+        } catch (Exception exc) {
+            Logger.error(TAG, "Error while creating/subscribing contact" + displayName, exc);
+        }
+
+
     }
 
     private void loadNativeLibraries() {
@@ -641,6 +672,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
 
             EpConfig epConfig = new EpConfig();
             epConfig.getUaConfig().setUserAgent(AGENT_NAME);
+            epConfig.getUaConfig().setMaxCalls(32);
             epConfig.getMedConfig().setHasIoqueue(true);
             epConfig.getMedConfig().setClockRate(16000);
             epConfig.getMedConfig().setQuality(10);
@@ -651,11 +683,11 @@ public class SipService extends BackgroundService implements SipServiceConstants
 
             TransportConfig udpTransport = new TransportConfig();
             udpTransport.setQosType(pj_qos_type.PJ_QOS_TYPE_VOICE);
-            TransportConfig tcpTransport = new TransportConfig();
-            tcpTransport.setQosType(pj_qos_type.PJ_QOS_TYPE_VOICE);
+//            TransportConfig tcpTransport = new TransportConfig();
+//            tcpTransport.setQosType(pj_qos_type.PJ_QOS_TYPE_VOICE);
 
             mEndpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP, udpTransport);
-            mEndpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TCP, tcpTransport);
+//            mEndpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_TCP, tcpTransport);
             mEndpoint.libStart();
 
             ArrayList<CodecPriority> codecPriorities = getConfiguredCodecPriorities();
