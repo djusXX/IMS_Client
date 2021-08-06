@@ -5,8 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Surface;
+import android.widget.EditText;
 
 import org.pjsip.pjsua2.AudDevManager;
+import org.pjsip.pjsua2.BuddyConfig;
+import org.pjsip.pjsua2.BuddyVector2;
 import org.pjsip.pjsua2.CallVidSetStreamParam;
 import org.pjsip.pjsua2.CodecFmtpVector;
 import org.pjsip.pjsua2.CodecInfo;
@@ -15,6 +18,7 @@ import org.pjsip.pjsua2.Endpoint;
 import org.pjsip.pjsua2.EpConfig;
 import org.pjsip.pjsua2.IpChangeParam;
 import org.pjsip.pjsua2.MediaFormatVideo;
+import org.pjsip.pjsua2.SendInstantMessageParam;
 import org.pjsip.pjsua2.TransportConfig;
 import org.pjsip.pjsua2.VidCodecParam;
 import org.pjsip.pjsua2.VidDevManager;
@@ -25,6 +29,7 @@ import org.pjsip.pjsua2.pjsip_transport_type_e;
 import org.pjsip.pjsua2.pjsua_call_vid_strm_op;
 import org.pjsip.pjsua2.pjsua_destroy_flag;
 
+import java.time.chrono.ThaiBuddhistDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -43,7 +48,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
     private static final String TAG = SipService.class.getSimpleName();
 
     private List<SipAccountData> mConfiguredAccounts = new ArrayList<>();
-    private List<SipContact> mConfiguredContacts = new ArrayList<>();
+    private static ArrayList<SipContact> mConfiguredContacts = new ArrayList<>();
     private SipAccountData mConfiguredGuestAccount;
     private static final ConcurrentHashMap<String, SipAccount> mActiveSipAccounts = new ConcurrentHashMap<>(); // TODO: maybe add same map for active subscriptions????
     private BroadcastEventEmitter mBroadcastEmitter;
@@ -179,6 +184,9 @@ public class SipService extends BackgroundService implements SipServiceConstants
                         break;
                     case ACTION_ADD_CONTACT:
                         handleAddContact(intent);
+                        break;
+                    case ACTION_SEND_MESSAGE:
+                        handleSendMessage(intent);
                         break;
                     default: break;
                 }
@@ -608,26 +616,48 @@ public class SipService extends BackgroundService implements SipServiceConstants
     }
 
     private void handleAddContact(Intent intent) {
+        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
         String displayName = intent.getStringExtra(PARAM_DISPLAY_NAME);
         String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
         boolean subscribe = intent.getBooleanExtra(PARAM_CONTACT_SUBSCRIBE, true);
 
-        try {
-            SipAccountData accountData = new SipAccountData();
-            accountData.setGuestDisplayName(displayName);
-            accountData.setContactUriParams(contactUri);
-            SipAccount account = new SipAccount(this, accountData);
-            account.createGuest();
-            SipContactConfig contactConfig = new SipContactConfig(contactUri, subscribe);
-            SipContact contact = new SipContact(this, account, contactConfig);
-            contact.create();
-            contact.setSubscribe(subscribe);
+        SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
+        if (loggedAcc == null) {
+            Logger.debug(TAG, accountID + " is not active (logged in), skipping");
+            return;
+        }
+        SipContactConfig sccfg = new SipContactConfig();
+        sccfg.setDisplayName(displayName);
+        sccfg.setUri(contactUri);
+        sccfg.setSubscribe(subscribe);
+        SipContact contact = loggedAcc.addSipContact(sccfg);
+        if (contact != null) {
             mConfiguredContacts.add(contact);
-        } catch (Exception exc) {
-            Logger.error(TAG, "Error while creating/subscribing contact" + displayName, exc);
+            mBroadcastEmitter.addedContact(contact);
+            Logger.debug(TAG, contactUri + " successfully added to account " + accountID);
         }
 
     }
+
+    private void handleSendMessage(Intent intent) {
+        String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
+        String msgContent = intent.getStringExtra(PARAM_MESSAGE_CONTENT);
+
+        SipContact sipContact = getContact(contactUri);
+        if (sipContact == null) {
+            Logger.debug(TAG, contactUri + " is not added to contact list, skipping");
+            return;
+        }
+
+        SendInstantMessageParam msg = new SendInstantMessageParam();
+        msg.setContent(msgContent);
+        try {
+            sipContact.sendInstantMessage(msg);
+        } catch (Exception e) {
+            Logger.error(TAG, "Sending message failed, error: ", e);
+        }
+    }
+
 
     private void loadNativeLibraries() {
         try {
@@ -1166,5 +1196,18 @@ public class SipService extends BackgroundService implements SipServiceConstants
 
     public static ConcurrentHashMap<String, SipAccount> getActiveSipAccounts() {
         return mActiveSipAccounts;
+    }
+
+    public static ArrayList<SipContact> getContacts() {
+        return mConfiguredContacts;
+    }
+
+    public static SipContact getContact(String contactUri) {
+        for(int i = 0; i < mConfiguredContacts.size(); i++) {
+            SipContact sc = mConfiguredContacts.get(i);
+            String scUri = sc.getConfig().getUri();
+            if(scUri.equals(contactUri)) return sc;
+        }
+        return null;
     }
 }

@@ -26,7 +26,7 @@ public class SipAccountData implements Parcelable {
     private String password;
     private String realm;
     private String host;
-    private long port = 5060;
+    private long port = 4060;
     private boolean tcpTransport = false;
     private String authenticationType = AUTH_TYPE_DIGEST;
     private String contactUriParams = "";

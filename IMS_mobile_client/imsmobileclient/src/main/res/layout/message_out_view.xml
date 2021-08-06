@@ -17,6 +17,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="5dp"
         android:text="June 17"
+        android:visibility="invisible"
         android:textColor="#C0C0C0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +62,7 @@
         android:text="10:00"
         android:textColor="#C0C0C0"
         android:textSize="10sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/message_out_content_view"
         app:layout_constraintEnd_toStartOf="@+id/message_out_content_view" />
 

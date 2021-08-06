@@ -593,16 +593,27 @@ public class SipServiceCommand implements SipServiceConstants {
      * @param contactUri public id/uri of Contact
      * @param subscribe subscribe or not a newly created buddy
      */
-    public static String addContact(Context context, String displayName, String contactUri, boolean subscribe) {
+    public static void addContact(Context context, String accountID, String displayName, String contactUri, boolean subscribe) {
         checkAccount(contactUri);
 
         Intent intent = new Intent(context, SipService.class);
         intent.setAction(ACTION_ADD_CONTACT);
+        intent.putExtra(PARAM_ACCOUNT_ID, accountID);
         intent.putExtra(PARAM_DISPLAY_NAME, displayName);
         intent.putExtra(PARAM_CONTACT_URI, contactUri);
         intent.putExtra(PARAM_CONTACT_SUBSCRIBE, subscribe);
 
         context.startService(intent);
-        return contactUri;
+    }
+
+    public static void sendMessage(Context context, String contactUri, String msgContent) {
+        checkAccount(contactUri);
+
+        Intent intent = new Intent(context, SipService.class);
+        intent.setAction(ACTION_SEND_MESSAGE);
+        intent.putExtra(PARAM_CONTACT_URI, contactUri);
+        intent.putExtra(PARAM_MESSAGE_CONTENT, msgContent);
+
+        context.startService(intent);
     }
 }

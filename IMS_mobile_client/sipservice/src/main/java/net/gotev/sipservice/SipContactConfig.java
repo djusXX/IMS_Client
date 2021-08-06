@@ -3,28 +3,21 @@ package net.gotev.sipservice;
 import org.pjsip.pjsua2.BuddyConfig;
 
 public class SipContactConfig extends BuddyConfig {
-    protected String uri;
-    protected boolean subscribe;
+    private String displayName;
 
     public SipContactConfig() {
         super();
     }
 
-    public SipContactConfig(String uri, boolean subscribe) {
-        super();
-        setUri(uri);
-        setSubscribe(subscribe);
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    @Override
-    public String getUri() {
-        return uri;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    @Override
-    public boolean getSubscribe() {
-        return subscribe;
-    }
+
 }
 
 

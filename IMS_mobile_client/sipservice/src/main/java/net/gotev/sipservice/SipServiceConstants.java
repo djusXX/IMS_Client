@@ -35,6 +35,7 @@ public interface SipServiceConstants {
     String ACTION_MAKE_DIRECT_CALL = "makeDirectCall";
     String ACTION_RECONNECT_CALL = "reconnectCall";
     String ACTION_ADD_CONTACT = "addContact";
+    String ACTION_SEND_MESSAGE = "sendMessage";
 
     /*
      * Generic Parameters
@@ -59,6 +60,7 @@ public interface SipServiceConstants {
     String PARAM_DIRECT_CALL_SIP_SERVER = "sipServer";
     String PARAM_CONTACT_URI = "contactUri";
     String PARAM_CONTACT_SUBSCRIBE = "contactSubscribe";
+    String PARAM_MESSAGE_CONTENT = "messageContent";
     String PARAM_PRESENCE_STATUS = "presenceStatus";
     String PARAM_PRESENCE_TEXT = "presenceText";
     String PARAM_PRESENCE_ACTIVITY_TYPE = "presenceActivityType";

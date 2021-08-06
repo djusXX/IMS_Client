@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -23,11 +24,14 @@ import com.example.ims_mobile_client.calls.OutgoingCallActivity;
 import com.example.ims_mobile_client.common.MessageType;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
+import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SharedPreferencesHelper;
+import net.gotev.sipservice.SipContact;
 import net.gotev.sipservice.SipMessage;
 import net.gotev.sipservice.SipService;
 import net.gotev.sipservice.SipServiceCommand;
 
+import org.pjsip.pjsua2.SendInstantMessageParam;
 import org.pjsip.pjsua2.pjsip_inv_state;
 
 import java.util.ArrayList;
@@ -37,14 +41,19 @@ import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 
 public class ConversationActivity extends AppCompatActivity {
+    private static final String TAG = ConversationActivity.class.getSimpleName();
+
     protected RecyclerView recyclerView;
     protected ConversationAdapter conversationAdapter;
     protected RecyclerView.LayoutManager layoutManager;
-    protected ArrayList<Message> messages;
+    protected ArrayList<Message> messages = new ArrayList<>();
     protected String accountID;
     protected String displayName;
     protected String contactUri;
     protected boolean isVideoCall;
+    protected SipContact currentContact;
+    protected EditText msgInput;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,11 +62,20 @@ public class ConversationActivity extends AppCompatActivity {
         accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
         displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
         contactUri = getIntent().getStringExtra(PARAM_CONTACT_URI);
-        initData();
+        msgInput = findViewById(R.id.message_input);
+//        currentContact = SipService.getContact(contactUri);
+
+//        initData();
 
         ((ImageButton) findViewById(R.id.send_button)).setOnClickListener(v -> {
-            SipMessage msg = new SipMessage();
-            // TODO: create and send Instant Message
+//            SendInstantMessageParam msg = new SendInstantMessageParam();
+            String msgContent = msgInput.getText().toString();
+
+
+            SipServiceCommand.sendMessage(this, contactUri, msgContent);
+            messages.add(new Message(msgContent, MessageType.OUT));
+            conversationAdapter.notifyDataSetChanged();
+            msgInput.setText("");
         });
 
 
@@ -140,6 +158,17 @@ public class ConversationActivity extends AppCompatActivity {
                 ConversationActivity.this.startActivity(intent);
                 finish();
             }
+        }
+
+        @Override
+        protected void onMessageReceived(String from, String to, String body) {
+            super.onMessageReceived(from, to, body);
+            if(!accountID.equals(to) || !contactUri.equals(from)) {
+                return;
+            }
+
+            messages.add(new Message(body,MessageType.IN));
+            conversationAdapter.notifyDataSetChanged();
         }
     };
 

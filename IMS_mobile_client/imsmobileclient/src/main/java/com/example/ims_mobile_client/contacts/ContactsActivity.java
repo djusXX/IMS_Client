@@ -12,31 +12,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
-
-import net.gotev.sipservice.Logger;
-import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipContact;
 import net.gotev.sipservice.SipService;
 import net.gotev.sipservice.SipServiceCommand;
 
-import java.time.Instant;
+import org.pjsip.pjsua2.BuddyVector2;
+
 import java.util.ArrayList;
 
 import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_SIP_CONTACTS_ARRAY;
 
 public class ContactsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ContactAdapter contactAdapter;
     protected RecyclerView.LayoutManager layoutManager;
-    public ArrayList<String> sipContacts = new ArrayList<>();
+    public ArrayList<SipContact> sipContacts = new ArrayList<>();
     protected String accountID;
     protected String displayName;
     protected CallEventsReceiver eventReceiver = new CallEventsReceiver() {
-        // TODO add emitter and receiver for onBuddyState
+        @Override
+        protected void onSipContactAdded(String contactUri, String displayName) {
+            super.onSipContactAdded(contactUri, displayName);
+            contactAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected void onSipContactState(String contactUri) {
+            super.onSipContactState(contactUri);
+
+        }
     };
-    static boolean firstStart = true;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,12 +52,8 @@ public class ContactsActivity extends AppCompatActivity {
         displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
         setTitle(displayName);
 
-        if (firstStart) {
-            initData();
-            firstStart = false;
-        } else {
-            sipContacts = getIntent().getStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY);
-        }
+        initData();
+
         eventReceiver.register(this);
 
         setContentView(R.layout.activity_contacts);
@@ -58,7 +61,7 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contacts_recycler_viewer);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        contactAdapter = new ContactAdapter(ContactsActivity.this, accountID, displayName, sipContacts);
+        contactAdapter = new ContactAdapter(ContactsActivity.this, accountID, displayName);
         recyclerView.setAdapter(contactAdapter);
     }
 
@@ -91,9 +94,8 @@ public class ContactsActivity extends AppCompatActivity {
             Intent intent = new Intent(ContactsActivity.this, AddContactActivity.class);
             intent.putExtra(PARAM_ACCOUNT_ID, accountID);
             intent.putExtra(PARAM_DISPLAY_NAME, displayName);
-            intent.putStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY, sipContacts);
             startActivity(intent);
-            finish();
+//            finish();
             return true;
         }
         if (R.id.contacts_menu_settings == id) {
@@ -108,23 +110,18 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        String contact_1 = SipServiceCommand.addContact(this, "Bob", "sip:bob@open-ims.test", true);
-        sipContacts.add(contact_1);
+        SipServiceCommand.addContact(this, accountID, "Bob", "sip:bob@open-ims.test", true);
+//        sipContacts.add(contact_1);
+//        sipContactDao.insert(new SipContactEntity(accountID, "Bob", "sip:bob@open-ims.test"));
 
-        contact_1 = SipServiceCommand.addContact(this, "Ela", "sip:ela@open-ims.test", true);
-        sipContacts.add(contact_1);
+//        SipServiceCommand.addContact(this, accountID, "Ela", "sip:ela@open-ims.test", true);
+//        sipContacts.add(contact_1);
+//        sipContactDao.insert(new SipContactEntity(accountID, "Ela", "sip:ela@open-ims.test"));
 
-        contact_1 = SipServiceCommand.addContact(this, "Gosia", "sip:gosia@open-ims.test", true);
-        sipContacts.add(contact_1);
+//        SipServiceCommand.addContact(this, accountID, "Gosia", "sip:gosia@open-ims.test", true);
+//        sipContacts.add(contact_1);
+//        sipContactDao.insert(new SipContactEntity(accountID, "Gosia", "sip:gosia@open-ims.test"));
     }
 
-    private void getContactsFromDB() {
-        // TODO get Contacts from application DB and add them to
-        //  contactHistory.add(dbContact);
-    }
-
-    private void getContacts() {
-
-    }
 
 }

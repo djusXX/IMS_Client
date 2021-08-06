@@ -22,7 +22,6 @@ import static net.gotev.sipservice.SipServiceConstants.*;
 public class AddContactActivity extends AppCompatActivity {
     String accountID;
     String userDisplayName;
-    protected ArrayList<String> sipContacts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class AddContactActivity extends AppCompatActivity {
         Button cancel = findViewById(R.id.add_contact_cancel);
         accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
         userDisplayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
-        sipContacts = getIntent().getStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY);
         setTitle(userDisplayName + " - Add contact");
 
 
@@ -47,13 +45,11 @@ public class AddContactActivity extends AppCompatActivity {
 
 
                 if(!contactName.isEmpty() || !contactSipUri.isEmpty()) {
-                    SipServiceCommand.addContact(AddContactActivity.this, contactName, contactSipUri, false);
-                    sipContacts.add(contactSipUri);
+                    SipServiceCommand.addContact(AddContactActivity.this, accountID, contactName, contactSipUri, false);
                 }
                 Intent intent = new Intent(AddContactActivity.this, ContactsActivity.class);
                 intent.putExtra(PARAM_ACCOUNT_ID, accountID);
                 intent.putExtra(PARAM_DISPLAY_NAME, userDisplayName);
-                intent.putStringArrayListExtra(PARAM_SIP_CONTACTS_ARRAY, sipContacts);
                 startActivity(intent);
                 finish();
             }

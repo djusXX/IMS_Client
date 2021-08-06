@@ -37,7 +37,9 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         VIDEO_SIZE,
         CALL_STATS,
         CALL_RECONNECTION_STATE,
-        CONTACT_PRESENCE_CHANGE
+        CONTACT_PRESENCE_CHANGE,
+        CONTACT_ADDED,
+        MESSAGE_RECEIVED;
     }
 
     public BroadcastEventEmitter(Context context) {
@@ -48,18 +50,36 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         return NAMESPACE + "." + action;
     }
 
-    public void onSipContactState(SipContactInfo sipContactInfo, PresenceStatus ps) {
+    public void sipContactState(SipContact sipContact) {
         final Intent intent = new Intent();
 
         intent.setAction(getAction(BroadcastAction.CONTACT_PRESENCE_CHANGE));
-        intent.putExtra(PARAM_CONTACT_URI, sipContactInfo.uri);
-        intent.putExtra(PARAM_PRESENCE_STATUS, ps.getStatus());
-        intent.putExtra(PARAM_PRESENCE_TEXT, ps.getStatusText());
-        intent.putExtra(PARAM_PRESENCE_ACTIVITY_TYPE, ps.getActivity());
-        intent.putExtra(PARAM_PRESENCE_NOTE, ps.getNote());
-        intent.putExtra(PARAM_PRESENCE_RPID_ID, ps.getRpidId());
+        intent.putExtra(PARAM_CONTACT_URI, sipContact.getConfig().getUri());
+        intent.putExtra(PARAM_DISPLAY_NAME, sipContact.getConfig().getDisplayName());
 
         sendExplicitBroadcast(intent);
+    }
+
+    public void addedContact(SipContact sipContact) {
+        final Intent intent = new Intent();
+
+        intent.setAction(getAction(BroadcastAction.CONTACT_ADDED));
+        intent.putExtra(PARAM_CONTACT_URI, sipContact.getConfig().getUri());
+        intent.putExtra(PARAM_DISPLAY_NAME, sipContact.getConfig().getDisplayName());
+
+        sendExplicitBroadcast(intent);
+    }
+
+    public void messageReceived(String from, String to, String body) {
+        final Intent intent = new Intent();
+
+        intent.setAction(getAction(BroadcastAction.MESSAGE_RECEIVED));
+        intent.putExtra(PARAM_CONTACT_URI, from);
+        intent.putExtra(PARAM_ACCOUNT_ID, to);
+        intent.putExtra(PARAM_MESSAGE_CONTENT, body);
+
+//        sendExplicitBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     public void onSipContactEvent(SipEvent e) {

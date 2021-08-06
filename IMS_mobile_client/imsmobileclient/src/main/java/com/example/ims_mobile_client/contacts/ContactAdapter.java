@@ -16,6 +16,7 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
 
 import net.gotev.sipservice.SipContact;
+import net.gotev.sipservice.SipService;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +30,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     Context context;
     String accountID;
     String displayName;
-    ArrayList<String> sipContactList = new ArrayList<>();
+    ArrayList<SipContact> sipContactList = new ArrayList<>();
 
 
     // class to hold the layout for one row (single contact) of contact list 
@@ -51,11 +52,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     }
     
-    public ContactAdapter(Context context, String accountID, String displayName, ArrayList<String> sipContacts) {
+    public ContactAdapter(Context context, String accountID, String displayName) {
         this.context = context;
         this.accountID = accountID;
         this.displayName = displayName;
-        this.sipContactList = sipContacts;
+        this.sipContactList = SipService.getContacts();
     }
 
     @NotNull
@@ -76,8 +77,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     @Override   // Fill holder with data
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String name = sipContactList.get(position);
-        holder.sipUri.setText(name);
+        SipContact contact = sipContactList.get(position);
+        holder.name.setText(contact.getConfig().getDisplayName());
+        holder.sipUri.setText(contact.getConfig().getUri());
     }
 
     @Override

@@ -21,6 +21,7 @@ import net.gotev.sipservice.BroadcastEventReceiver;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;
 
+import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.pjsip_status_code;
 
 
@@ -107,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         sipAccount.setHost(host);
         sipAccount.setPort(port);
 
-
+//        SipServiceCommand.setAccount(this, sipAccount);
         SipServiceCommand.getRegistrationStatus(this, sipAccount.getIdUri());
     }
 

@@ -2,9 +2,11 @@ package net.gotev.sipservice;
 
 import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.AccountConfig;
+import org.pjsip.pjsua2.BuddyConfig;
 import org.pjsip.pjsua2.CallInfo;
 import org.pjsip.pjsua2.CallOpParam;
 import org.pjsip.pjsua2.OnIncomingCallParam;
+import org.pjsip.pjsua2.OnInstantMessageParam;
 import org.pjsip.pjsua2.OnRegStateParam;
 import org.pjsip.pjsua2.pjsip_status_code;
 
@@ -111,6 +113,28 @@ public class SipAccount extends Account {
         return addOutgoingCall(numberToDial, false, false);
     }
 
+    public SipContact addSipContact(SipContactConfig sccfg) {
+        SipContact sipContact = new SipContact(service, sccfg);
+
+        try {
+            sipContact.create(this, sccfg);
+        } catch (Exception exc) {
+            Logger.error(LOG_TAG, "Error creating contact", exc);
+            sipContact.delete();
+            sipContact = null;
+        }
+
+        if (sipContact != null && sccfg.getSubscribe()) {
+            try {
+                sipContact.subscribePresence(true);
+            } catch (Exception exc) {
+                Logger.error(LOG_TAG, "Error subscribing contact's presence", exc);
+            }
+        }
+
+        return sipContact;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -130,6 +154,37 @@ public class SipAccount extends Account {
     @Override
     public void onRegState(OnRegStateParam prm) {
         service.getBroadcastEmitter().registrationState(data.getIdUri(), prm.getCode());
+    }
+
+    @Override
+    public void onInstantMessage(OnInstantMessageParam prm)
+    {
+        String from = prm.getFromUri().substring(1, prm.getFromUri().length() - 1);
+        String to = prm.getToUri().substring(1, prm.getToUri().length() - 1);
+        String contentType = prm.getContentType();
+        String body = prm.getMsgBody();
+        Logger.debug(LOG_TAG,"======== Incoming Message ======== ");
+        Logger.debug(LOG_TAG,"From     : " + from);
+        Logger.debug(LOG_TAG,"To       : " + to);
+        Logger.debug(LOG_TAG,"Mimetype : " + contentType);
+        Logger.debug(LOG_TAG,"Body     : " + body);
+
+        SipContact sipContact = SipService.getContact(from);
+        if(null == sipContact) {
+            Logger.debug(LOG_TAG, "Contact not in contact list, skipping.");
+            return;
+        }
+        if(!contentType.equals("text/plain")) {
+            Logger.debug(LOG_TAG, "Wrong message type, skipping.");
+            return;
+        }
+
+        if(!data.getIdUri().equals(to)) {
+            Logger.debug(LOG_TAG, "Wrong message received, skipping.");
+            return;
+        }
+
+        service.getBroadcastEmitter().messageReceived(from, to, body);
     }
 
     @Override
