@@ -116,6 +116,9 @@ public class SipAccount extends Account {
     public SipContact addSipContact(SipContactConfig sccfg) {
         SipContact sipContact = new SipContact(service, sccfg);
 
+
+
+
         try {
             sipContact.create(this, sccfg);
         } catch (Exception exc) {

@@ -621,6 +621,8 @@ public class SipService extends BackgroundService implements SipServiceConstants
         String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
         boolean subscribe = intent.getBooleanExtra(PARAM_CONTACT_SUBSCRIBE, true);
 
+        startStack();
+
         SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
         if (loggedAcc == null) {
             Logger.debug(TAG, accountID + " is not active (logged in), skipping");
@@ -706,7 +708,10 @@ public class SipService extends BackgroundService implements SipServiceConstants
             epConfig.getMedConfig().setEcOptions(1);
             epConfig.getMedConfig().setEcTailLen(200);
             epConfig.getMedConfig().setThreadCnt(2);
+
+
             mEndpoint.libInit(epConfig);
+
 
             TransportConfig udpTransport = new TransportConfig();
             udpTransport.setQosType(pj_qos_type.PJ_QOS_TYPE_VOICE);

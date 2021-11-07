@@ -83,6 +83,7 @@ public class BroadcastEventEmitter implements SipServiceConstants {
     }
 
     public void onSipContactEvent(SipEvent e) {
+
     }
 
     /**

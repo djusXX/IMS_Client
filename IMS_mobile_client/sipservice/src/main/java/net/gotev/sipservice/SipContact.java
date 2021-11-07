@@ -22,16 +22,6 @@ public class SipContact extends Buddy {
 
     public SipContactConfig getConfig() { return cfg; }
 
-    public void sendMessage(SipMessage msg) throws Exception {
-        SendInstantMessageParam prm = new SendInstantMessageParam();
-        prm.setContentType(msg.type);
-        prm.setContent(msg.content);
-        prm.setTxOption(msg.txOption);
-        prm.setUserData(msg.userData);
-        sendInstantMessage(prm);
-
-    }
-
     @Override
     public void onBuddyState() {
         Logger.debug(LOG_TAG, "called onBuddyState() of " + cfg.getUri());
@@ -40,7 +30,9 @@ public class SipContact extends Buddy {
 
     @Override
     public void onBuddyEvSubState(OnBuddyEvSubStateParam prm) {
-        Logger.debug(LOG_TAG, "called onBuddyEvSubState() of " + cfg.getUri() + ", event:" + prm.getE());
+        Logger.debug(LOG_TAG, "called onBuddyEvSubState() of " + cfg.getUri() + ", event type: " + prm.getE().getType());
+        Logger.debug(LOG_TAG, "whole message: " + prm.getE().getBody().getTxMsg().getTdata().getWholeMsg());
+
         service.getBroadcastEmitter().onSipContactEvent(prm.getE());
     }
 

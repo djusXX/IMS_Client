@@ -244,12 +244,14 @@ public class SipAccountData implements Parcelable {
         accountConfig.getRegConfig().setRegistrarUri(getRegistrarUri());
         accountConfig.getRegConfig().setTimeoutSec(regExpirationTimeout);
 
-//        accountConfig.get
+
 
         // account sip stuff configs
         accountConfig.getSipConfig().getAuthCreds().add(getIMSAuthCredInfo());
         accountConfig.getSipConfig().getProxies().add(getProxyUri());
         accountConfig.getSipConfig().setContactUriParams(contactUriParams);
+        accountConfig.getPresConfig().setPublishEnabled(true);
+        accountConfig.getPresConfig().setPublishQueue(true);
 
         // nat configs to allow call reconnection across networks
         accountConfig.getNatConfig().setSdpNatRewriteUse(pj_constants_.PJ_TRUE);
