@@ -1,8 +1,6 @@
 package net.gotev.sipservice;
 
 import org.pjsip.pjsua2.Account;
-import org.pjsip.pjsua2.AccountConfig;
-import org.pjsip.pjsua2.BuddyConfig;
 import org.pjsip.pjsua2.CallInfo;
 import org.pjsip.pjsua2.CallOpParam;
 import org.pjsip.pjsua2.OnIncomingCallParam;
@@ -113,29 +111,26 @@ public class SipAccount extends Account {
         return addOutgoingCall(numberToDial, false, false);
     }
 
-    public SipContact addSipContact(SipContactConfig sccfg) {
-        SipContact sipContact = new SipContact(service, sccfg);
+    public SipBuddy addSipContact(SipBuddyData sccfg) {
+        SipBuddy sipBuddy = new SipBuddy(service, sccfg);
 
+//        try {
+//            sipBuddy.create(this, sccfg);
+//        } catch (Exception exc) {
+//            Logger.error(LOG_TAG, "Error creating contact", exc);
+//            sipBuddy.delete();
+//            sipBuddy = null;
+//        }
+//
+//        if (sipBuddy != null && sccfg.getSubscribe()) {
+//            try {
+//                sipBuddy.subscribePresence(true);
+//            } catch (Exception exc) {
+//                Logger.error(LOG_TAG, "Error subscribing contact's presence", exc);
+//            }
+//        }
 
-
-
-        try {
-            sipContact.create(this, sccfg);
-        } catch (Exception exc) {
-            Logger.error(LOG_TAG, "Error creating contact", exc);
-            sipContact.delete();
-            sipContact = null;
-        }
-
-        if (sipContact != null && sccfg.getSubscribe()) {
-            try {
-                sipContact.subscribePresence(true);
-            } catch (Exception exc) {
-                Logger.error(LOG_TAG, "Error subscribing contact's presence", exc);
-            }
-        }
-
-        return sipContact;
+        return sipBuddy;
     }
 
     @Override
@@ -172,7 +167,7 @@ public class SipAccount extends Account {
         Logger.debug(LOG_TAG,"Mimetype : " + contentType);
         Logger.debug(LOG_TAG,"Body     : " + body);
 
-//        SipContact sipContact = SipService.getContact(from);
+//        SipBuddy sipContact = SipService.getContact(from);
 //        if(null == sipContact) {
 //            Logger.debug(LOG_TAG, "Contact not in contact list, skipping.");
 //            return;

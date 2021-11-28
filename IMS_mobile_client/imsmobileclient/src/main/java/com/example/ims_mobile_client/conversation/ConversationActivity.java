@@ -1,14 +1,9 @@
 package com.example.ims_mobile_client.conversation;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -18,20 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.calls.ActiveCallActivity;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
 import com.example.ims_mobile_client.calls.OutgoingCallActivity;
 import com.example.ims_mobile_client.common.MessageType;
 
-import net.gotev.sipservice.BroadcastEventReceiver;
-import net.gotev.sipservice.Logger;
-import net.gotev.sipservice.SharedPreferencesHelper;
-import net.gotev.sipservice.SipContact;
-import net.gotev.sipservice.SipMessage;
-import net.gotev.sipservice.SipService;
+import net.gotev.sipservice.SipBuddy;
 import net.gotev.sipservice.SipServiceCommand;
 
-import org.pjsip.pjsua2.SendInstantMessageParam;
 import org.pjsip.pjsua2.pjsip_inv_state;
 
 import java.util.ArrayList;
@@ -51,7 +39,7 @@ public class ConversationActivity extends AppCompatActivity {
     protected String displayName;
     protected String contactUri;
     protected boolean isVideoCall;
-    protected SipContact currentContact;
+    protected SipBuddy currentContact;
     protected EditText msgInput;
 
 

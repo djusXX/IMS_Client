@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
-import org.pjsip.pjsua2.PresenceStatus;
+import org.pjsip.pjsua2.OnBuddyEvSubStateParam;
 import org.pjsip.pjsua2.SipEvent;
 
 import java.util.ArrayList;
@@ -50,22 +50,22 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         return NAMESPACE + "." + action;
     }
 
-    public void sipContactState(SipContact sipContact) {
+    public void buddyState(SipBuddy sipBuddy) {
         final Intent intent = new Intent();
 
         intent.setAction(getAction(BroadcastAction.CONTACT_PRESENCE_CHANGE));
-        intent.putExtra(PARAM_CONTACT_URI, sipContact.getConfig().getUri());
-        intent.putExtra(PARAM_DISPLAY_NAME, sipContact.getConfig().getDisplayName());
+        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getUri());
+        intent.putExtra(PARAM_DISPLAY_NAME, sipBuddy.getData().getDisplayName());
 
         sendExplicitBroadcast(intent);
     }
 
-    public void addedContact(SipContact sipContact) {
+    public void addedContact(SipBuddy sipBuddy) {
         final Intent intent = new Intent();
 
         intent.setAction(getAction(BroadcastAction.CONTACT_ADDED));
-        intent.putExtra(PARAM_CONTACT_URI, sipContact.getConfig().getUri());
-        intent.putExtra(PARAM_DISPLAY_NAME, sipContact.getConfig().getDisplayName());
+        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getUri());
+        intent.putExtra(PARAM_DISPLAY_NAME, sipBuddy.getData().getDisplayName());
 
         sendExplicitBroadcast(intent);
     }
@@ -82,8 +82,8 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         mContext.sendBroadcast(intent);
     }
 
-    public void onSipContactEvent(SipEvent e) {
-
+    public void buddySubscriptionState(SipBuddy buddy, OnBuddyEvSubStateParam e) {
+//        TODO: implement!!!!!!!!!!!!!!
     }
 
     /**

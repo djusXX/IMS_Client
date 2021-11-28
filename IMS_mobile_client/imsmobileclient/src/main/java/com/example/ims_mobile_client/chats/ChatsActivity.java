@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
-import net.gotev.sipservice.SipContact;
+import net.gotev.sipservice.SipBuddy;
 import net.gotev.sipservice.SipServiceCommand;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ChatsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ChatsAdapter chatsAdapter;
     protected RecyclerView.LayoutManager layoutManager;
-    public ArrayList<SipContact> sipContacts = new ArrayList<>();
+    public ArrayList<SipBuddy> sipBuddies = new ArrayList<>();
     protected String accountID;
     protected String displayName;
     protected CallEventsReceiver eventReceiver = new CallEventsReceiver() {
@@ -60,7 +60,7 @@ public class ChatsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.chats_recycler_viewer);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        chatsAdapter = new ChatsAdapter(ChatsActivity.this, accountID, displayName, sipContacts);
+        chatsAdapter = new ChatsAdapter(ChatsActivity.this, accountID, displayName, sipBuddies);
         recyclerView.setAdapter(chatsAdapter);
     }
 
@@ -111,15 +111,15 @@ public class ChatsActivity extends AppCompatActivity {
 
     private void initData() {
         SipServiceCommand.addContact(this, accountID, "Bob", "sip:bob@open-ims.test", true);
-//        sipContacts.start(contact_1);
+//        sipBuddies.start(contact_1);
 //        sipContactDao.insert(new SipContactEntity(accountID, "Bob", "sip:bob@open-ims.test"));
 
 //        SipServiceCommand.addContact(this, accountID, "Ela", "sip:ela@open-ims.test", true);
-//        sipContacts.start(contact_1);
+//        sipBuddies.start(contact_1);
 //        sipContactDao.insert(new SipContactEntity(accountID, "Ela", "sip:ela@open-ims.test"));
 
 //        SipServiceCommand.addContact(this, accountID, "Gosia", "sip:gosia@open-ims.test", true);
-//        sipContacts.start(contact_1);
+//        sipBuddies.start(contact_1);
 //        sipContactDao.insert(new SipContactEntity(accountID, "Gosia", "sip:gosia@open-ims.test"));
     }
 
