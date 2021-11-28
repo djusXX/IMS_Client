@@ -147,6 +147,10 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
     public void onRegistration(String accountID, int registrationStateCode) {
         Logger.debug(LOG_TAG, "onRegistration - accountID: " + accountID +
                 ", registrationStateCode: " + registrationStateCode);
+//        Logger.debug(LOG_TAG, "accountID: [" + accountID +
+//                "], accountID.length: [" + accountID.length() +
+//                "], accountID.isEmpty: [" + accountID.isEmpty() + "]");
+
     }
 
     public void onIncomingCall(String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {

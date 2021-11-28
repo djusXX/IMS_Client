@@ -48,9 +48,9 @@ public class SipService extends BackgroundService implements SipServiceConstants
     private static final String TAG = SipService.class.getSimpleName();
 
     private List<SipAccountData> mConfiguredAccounts = new ArrayList<>();
-    private static ArrayList<SipContact> mConfiguredContacts = new ArrayList<>();
+//    private static ArrayList<SipContact> mConfiguredContacts = new ArrayList<>();
     private SipAccountData mConfiguredGuestAccount;
-    private static final ConcurrentHashMap<String, SipAccount> mActiveSipAccounts = new ConcurrentHashMap<>(); // TODO: maybe add same map for active subscriptions????
+    private static final ConcurrentHashMap<String, SipAccount> mActiveSipAccounts = new ConcurrentHashMap<>();
     private BroadcastEventEmitter mBroadcastEmitter;
     private Endpoint mEndpoint;
     private SharedPreferencesHelper mSharedPreferencesHelper;
@@ -188,6 +188,8 @@ public class SipService extends BackgroundService implements SipServiceConstants
                     case ACTION_SEND_MESSAGE:
                         handleSendMessage(intent);
                         break;
+                    case ACTION_GET_CONTACTS:
+                        handleGetContacts(intent);
                     default: break;
                 }
 
@@ -198,7 +200,6 @@ public class SipService extends BackgroundService implements SipServiceConstants
             }
         });
 
-//        return START_STICKY;
         return START_NOT_STICKY;
     }
 
@@ -209,7 +210,6 @@ public class SipService extends BackgroundService implements SipServiceConstants
             public void run() {
                 Logger.debug(TAG, "Destroying SipService");
                 stopStack();
-//                stopSelf();
             }
         });
         super.onDestroy();
@@ -604,7 +604,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
             Logger.debug(TAG, "Reconfiguring " + data.getIdUri());
 
             try {
-//                removeAccount(data.getIdUri());
+                removeAccount(data.getIdUri());
                 handleSetCodecPriorities(intent);
                 addAccount(data);
                 mConfiguredAccounts.set(index, data);
@@ -634,7 +634,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
         sccfg.setSubscribe(subscribe);
         SipContact contact = loggedAcc.addSipContact(sccfg);
         if (contact != null) {
-            mConfiguredContacts.add(contact);
+//            mConfiguredContacts.start(contact);
             mBroadcastEmitter.addedContact(contact);
             Logger.debug(TAG, contactUri + " successfully added to account " + accountID);
         }
@@ -645,19 +645,19 @@ public class SipService extends BackgroundService implements SipServiceConstants
         String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
         String msgContent = intent.getStringExtra(PARAM_MESSAGE_CONTENT);
 
-        SipContact sipContact = getContact(contactUri);
-        if (sipContact == null) {
-            Logger.debug(TAG, contactUri + " is not added to contact list, skipping");
-            return;
-        }
-
-        SendInstantMessageParam msg = new SendInstantMessageParam();
-        msg.setContent(msgContent);
-        try {
-            sipContact.sendInstantMessage(msg);
-        } catch (Exception e) {
-            Logger.error(TAG, "Sending message failed, error: ", e);
-        }
+//        SipContact sipContact = getContact(contactUri);
+//        if (sipContact == null) {
+//            Logger.debug(TAG, contactUri + " is not added to contact list, skipping");
+//            return;
+//        }
+//
+//        SendInstantMessageParam msg = new SendInstantMessageParam();
+//        msg.setContent(msgContent);
+//        try {
+//            sipContact.sendInstantMessage(msg);
+//        } catch (Exception e) {
+//            Logger.error(TAG, "Sending message failed, error: ", e);
+//        }
     }
 
 
@@ -702,6 +702,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
             EpConfig epConfig = new EpConfig();
             epConfig.getUaConfig().setUserAgent(AGENT_NAME);
             epConfig.getUaConfig().setMaxCalls(32);
+//            epConfig.getUaConfig().setThreadCnt(0);
             epConfig.getMedConfig().setHasIoqueue(true);
             epConfig.getMedConfig().setClockRate(16000);
             epConfig.getMedConfig().setQuality(10);
@@ -933,7 +934,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
 
     /**
      * Adds a new SIP Account and performs initial registration.
-     * @param account SIP account to add
+     * @param account SIP account to start
      */
     private void addAccount(SipAccountData account) throws Exception {
         String accountString = account.getIdUri();
@@ -1203,16 +1204,32 @@ public class SipService extends BackgroundService implements SipServiceConstants
         return mActiveSipAccounts;
     }
 
-    public static ArrayList<SipContact> getContacts() {
-        return mConfiguredContacts;
+    private void handleGetContacts(Intent intent) {
+        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
+
+        SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
+        if (loggedAcc == null) {
+            Logger.debug(TAG, accountID + " is not active (logged in), skipping");
+            return;
+        }
+
+        try {
+            BuddyVector2 buddyList = loggedAcc.enumBuddies2();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static SipContact getContact(String contactUri) {
-        for(int i = 0; i < mConfiguredContacts.size(); i++) {
-            SipContact sc = mConfiguredContacts.get(i);
-            String scUri = sc.getConfig().getUri();
-            if(scUri.equals(contactUri)) return sc;
-        }
-        return null;
-    }
+//    public static ArrayList<SipContact> getContacts() {
+//        return mConfiguredContacts;
+//    }
+
+//    public static SipContact getContact(String contactUri) {
+//        for(int i = 0; i < mConfiguredContacts.size(); i++) {
+//            SipContact sc = mConfiguredContacts.get(i);
+//            String scUri = sc.getConfig().getUri();
+//            if(scUri.equals(contactUri)) return sc;
+//        }
+//        return null;
+//    }
 }

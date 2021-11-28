@@ -1,6 +1,5 @@
-package com.example.ims_mobile_client.contacts;
+package com.example.ims_mobile_client.chats;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,16 +9,13 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.conversation.ConversationActivity;
 
-import net.gotev.sipservice.SipContact;
 import net.gotev.sipservice.SipServiceCommand;
-
-import java.time.Instant;
-import java.util.ArrayList;
 
 import static net.gotev.sipservice.SipServiceConstants.*;
 
-public class AddContactActivity extends AppCompatActivity {
+public class NewChatActivity extends AppCompatActivity {
     String accountID;
     String userDisplayName;
 
@@ -27,14 +23,14 @@ public class AddContactActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add_contact);
-        EditText displayName = findViewById(R.id.add_contact_display_name);
-        EditText sipUri = findViewById(R.id.add_contact_sip_uri);
-        Button add = findViewById(R.id.add_contact_add);
-        Button cancel = findViewById(R.id.add_contact_cancel);
+        setContentView(R.layout.activity_new_chat);
+        EditText displayName = findViewById(R.id.new_chat_display_name);
+        EditText sipUri = findViewById(R.id.new_chat_sip_uri);
+        Button add = findViewById(R.id.new_chat_add);
+        Button cancel = findViewById(R.id.new_chat_cancel);
         accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
         userDisplayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
-        setTitle(userDisplayName + " - Add contact");
+        setTitle(userDisplayName + " - new chat ");
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -45,11 +41,12 @@ public class AddContactActivity extends AppCompatActivity {
 
 
                 if(!contactName.isEmpty() || !contactSipUri.isEmpty()) {
-                    SipServiceCommand.addContact(AddContactActivity.this, accountID, contactName, contactSipUri, false);
+                    SipServiceCommand.addContact(NewChatActivity.this, accountID, contactName, contactSipUri, true);
                 }
-                Intent intent = new Intent(AddContactActivity.this, ContactsActivity.class);
+                Intent intent = new Intent(NewChatActivity.this, ConversationActivity.class);
                 intent.putExtra(PARAM_ACCOUNT_ID, accountID);
                 intent.putExtra(PARAM_DISPLAY_NAME, userDisplayName);
+                intent.putExtra(PARAM_CONTACT_URI, contactSipUri);
                 startActivity(intent);
                 finish();
             }

@@ -36,6 +36,7 @@ public interface SipServiceConstants {
     String ACTION_RECONNECT_CALL = "reconnectCall";
     String ACTION_ADD_CONTACT = "addContact";
     String ACTION_SEND_MESSAGE = "sendMessage";
+    String ACTION_GET_CONTACTS = "getContacts";
 
     /*
      * Generic Parameters
@@ -67,6 +68,7 @@ public interface SipServiceConstants {
     String PARAM_PRESENCE_NOTE = "presenceNote";
     String PARAM_PRESENCE_RPID_ID = "presenceRpidId";
     String PARAM_SIP_CONTACTS_ARRAY = "sipContactsArray";
+
 
     /**
      * Specific Parameters passed in the broadcast intents.

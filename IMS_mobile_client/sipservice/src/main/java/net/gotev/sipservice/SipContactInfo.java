@@ -17,6 +17,6 @@ public class SipContactInfo extends BuddyInfo {
         super();
     }
 
-    // TODO: add getters/setters
+    // TODO: start getters/setters
 
 }

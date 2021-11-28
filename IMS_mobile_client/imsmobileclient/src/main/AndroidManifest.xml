@@ -39,8 +39,8 @@
         <activity android:name=".calls.OutgoingCallActivity" />
         <activity android:name=".calls.IncomingCallActivity" />
 
-        <activity android:name=".contacts.ContactsActivity" />
-        <activity android:name=".contacts.AddContactActivity" />
+        <activity android:name=".chats.ChatsActivity" />
+        <activity android:name=".chats.NewChatActivity" />
 
         <activity android:name=".conversation.ConversationActivity" />
     </application>

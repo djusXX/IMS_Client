@@ -9,12 +9,12 @@
 <!--        app:actionViewClass="android.widget.SearchView"-->
 <!--        app:showAsAction="always" />-->
     <item
-        android:id="@+id/contacts_menu_add_contact"
+        android:id="@+id/chats_menu_new_chat"
         android:icon="@drawable/ic_baseline_add_24"
         android:title="Add Contact"
         app:showAsAction="always" />
     <item
-        android:id="@+id/contacts_menu_settings"
+        android:id="@+id/chats_menu_settings"
         android:title="Settings" />
 <!--    <item-->
 <!--        android:id="@+id/contacts_menu_log_out"-->

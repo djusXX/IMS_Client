@@ -1,11 +1,10 @@
-package com.example.ims_mobile_client.contacts;
+package com.example.ims_mobile_client.chats;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +15,7 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
 
 import net.gotev.sipservice.SipContact;
-import net.gotev.sipservice.SipService;
+import net.gotev.sipservice.SipServiceCommand;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +25,7 @@ import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
     Context context;
     String accountID;
     String displayName;
@@ -52,18 +51,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     }
     
-    public ContactAdapter(Context context, String accountID, String displayName) {
+    public ChatsAdapter(Context context, String accountID, String displayName, ArrayList<SipContact> sipContactList) {
         this.context = context;
         this.accountID = accountID;
         this.displayName = displayName;
-        this.sipContactList = SipService.getContacts();
+        this.sipContactList = sipContactList;
     }
 
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create view from core layout and data
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_chat, parent, false);
         v.setOnClickListener(view -> {
             Intent intent = new Intent(context, ConversationActivity.class);
             intent.putExtra(PARAM_ACCOUNT_ID, accountID);
@@ -86,4 +85,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public int getItemCount() {
         return sipContactList.size();
     }
+
+    public void addContactToList() {}
 }

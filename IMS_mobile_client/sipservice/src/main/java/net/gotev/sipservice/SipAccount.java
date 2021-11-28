@@ -172,11 +172,11 @@ public class SipAccount extends Account {
         Logger.debug(LOG_TAG,"Mimetype : " + contentType);
         Logger.debug(LOG_TAG,"Body     : " + body);
 
-        SipContact sipContact = SipService.getContact(from);
-        if(null == sipContact) {
-            Logger.debug(LOG_TAG, "Contact not in contact list, skipping.");
-            return;
-        }
+//        SipContact sipContact = SipService.getContact(from);
+//        if(null == sipContact) {
+//            Logger.debug(LOG_TAG, "Contact not in contact list, skipping.");
+//            return;
+//        }
         if(!contentType.equals("text/plain")) {
             Logger.debug(LOG_TAG, "Wrong message type, skipping.");
             return;

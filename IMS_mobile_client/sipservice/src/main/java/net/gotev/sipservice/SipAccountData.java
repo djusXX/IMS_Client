@@ -250,6 +250,7 @@ public class SipAccountData implements Parcelable {
         accountConfig.getSipConfig().getAuthCreds().add(getIMSAuthCredInfo());
         accountConfig.getSipConfig().getProxies().add(getProxyUri());
         accountConfig.getSipConfig().setContactUriParams(contactUriParams);
+        accountConfig.getSipConfig().setAuthInitialEmpty(true);
         accountConfig.getPresConfig().setPublishEnabled(true);
         accountConfig.getPresConfig().setPublishQueue(true);
 
