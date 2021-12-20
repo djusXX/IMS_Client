@@ -82,9 +82,7 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
         } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.CALL_RECONNECTION_STATE).equals(action)) {
             onCallReconnectionState((CallReconnectionState) intent.getSerializableExtra(PARAM_CALL_RECONNECTION_STATE));
         } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.CONTACT_PRESENCE_CHANGE).equals(action)) {
-            onSipContactState(intent.getStringExtra(PARAM_CONTACT_URI));
-        } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.CONTACT_ADDED).equals(action)) {
-            onSipContactAdded(intent.getStringExtra(PARAM_CONTACT_URI), intent.getStringExtra(PARAM_DISPLAY_NAME));
+            onBuddyState(intent.getStringExtra(PARAM_CONTACT_URI));
         } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.MESSAGE_RECEIVED).equals(action)) {
             onMessageReceived(intent.getStringExtra(PARAM_CONTACT_URI), intent.getStringExtra(PARAM_ACCOUNT_ID), intent.getStringExtra(PARAM_MESSAGE_CONTENT));
         }
@@ -127,8 +125,6 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
                 BroadcastEventEmitter.BroadcastAction.CALL_RECONNECTION_STATE));
         intentFilter.addAction(BroadcastEventEmitter.getAction(
                 BroadcastEventEmitter.BroadcastAction.CONTACT_PRESENCE_CHANGE));
-        intentFilter.addAction(BroadcastEventEmitter.getAction(
-                BroadcastEventEmitter.BroadcastAction.CONTACT_ADDED));
         intentFilter.addAction(BroadcastEventEmitter.getAction(
                 BroadcastEventEmitter.BroadcastAction.MESSAGE_RECEIVED));
         context.registerReceiver(this, intentFilter);
@@ -209,12 +205,8 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
         Logger.debug(LOG_TAG, "Call reconnection state " + state.name());
     }
 
-    protected void onSipContactState(String contactUri) {
-        Logger.debug(LOG_TAG, "Call sip contact state for contact: " + contactUri);
-    }
-
-    protected void onSipContactAdded(String contactUri, String displayName) {
-        Logger.debug(LOG_TAG, "Added contact: " + displayName + ", uri:" + contactUri);
+    protected void onBuddyState(String contactUri) {
+        Logger.debug(LOG_TAG, "State changed for :" + contactUri);
     }
 
     protected void onMessageReceived(String from, String to, String body) {

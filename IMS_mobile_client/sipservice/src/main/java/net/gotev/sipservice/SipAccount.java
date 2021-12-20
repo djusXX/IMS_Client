@@ -111,28 +111,6 @@ public class SipAccount extends Account {
         return addOutgoingCall(numberToDial, false, false);
     }
 
-    public SipBuddy addSipContact(SipBuddyData sccfg) {
-        SipBuddy sipBuddy = new SipBuddy(service, sccfg);
-
-//        try {
-//            sipBuddy.create(this, sccfg);
-//        } catch (Exception exc) {
-//            Logger.error(LOG_TAG, "Error creating contact", exc);
-//            sipBuddy.delete();
-//            sipBuddy = null;
-//        }
-//
-//        if (sipBuddy != null && sccfg.getSubscribe()) {
-//            try {
-//                sipBuddy.subscribePresence(true);
-//            } catch (Exception exc) {
-//                Logger.error(LOG_TAG, "Error subscribing contact's presence", exc);
-//            }
-//        }
-
-        return sipBuddy;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

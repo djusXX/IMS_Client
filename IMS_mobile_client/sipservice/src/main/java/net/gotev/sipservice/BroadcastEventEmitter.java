@@ -38,7 +38,6 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         CALL_STATS,
         CALL_RECONNECTION_STATE,
         CONTACT_PRESENCE_CHANGE,
-        CONTACT_ADDED,
         MESSAGE_RECEIVED;
     }
 
@@ -54,20 +53,15 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         final Intent intent = new Intent();
 
         intent.setAction(getAction(BroadcastAction.CONTACT_PRESENCE_CHANGE));
-        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getUri());
+        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getSipUri());
         intent.putExtra(PARAM_DISPLAY_NAME, sipBuddy.getData().getDisplayName());
 
-        sendExplicitBroadcast(intent);
+//        sendExplicitBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
-    public void addedContact(SipBuddy sipBuddy) {
-        final Intent intent = new Intent();
-
-        intent.setAction(getAction(BroadcastAction.CONTACT_ADDED));
-        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getUri());
-        intent.putExtra(PARAM_DISPLAY_NAME, sipBuddy.getData().getDisplayName());
-
-        sendExplicitBroadcast(intent);
+    public void buddySubscriptionState(SipBuddy buddy, OnBuddyEvSubStateParam e) {
+//        TODO: implement!!!!!!!!!!!!!!
     }
 
     public void messageReceived(String from, String to, String body) {
@@ -80,10 +74,6 @@ public class BroadcastEventEmitter implements SipServiceConstants {
 
 //        sendExplicitBroadcast(intent);
         mContext.sendBroadcast(intent);
-    }
-
-    public void buddySubscriptionState(SipBuddy buddy, OnBuddyEvSubStateParam e) {
-//        TODO: implement!!!!!!!!!!!!!!
     }
 
     /**

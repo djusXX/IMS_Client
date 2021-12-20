@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.Surface;
 
-import org.pjsip.pjsua2.Account;
-import org.pjsip.pjsua2.BuddyConfig;
-
 import java.util.ArrayList;
 
 /**
@@ -585,25 +582,35 @@ public class SipServiceCommand implements SipServiceConstants {
         context.startService(intent);
     }
 
+
+/**************************************   new methods   ********************************************/
+
+
     /**
      * Create Buddy reference and subscribe for presence status.
      *
      * @param context application context
-     * @param displayName Contact's display name
-     * @param contactUri public id/uri of Contact
-     * @param subscribe subscribe or not a newly created buddy
+     * @param accountID sip URI of local user
+     * @param buddyData data used to create Buddy
+     *
+     * @return sip URI to identify Buddy
      */
-    public static void addContact(Context context, String accountID, String displayName, String contactUri, boolean subscribe) {
-        checkAccount(contactUri);
+    public static String addBuddy(Context context, String accountID, SipBuddyData buddyData) {
+        if (buddyData == null) {
+            throw new IllegalArgumentException("buddyData MUST not be null!");
+        }
+
+        String buddyUri = buddyData.getSipUri();
+        checkAccount(buddyUri);
+        checkAccount(accountID);
 
         Intent intent = new Intent(context, SipService.class);
-        intent.setAction(ACTION_ADD_CONTACT);
+        intent.setAction(ACTION_ADD_BUDDY);
         intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-        intent.putExtra(PARAM_DISPLAY_NAME, displayName);
-        intent.putExtra(PARAM_CONTACT_URI, contactUri);
-        intent.putExtra(PARAM_CONTACT_SUBSCRIBE, subscribe);
-
+        intent.putExtra(PARAM_BUDDY_DATA, buddyData);
         context.startService(intent);
+
+        return buddyUri;
     }
 
     public static void sendMessage(Context context, String contactUri, String msgContent) {

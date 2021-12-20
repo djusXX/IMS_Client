@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
 
+import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 
 import static net.gotev.sipservice.SipServiceConstants.*;
@@ -41,7 +42,10 @@ public class NewChatActivity extends AppCompatActivity {
 
 
                 if(!contactName.isEmpty() || !contactSipUri.isEmpty()) {
-                    SipServiceCommand.addContact(NewChatActivity.this, accountID, contactName, contactSipUri, true);
+                    SipBuddyData buddyData = new SipBuddyData();
+                    buddyData.setDisplayName(contactName);
+                    buddyData.setSipUri(contactSipUri);
+                    SipServiceCommand.addBuddy(NewChatActivity.this, accountID, buddyData);
                 }
                 Intent intent = new Intent(NewChatActivity.this, ConversationActivity.class);
                 intent.putExtra(PARAM_ACCOUNT_ID, accountID);

@@ -28,15 +28,8 @@ public class ChatsActivity extends AppCompatActivity {
     protected String displayName;
     protected CallEventsReceiver eventReceiver = new CallEventsReceiver() {
         @Override
-        protected void onSipContactAdded(String contactUri, String displayName) {
-            super.onSipContactAdded(contactUri, displayName);
-
-            chatsAdapter.notifyDataSetChanged();
-        }
-
-        @Override
-        protected void onSipContactState(String contactUri) {
-            super.onSipContactState(contactUri);
+        protected void onBuddyState(String contactUri) {
+            super.onBuddyState(contactUri);
 
         }
     };
@@ -110,7 +103,7 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        SipServiceCommand.addContact(this, accountID, "Bob", "sip:bob@open-ims.test", true);
+//        SipServiceCommand.addBuddy(this, accountID, "Bob", "sip:bob@open-ims.test", true);
 //        sipBuddies.start(contact_1);
 //        sipContactDao.insert(new SipContactEntity(accountID, "Bob", "sip:bob@open-ims.test"));
 

@@ -77,7 +77,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         SipBuddy contact = sipBuddyList.get(position);
         holder.name.setText(contact.getData().getDisplayName());
-        holder.sipUri.setText(contact.getData().getUri());
+        holder.sipUri.setText(contact.getData().getSipUri());
     }
 
     @Override

@@ -178,8 +178,8 @@ public class SipService extends BackgroundService implements SipServiceConstants
                     case ACTION_RECONNECT_CALL:
                         handleReconnectCall();
                         break;
-                    case ACTION_ADD_CONTACT:
-                        handleAddContact(intent);
+                    case ACTION_ADD_BUDDY:
+                        handleAddBuddy(intent);
                         break;
                     case ACTION_SEND_MESSAGE:
                         handleSendMessage(intent);
@@ -610,52 +610,6 @@ public class SipService extends BackgroundService implements SipServiceConstants
             }
         }
     }
-
-    private void handleAddContact(Intent intent) {
-//        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
-//        String displayName = intent.getStringExtra(PARAM_DISPLAY_NAME);
-//        String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
-//        boolean subscribe = intent.getBooleanExtra(PARAM_CONTACT_SUBSCRIBE, true);
-//
-//        startStack();
-//
-//        SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
-//        if (loggedAcc == null) {
-//            Logger.debug(TAG, accountID + " is not active (logged in), skipping");
-//            return;
-//        }
-//        SipBuddyData sccfg = new SipBuddyData();
-//        sccfg.setDisplayName(displayName);
-//        sccfg.setUri(contactUri);
-//        sccfg.setSubscribe(subscribe);
-//        SipBuddy contact = loggedAcc.addSipContact(sccfg);
-//        if (contact != null) {
-////            mConfiguredContacts.start(contact);
-//            mBroadcastEmitter.addedContact(contact);
-//            Logger.debug(TAG, contactUri + " successfully added to account " + accountID);
-//        }
-
-    }
-
-    private void handleSendMessage(Intent intent) {
-        String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
-        String msgContent = intent.getStringExtra(PARAM_MESSAGE_CONTENT);
-
-//        SipBuddy sipContact = getContact(contactUri);
-//        if (sipContact == null) {
-//            Logger.debug(TAG, contactUri + " is not added to contact list, skipping");
-//            return;
-//        }
-//
-//        SendInstantMessageParam msg = new SendInstantMessageParam();
-//        msg.setContent(msgContent);
-//        try {
-//            sipContact.sendInstantMessage(msg);
-//        } catch (Exception e) {
-//            Logger.error(TAG, "Sending message failed, error: ", e);
-//        }
-    }
-
 
     private void loadNativeLibraries() {
         try {
@@ -1197,6 +1151,49 @@ public class SipService extends BackgroundService implements SipServiceConstants
 
     public static ConcurrentHashMap<String, SipAccount> getActiveSipAccounts() {
         return mActiveSipAccounts;
+    }
+
+    private void handleAddBuddy(Intent intent) {
+        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
+        SipBuddyData buddyData = intent.getParcelableExtra(PARAM_BUDDY_DATA);
+
+        startStack();
+
+        SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
+        if (loggedAcc == null) {
+            Logger.debug(TAG, accountID + " is not active (logged in), skipping");
+            return;
+        }
+
+        SipBuddy sipBuddy = new SipBuddy(this, buddyData);
+        String buddyUri = buddyData.getSipUri();
+        try {
+            sipBuddy.create(loggedAcc);
+            mSipBuddies.put(buddyUri, sipBuddy);
+        } catch (Exception e) {
+            Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
+        }
+
+        Logger.debug(TAG, buddyUri + " successfully added to " + accountID + " buddy list");
+    }
+
+    private void handleSendMessage(Intent intent) {
+        String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
+        String msgContent = intent.getStringExtra(PARAM_MESSAGE_CONTENT);
+
+//        SipBuddy sipContact = getContact(contactUri);
+//        if (sipContact == null) {
+//            Logger.debug(TAG, contactUri + " is not added to contact list, skipping");
+//            return;
+//        }
+//
+//        SendInstantMessageParam msg = new SendInstantMessageParam();
+//        msg.setContent(msgContent);
+//        try {
+//            sipContact.sendInstantMessage(msg);
+//        } catch (Exception e) {
+//            Logger.error(TAG, "Sending message failed, error: ", e);
+//        }
     }
 
     private void handleGetContacts(Intent intent) {
