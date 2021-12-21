@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
-import net.gotev.sipservice.SipBuddy;
+
+import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ChatsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
     protected ChatsAdapter chatsAdapter;
     protected RecyclerView.LayoutManager layoutManager;
-    public ArrayList<SipBuddy> sipBuddies = new ArrayList<>();
+    public ArrayList<SipBuddyData> sipBuddies = new ArrayList<>();
     protected String accountID;
     protected String displayName;
     protected CallEventsReceiver eventReceiver = new CallEventsReceiver() {
@@ -31,6 +32,13 @@ public class ChatsActivity extends AppCompatActivity {
         protected void onBuddyState(String contactUri) {
             super.onBuddyState(contactUri);
 
+        }
+
+        @Override
+        protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
+            super.onBuddyAdded(accountID, buddyData);
+            sipBuddies.add(buddyData);
+            chatsAdapter.notifyDataSetChanged();
         }
     };
 
@@ -48,7 +56,7 @@ public class ChatsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_chats);
 
-        updateContactList();
+        updateBuddyList();
 
         recyclerView = findViewById(R.id.chats_recycler_viewer);
         layoutManager = new LinearLayoutManager(this);
@@ -57,8 +65,10 @@ public class ChatsActivity extends AppCompatActivity {
         recyclerView.setAdapter(chatsAdapter);
     }
 
-    private void updateContactList() {
-        SipServiceCommand.getContacts(this, accountID);
+    private void updateBuddyList() {
+        SipServiceCommand.getBuddyList(this, accountID);
+
+//        TODO: Need to keep current buddyData list in DB or parcelable obj
     }
 
     @Override

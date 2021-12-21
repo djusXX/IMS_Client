@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 import org.pjsip.pjsua2.OnBuddyEvSubStateParam;
-import org.pjsip.pjsua2.SipEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,8 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         VIDEO_SIZE,
         CALL_STATS,
         CALL_RECONNECTION_STATE,
-        CONTACT_PRESENCE_CHANGE,
+        BUDDY_PRESENCE_CHANGE,
+        BUDDY_ADDED,
         MESSAGE_RECEIVED;
     }
 
@@ -52,11 +52,21 @@ public class BroadcastEventEmitter implements SipServiceConstants {
     public void buddyState(SipBuddy sipBuddy) {
         final Intent intent = new Intent();
 
-        intent.setAction(getAction(BroadcastAction.CONTACT_PRESENCE_CHANGE));
+        intent.setAction(getAction(BroadcastAction.BUDDY_PRESENCE_CHANGE));
         intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getSipUri());
         intent.putExtra(PARAM_DISPLAY_NAME, sipBuddy.getData().getDisplayName());
 
 //        sendExplicitBroadcast(intent);
+        mContext.sendBroadcast(intent);
+    }
+
+    public void buddyAdded(String accountID, SipBuddyData buddyData) {
+        final Intent intent = new Intent();
+
+        intent.setAction(getAction(BroadcastAction.BUDDY_ADDED));
+        intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+        intent.putExtra(PARAM_BUDDY_DATA, buddyData);
+
         mContext.sendBroadcast(intent);
     }
 

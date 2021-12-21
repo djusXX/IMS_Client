@@ -624,11 +624,11 @@ public class SipServiceCommand implements SipServiceConstants {
         context.startService(intent);
     }
 
-    public static void getContacts(Context context, String accountID) {
+    public static void getBuddyList(Context context, String accountID) {
         checkAccount(accountID);
 
         Intent intent = new Intent(context, SipService.class);
-        intent.setAction(ACTION_GET_CONTACTS);
+        intent.setAction(ACTION_GET_BUDDY_LIST);
         intent.putExtra(PARAM_ACCOUNT_ID, accountID);
 
         context.startService(intent);

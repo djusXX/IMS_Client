@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -184,8 +185,8 @@ public class SipService extends BackgroundService implements SipServiceConstants
                     case ACTION_SEND_MESSAGE:
                         handleSendMessage(intent);
                         break;
-                    case ACTION_GET_CONTACTS:
-                        handleGetContacts(intent);
+                    case ACTION_GET_BUDDY_LIST:
+                        handleGetBuddyList(intent);
                     default: break;
                 }
 
@@ -1172,9 +1173,11 @@ public class SipService extends BackgroundService implements SipServiceConstants
             mSipBuddies.put(buddyUri, sipBuddy);
         } catch (Exception e) {
             Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
+            return;
         }
 
         Logger.debug(TAG, buddyUri + " successfully added to " + accountID + " buddy list");
+        mBroadcastEmitter.buddyAdded(accountID, buddyData);
     }
 
     private void handleSendMessage(Intent intent) {
@@ -1196,7 +1199,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
 //        }
     }
 
-    private void handleGetContacts(Intent intent) {
+    private void handleGetBuddyList(Intent intent) {
         String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
 
         SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
@@ -1205,11 +1208,13 @@ public class SipService extends BackgroundService implements SipServiceConstants
             return;
         }
 
-        try {
-            BuddyVector2 buddyList = loggedAcc.enumBuddies2();
-        } catch (Exception e) {
-            e.printStackTrace();
+        ArrayList<SipBuddyData> buddies = new ArrayList<>();
+        for (Map.Entry<String, SipBuddy> entry : mSipBuddies.entrySet()) {
+            String uri = entry.getKey();
+            SipBuddy sipBuddy = entry.getValue();
+            buddies.add(sipBuddy.getData());
         }
+
     }
 
 //    public static ArrayList<SipBuddy> getContacts() {

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 
@@ -81,8 +82,10 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
                 (RtpStreamStats) intent.getParcelableExtra(PARAM_CALL_STATS_TX_STREAM));
         } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.CALL_RECONNECTION_STATE).equals(action)) {
             onCallReconnectionState((CallReconnectionState) intent.getSerializableExtra(PARAM_CALL_RECONNECTION_STATE));
-        } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.CONTACT_PRESENCE_CHANGE).equals(action)) {
+        } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.BUDDY_PRESENCE_CHANGE).equals(action)) {
             onBuddyState(intent.getStringExtra(PARAM_CONTACT_URI));
+        } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.BUDDY_ADDED).equals(action)) {
+            onBuddyAdded(intent.getStringExtra(PARAM_ACCOUNT_ID), intent.getParcelableExtra(PARAM_BUDDY_DATA));
         } else if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.MESSAGE_RECEIVED).equals(action)) {
             onMessageReceived(intent.getStringExtra(PARAM_CONTACT_URI), intent.getStringExtra(PARAM_ACCOUNT_ID), intent.getStringExtra(PARAM_MESSAGE_CONTENT));
         }
@@ -124,7 +127,7 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
         intentFilter.addAction(BroadcastEventEmitter.getAction(
                 BroadcastEventEmitter.BroadcastAction.CALL_RECONNECTION_STATE));
         intentFilter.addAction(BroadcastEventEmitter.getAction(
-                BroadcastEventEmitter.BroadcastAction.CONTACT_PRESENCE_CHANGE));
+                BroadcastEventEmitter.BroadcastAction.BUDDY_PRESENCE_CHANGE));
         intentFilter.addAction(BroadcastEventEmitter.getAction(
                 BroadcastEventEmitter.BroadcastAction.MESSAGE_RECEIVED));
         context.registerReceiver(this, intentFilter);
@@ -207,6 +210,10 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
 
     protected void onBuddyState(String contactUri) {
         Logger.debug(LOG_TAG, "State changed for :" + contactUri);
+    }
+
+    protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
+        Logger.debug(LOG_TAG, buddyData.getDisplayName() + "(" + buddyData.getSipUri() + ") added to " + accountID + " buddy list");
     }
 
     protected void onMessageReceived(String from, String to, String body) {

@@ -36,7 +36,7 @@ public interface SipServiceConstants {
     String ACTION_RECONNECT_CALL = "reconnectCall";
     String ACTION_ADD_BUDDY = "addContact";
     String ACTION_SEND_MESSAGE = "sendMessage";
-    String ACTION_GET_CONTACTS = "getContacts";
+    String ACTION_GET_BUDDY_LIST = "getContacts";
 
     /*
      * Generic Parameters

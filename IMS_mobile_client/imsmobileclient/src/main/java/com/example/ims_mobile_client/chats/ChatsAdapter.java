@@ -15,6 +15,7 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
 
 import net.gotev.sipservice.SipBuddy;
+import net.gotev.sipservice.SipBuddyData;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +29,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
     Context context;
     String accountID;
     String displayName;
-    ArrayList<SipBuddy> sipBuddyList = new ArrayList<>();
+    ArrayList<SipBuddyData> sipBuddyList = new ArrayList<>();
 
 
     // class to hold the layout for one row (single contact) of contact list 
@@ -50,7 +51,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     }
     
-    public ChatsAdapter(Context context, String accountID, String displayName, ArrayList<SipBuddy> sipBuddyList) {
+    public ChatsAdapter(Context context, String accountID, String displayName, ArrayList<SipBuddyData> sipBuddyList) {
         this.context = context;
         this.accountID = accountID;
         this.displayName = displayName;
@@ -75,9 +76,9 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     @Override   // Fill holder with data
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SipBuddy contact = sipBuddyList.get(position);
-        holder.name.setText(contact.getData().getDisplayName());
-        holder.sipUri.setText(contact.getData().getSipUri());
+        SipBuddyData contact = sipBuddyList.get(position);
+        holder.name.setText(contact.getDisplayName());
+        holder.sipUri.setText(contact.getSipUri());
     }
 
     @Override
