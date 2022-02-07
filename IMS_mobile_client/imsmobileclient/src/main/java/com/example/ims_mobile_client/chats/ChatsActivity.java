@@ -28,16 +28,17 @@ public class ChatsActivity extends AppCompatActivity {
     protected String accountID;
     protected String displayName;
     protected CallEventsReceiver eventReceiver = new CallEventsReceiver() {
-        @Override
-        protected void onBuddyState(String contactUri) {
-            super.onBuddyState(contactUri);
-
-        }
-
+//        @Override
+//        protected void onBuddyState(String contactUri) {
+//            super.onBuddyState(contactUri);
+//
+//        }
+//
         @Override
         protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
             super.onBuddyAdded(accountID, buddyData);
-            sipBuddies.add(buddyData);
+//            sipBuddies.add(buddyData);
+            chatsAdapter.addBuddy(buddyData);
             chatsAdapter.notifyDataSetChanged();
         }
     };
@@ -50,25 +51,20 @@ public class ChatsActivity extends AppCompatActivity {
         displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
         setTitle(displayName);
 
-//        initData();
+        initData();
+
+        refreshBuddyList();
 
         eventReceiver.register(this);
 
         setContentView(R.layout.activity_chats);
 
-        updateBuddyList();
 
         recyclerView = findViewById(R.id.chats_recycler_viewer);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         chatsAdapter = new ChatsAdapter(ChatsActivity.this, accountID, displayName, sipBuddies);
         recyclerView.setAdapter(chatsAdapter);
-    }
-
-    private void updateBuddyList() {
-        SipServiceCommand.getBuddyList(this, accountID);
-
-//        TODO: Need to keep current buddyData list in DB or parcelable obj
     }
 
     @Override
@@ -113,17 +109,17 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-//        SipServiceCommand.addBuddy(this, accountID, "Bob", "sip:bob@open-ims.test", true);
-//        sipBuddies.start(contact_1);
-//        sipContactDao.insert(new SipContactEntity(accountID, "Bob", "sip:bob@open-ims.test"));
+        SipBuddyData buddyData = new SipBuddyData();
+        buddyData.setDisplayName("BOB");
+        buddyData.setSipUri("sip:bob@open-ims.test");
+        sipBuddies.add(buddyData);
 
-//        SipServiceCommand.addContact(this, accountID, "Ela", "sip:ela@open-ims.test", true);
-//        sipBuddies.start(contact_1);
-//        sipContactDao.insert(new SipContactEntity(accountID, "Ela", "sip:ela@open-ims.test"));
+    }
 
-//        SipServiceCommand.addContact(this, accountID, "Gosia", "sip:gosia@open-ims.test", true);
-//        sipBuddies.start(contact_1);
-//        sipContactDao.insert(new SipContactEntity(accountID, "Gosia", "sip:gosia@open-ims.test"));
+    private void refreshBuddyList() {
+        for (SipBuddyData buddyData : sipBuddies) {
+            SipServiceCommand.addBuddy(this, accountID, buddyData);
+        }
     }
 
 

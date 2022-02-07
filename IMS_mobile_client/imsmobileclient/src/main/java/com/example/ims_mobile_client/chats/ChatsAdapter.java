@@ -86,5 +86,11 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         return sipBuddyList.size();
     }
 
-    public void addContactToList() {}
+    public boolean addBuddy(SipBuddyData buddyData) {
+        if (sipBuddyList.contains(buddyData))
+            return false;
+
+        sipBuddyList.add(buddyData);
+        return true;
+    }
 }

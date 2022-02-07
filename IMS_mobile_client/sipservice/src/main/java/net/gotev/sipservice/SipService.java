@@ -1166,17 +1166,22 @@ public class SipService extends BackgroundService implements SipServiceConstants
             return;
         }
 
-        SipBuddy sipBuddy = new SipBuddy(this, buddyData);
         String buddyUri = buddyData.getSipUri();
-        try {
-            sipBuddy.create(loggedAcc);
-            mSipBuddies.put(buddyUri, sipBuddy);
-        } catch (Exception e) {
-            Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
-            return;
+        if (mSipBuddies.containsKey(buddyUri)) {
+            Logger.debug(TAG, buddyUri + " already added to " + accountID + " buddy list, skipping");
+        } else {
+            SipBuddy sipBuddy = new SipBuddy(this, buddyData);
+            try {
+                sipBuddy.create(loggedAcc);
+                mSipBuddies.put(buddyUri, sipBuddy);
+            } catch (Exception e) {
+                Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
+                return;
+            }
+
+            Logger.debug(TAG, buddyUri + " successfully added to " + accountID + " buddy list");
         }
 
-        Logger.debug(TAG, buddyUri + " successfully added to " + accountID + " buddy list");
         mBroadcastEmitter.buddyAdded(accountID, buddyData);
     }
 
