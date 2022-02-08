@@ -1,7 +1,9 @@
 package com.example.ims_mobile_client.login;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.chats.ChatsActivity;
+import com.example.ims_mobile_client.common.AppConstants;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
 import net.gotev.sipservice.SipAccountData;
@@ -27,7 +31,6 @@ import org.pjsip.pjsua2.pjsip_status_code;
 public class LoginActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     BroadcastEventReceiver eventReceiver = new LoginEventReceiver();
-    String displayName;
     SipAccountData sipAccount = new SipAccountData();
 
     @Override
@@ -45,18 +48,21 @@ public class LoginActivity extends AppCompatActivity {
         eventReceiver.register(this);
 
 
-        // ONLY FOR DEBUGGING
-        displayNameEditText.setText("ALICE");
-        usernameEditText.setText("alice");
-        passwordEditText.setText("alice");
-        realmEditText.setText("open-ims.test");
-        pcscfEditText.setText("10.0.0.9:4060");
+        String prevDisplayName = AppPreferencesHelper.getInstance(LoginActivity.this).getString(AppConstants.USER_DISPLAY_NAME);
+        String prevName = AppPreferencesHelper.getInstance(LoginActivity.this).getString(AppConstants.USER_NAME);
+        String prevRealm = AppPreferencesHelper.getInstance(LoginActivity.this).getString(AppConstants.USER_REALM);
+        String prevPCSCF = AppPreferencesHelper.getInstance(LoginActivity.this).getString(AppConstants.USER_PCSCF);
 
-        displayName = displayNameEditText.getText().toString();
+        displayNameEditText.setText(prevDisplayName);
+        usernameEditText.setText(prevName);
+        realmEditText.setText(prevRealm);
+        pcscfEditText.setText(prevPCSCF);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(usernameEditText.getText().toString(),
+                login(displayNameEditText.getText().toString(),
+                        usernameEditText.getText().toString(),
                         passwordEditText.getText().toString(),
                         realmEditText.getText().toString(),
                         pcscfEditText.getText().toString());
@@ -85,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                 SipServiceCommand.setAccount(LoginActivity.this, sipAccount);
             } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
                 Intent intent = new Intent(LoginActivity.this, ChatsActivity.class);
-                intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-                intent.putExtra(PARAM_DISPLAY_NAME, displayName);
                 startActivity(intent);
                 finish();
             } else {
@@ -97,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
     };
 
-    private void login(String username, String password, String realm, String pcscf) {
+    private void login(String displayName, String username, String password, String realm, String pcscf) {
         sipAccount.setUsername(username);
         sipAccount.setPassword(password);
         sipAccount.setRealm(realm);
@@ -108,6 +112,12 @@ public class LoginActivity extends AppCompatActivity {
         sipAccount.setPort(port);
 
         SipServiceCommand.getRegistrationStatus(this, sipAccount.getIdUri());
+
+        AppPreferencesHelper.getInstance(LoginActivity.this).setString(AppConstants.USER_DISPLAY_NAME, displayName);
+        AppPreferencesHelper.getInstance(LoginActivity.this).setString(AppConstants.USER_NAME, username);
+        AppPreferencesHelper.getInstance(LoginActivity.this).setString(AppConstants.USER_REALM, realm);
+        AppPreferencesHelper.getInstance(LoginActivity.this).setString(AppConstants.USER_PCSCF, pcscf);
+        AppPreferencesHelper.getInstance(LoginActivity.this).setString(AppConstants.USER_SIP_URI, sipAccount.getIdUri());
     }
 
     private void requestPermissions() {

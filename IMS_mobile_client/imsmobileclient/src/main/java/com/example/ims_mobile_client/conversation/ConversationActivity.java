@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
 import com.example.ims_mobile_client.calls.OutgoingCallActivity;
+import com.example.ims_mobile_client.chats.ChatsActivity;
+import com.example.ims_mobile_client.common.AppConstants;
 import com.example.ims_mobile_client.common.MessageType;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipBuddy;
 import net.gotev.sipservice.SipServiceCommand;
@@ -39,7 +42,6 @@ public class ConversationActivity extends AppCompatActivity {
     protected String displayName;
     protected String contactUri;
     protected boolean isVideoCall;
-    protected SipBuddy currentContact;
     protected EditText msgInput;
 
 
@@ -47,9 +49,9 @@ public class ConversationActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-        accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
-        displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
-        contactUri = getIntent().getStringExtra(PARAM_CONTACT_URI);
+        accountID = AppPreferencesHelper.getInstance(ConversationActivity.this).getString(AppConstants.USER_SIP_URI);
+        displayName = AppPreferencesHelper.getInstance(ConversationActivity.this).getString(AppConstants.USER_DISPLAY_NAME);
+        contactUri = AppPreferencesHelper.getInstance(ConversationActivity.this).getString(AppConstants.CONVERSATION_BUDDY_URI);
         msgInput = findViewById(R.id.message_input);
 //        currentContact = SipService.getContact(contactUri);
 
@@ -121,10 +123,7 @@ public class ConversationActivity extends AppCompatActivity {
         public void onOutgoingCall(String accountID, int callID, String number, boolean isVideo, boolean isVideoConference) {
             super.onOutgoingCall(accountID, callID, number, isVideo, isVideoConference);
             Intent intent = new Intent(ConversationActivity.this, OutgoingCallActivity.class);
-            intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-            intent.putExtra(PARAM_IS_VIDEO, isVideo);
-            intent.putExtra(PARAM_CONTACT_URI, contactUri);
-            intent.putExtra(PARAM_DISPLAY_NAME, displayName);
+            AppPreferencesHelper.getInstance(ConversationActivity.this).setBoolean(AppConstants.CALL_IS_VIDEO, isVideo);
             ConversationActivity.this.startActivity(intent);
             finish();
         }
@@ -138,11 +137,11 @@ public class ConversationActivity extends AppCompatActivity {
 
             if (pjsip_inv_state.PJSIP_INV_STATE_NULL < callStateCode && callStateCode < pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED) {
                 Intent intent = new Intent(ConversationActivity.this, OutgoingCallActivity.class);
-                intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-                intent.putExtra(PARAM_CALL_ID, callID);
-                intent.putExtra(PARAM_CONTACT_URI, contactUri);
-                intent.putExtra(PARAM_DISPLAY_NAME, displayName);
-                intent.putExtra(PARAM_IS_VIDEO, isVideoCall);
+                AppPreferencesHelper.getInstance(ConversationActivity.this).setString(AppConstants.USER_SIP_URI, accountID);
+                AppPreferencesHelper.getInstance(ConversationActivity.this).setInt(AppConstants.CALL_ID, callID);
+                AppPreferencesHelper.getInstance(ConversationActivity.this).setString(AppConstants.USER_DISPLAY_NAME, displayName);
+                AppPreferencesHelper.getInstance(ConversationActivity.this).setString(AppConstants.CONVERSATION_BUDDY_URI, contactUri);
+                AppPreferencesHelper.getInstance(ConversationActivity.this).setBoolean(AppConstants.CALL_IS_VIDEO, isVideoCall);
                 ConversationActivity.this.startActivity(intent);
                 finish();
             }

@@ -12,7 +12,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.common.AppConstants;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipBuddy;
 import net.gotev.sipservice.SipBuddyData;
@@ -65,10 +67,8 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_chat, parent, false);
         v.setOnClickListener(view -> {
             Intent intent = new Intent(context, ConversationActivity.class);
-            intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-            intent.putExtra(PARAM_DISPLAY_NAME, displayName);
             String contactUri = ((TextView) v.findViewById(R.id.contact_sip_uri)).getText().toString();
-            intent.putExtra(PARAM_CONTACT_URI, contactUri);
+            AppPreferencesHelper.getInstance(context).setString(AppConstants.CONVERSATION_BUDDY_URI, contactUri);
             context.startActivity(intent);
         });
         return new ViewHolder(v);

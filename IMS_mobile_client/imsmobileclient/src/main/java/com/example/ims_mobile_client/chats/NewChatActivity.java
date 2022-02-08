@@ -9,7 +9,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.common.AppConstants;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
@@ -48,9 +50,9 @@ public class NewChatActivity extends AppCompatActivity {
                     SipServiceCommand.addBuddy(NewChatActivity.this, accountID, buddyData);
                 }
                 Intent intent = new Intent(NewChatActivity.this, ConversationActivity.class);
-                intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-                intent.putExtra(PARAM_DISPLAY_NAME, userDisplayName);
-                intent.putExtra(PARAM_CONTACT_URI, contactSipUri);
+                AppPreferencesHelper.getInstance(NewChatActivity.this).setString(AppConstants.USER_SIP_URI, accountID);
+                AppPreferencesHelper.getInstance(NewChatActivity.this).setString(AppConstants.USER_DISPLAY_NAME, userDisplayName);
+                AppPreferencesHelper.getInstance(NewChatActivity.this).setString(AppConstants.CONVERSATION_BUDDY_URI, contactSipUri);
                 startActivity(intent);
                 finish();
             }

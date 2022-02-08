@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.common.AppConstants;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipServiceCommand;
 
@@ -67,10 +69,10 @@ public class OutgoingCallActivity extends AppCompatActivity {
 
             if (pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED == callStateCode) {
                 Intent intent = new Intent(OutgoingCallActivity.this, ActiveCallActivity.class);
-                intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-                intent.putExtra(PARAM_CALL_ID, callID);
-                intent.putExtra(PARAM_REMOTE_URI, remoteUri);
-                intent.putExtra(PARAM_IS_VIDEO, isVideo);
+                AppPreferencesHelper.getInstance(OutgoingCallActivity.this).setString(AppConstants.USER_SIP_URI, accountID);
+                AppPreferencesHelper.getInstance(OutgoingCallActivity.this).setInt(AppConstants.CALL_ID, callID);
+                AppPreferencesHelper.getInstance(OutgoingCallActivity.this).setString(AppConstants.CALL_REMOTE_URI, remoteUri);
+                AppPreferencesHelper.getInstance(OutgoingCallActivity.this).setBoolean(AppConstants.CALL_IS_VIDEO, isVideo);
                 OutgoingCallActivity.this.startActivity(intent);
                 finish();
             } else if (pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED == callStateCode

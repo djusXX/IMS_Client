@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
+import com.example.ims_mobile_client.common.AppConstants;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.login.LoginActivity;
 
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
@@ -47,8 +50,8 @@ public class ChatsActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        accountID = getIntent().getStringExtra(PARAM_ACCOUNT_ID);
-        displayName = getIntent().getStringExtra(PARAM_DISPLAY_NAME);
+        accountID = AppPreferencesHelper.getInstance(ChatsActivity.this).getString(AppConstants.USER_SIP_URI);
+        displayName = AppPreferencesHelper.getInstance(ChatsActivity.this).getString(AppConstants.USER_DISPLAY_NAME);
         setTitle(displayName);
 
         initData();
@@ -94,8 +97,6 @@ public class ChatsActivity extends AppCompatActivity {
 //        }
         if (R.id.chats_menu_new_chat == id) {
             Intent intent = new Intent(ChatsActivity.this, NewChatActivity.class);
-            intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-            intent.putExtra(PARAM_DISPLAY_NAME, displayName);
             startActivity(intent);
 //            finish();
             return true;

@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.common.AppConstants;
+import com.example.ims_mobile_client.data.AppPreferencesHelper;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
 import net.gotev.sipservice.SipService;
@@ -44,9 +46,9 @@ public class IncomingCallActivity extends AppCompatActivity {
             if(callID >= 0) {
                 SipServiceCommand.acceptIncomingCall(this, accountID, callID, isVideo);
                 Intent intent = new Intent(IncomingCallActivity.this, ActiveCallActivity.class);
-                intent.putExtra(PARAM_ACCOUNT_ID, accountID);
-                intent.putExtra(PARAM_CALL_ID, callID);
-                intent.putExtra(PARAM_IS_VIDEO, isVideo);
+                AppPreferencesHelper.getInstance(this).setString(AppConstants.USER_SIP_URI, accountID);
+                AppPreferencesHelper.getInstance(this).setInt(AppConstants.CALL_ID, callID);
+                AppPreferencesHelper.getInstance(this).setBoolean(AppConstants.CALL_IS_VIDEO, isVideo);
                 IncomingCallActivity.this.startActivity(intent);
             }
             finish();
