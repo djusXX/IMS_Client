@@ -1,9 +1,7 @@
 package com.example.ims_mobile_client.login;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -18,8 +16,8 @@ import android.widget.Toast;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.chats.ChatsActivity;
-import com.example.ims_mobile_client.common.AppConstants;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.AppConstants;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
 import net.gotev.sipservice.SipAccountData;

@@ -11,17 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
-import com.example.ims_mobile_client.common.AppConstants;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
-import com.example.ims_mobile_client.login.LoginActivity;
+import com.example.ims_mobile_client.utils.AppConstants;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 
 import java.util.ArrayList;
-
-import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 
 public class ChatsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;

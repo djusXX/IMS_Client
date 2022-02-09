@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.data;
+package com.example.ims_mobile_client.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,6 +1,6 @@
 package com.example.ims_mobile_client.conversation;
 
-import com.example.ims_mobile_client.common.MessageType;
+import com.example.ims_mobile_client.utils.MessageType;
 
 public class Message {
     public String text;

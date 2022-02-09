@@ -15,21 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
 import com.example.ims_mobile_client.calls.OutgoingCallActivity;
-import com.example.ims_mobile_client.chats.ChatsActivity;
-import com.example.ims_mobile_client.common.AppConstants;
-import com.example.ims_mobile_client.common.MessageType;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.AppConstants;
+import com.example.ims_mobile_client.utils.MessageType;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
-import net.gotev.sipservice.SipBuddy;
 import net.gotev.sipservice.SipServiceCommand;
 
 import org.pjsip.pjsua2.pjsip_inv_state;
 
 import java.util.ArrayList;
-
-import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 
 public class ConversationActivity extends AppCompatActivity {
     private static final String TAG = ConversationActivity.class.getSimpleName();

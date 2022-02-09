@@ -3,13 +3,10 @@ package com.example.ims_mobile_client.calls;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.ims_mobile_client.common.AppConstants;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.AppConstants;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
-import net.gotev.sipservice.Logger;
-
-import java.util.zip.Adler32;
 
 public class CallEventsReceiver extends BroadcastEventReceiver {
 //    public boolean isRegistered = false;

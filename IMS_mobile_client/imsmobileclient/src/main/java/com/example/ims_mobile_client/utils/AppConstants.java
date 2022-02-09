@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.common;
+package com.example.ims_mobile_client.utils;
 
 public class AppConstants {
     public static final String USER_DISPLAY_NAME = "user_display_name";

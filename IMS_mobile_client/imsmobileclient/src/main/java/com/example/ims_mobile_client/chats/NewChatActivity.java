@@ -9,9 +9,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.common.AppConstants;
+import com.example.ims_mobile_client.utils.AppConstants;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;

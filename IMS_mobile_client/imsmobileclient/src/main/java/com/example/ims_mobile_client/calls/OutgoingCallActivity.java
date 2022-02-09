@@ -8,19 +8,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.common.AppConstants;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.AppConstants;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipServiceCommand;
 
 import org.pjsip.pjsua2.pjsip_inv_state;
 
 import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_CALL_ID;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 import static net.gotev.sipservice.SipServiceConstants.PARAM_IS_VIDEO;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_REMOTE_URI;
 
 public class OutgoingCallActivity extends AppCompatActivity {
     protected String accountID;

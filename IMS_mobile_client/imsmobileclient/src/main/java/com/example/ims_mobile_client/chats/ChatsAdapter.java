@@ -12,20 +12,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.common.AppConstants;
+import com.example.ims_mobile_client.utils.AppConstants;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
-import com.example.ims_mobile_client.data.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
-import net.gotev.sipservice.SipBuddy;
 import net.gotev.sipservice.SipBuddyData;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import static net.gotev.sipservice.SipServiceConstants.PARAM_ACCOUNT_ID;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_CONTACT_URI;
-import static net.gotev.sipservice.SipServiceConstants.PARAM_DISPLAY_NAME;
 
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
     Context context;
