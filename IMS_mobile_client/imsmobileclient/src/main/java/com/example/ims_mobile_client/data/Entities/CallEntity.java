@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.data;
+package com.example.ims_mobile_client.data.Entities;
 
 
 import androidx.annotation.NonNull;
