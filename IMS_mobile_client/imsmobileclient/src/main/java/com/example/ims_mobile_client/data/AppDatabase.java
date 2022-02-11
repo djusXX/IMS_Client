@@ -3,6 +3,8 @@ package com.example.ims_mobile_client.data;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -19,41 +21,54 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {CallEntity.class, MessageEntity.class, BuddyEntity.class}, version = 1)
-abstract class AppDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
 
-    abstract CallDao callDao();
-    abstract MessageDao messageDao();
-    abstract BuddyDao buddyDao();
+    private static final String DB_NAME = "imsmobileclient_database";
 
-    private static volatile AppDatabase INSTANCE;
+    public abstract CallDao callDao();
+    public abstract MessageDao messageDao();
+    public abstract BuddyDao buddyDao();
+
+    private static AppDatabase INSTANCE;
+    private final MutableLiveData<Boolean> isDBCreated = new MutableLiveData<>();
     private static final int THREADS_NUM = 4;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(THREADS_NUM);
+    static final ExecutorService dbWriteExecutor = Executors.newFixedThreadPool(THREADS_NUM);
 
-    static AppDatabase getDB(final Context context) {
+    public static AppDatabase getInstance(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class,
-                            "imsmobileclient_database")
-//                            .addCallback(databaseCallback)
-                            .build();
+                    INSTANCE = buildDB(context.getApplicationContext());
+                    INSTANCE.updateDBCreated(context.getApplicationContext());
                 }
             }
         }
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback databaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
+    private static AppDatabase buildDB(Context context) {
+        return Room.databaseBuilder(context, AppDatabase.class, DB_NAME)
+                .addCallback(new Callback() {
+                    @Override
+                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        super.onCreate(db);
+                        AppDatabase.getInstance(context).setDBCreated();
+                    }
+                }).build();
+    }
 
-            databaseWriteExecutor.execute(() -> {
-                INSTANCE.callDao().deleteAll();
-                INSTANCE.messageDao().deleteAll();
-                INSTANCE.buddyDao().deleteAll();
-            });
+    private void setDBCreated() {
+        isDBCreated.postValue(true);
+    }
+
+    public LiveData<Boolean> getDBCreated() {
+        return isDBCreated;
+    }
+
+    private void updateDBCreated(final Context context) {
+        if (context.getDatabasePath(DB_NAME).exists()) {
+            setDBCreated();
         }
-    };
+    }
+
 }
