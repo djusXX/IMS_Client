@@ -64,21 +64,21 @@ public class AppRepository {
         return observedBuddies;
     }
 
-//    public void addCall(CallEntity callEntity) {
-//        AppDatabase.dbWriteExecutor.execute(() -> {
-//            callDao.insert(callEntity);
-//        });
-//    }
-//
-//    public void addMessage(MessageEntity messageEntity) {
-//        AppDatabase.dbWriteExecutor.execute(() -> {
-//            messageDao.insert(messageEntity);
-//        });
-//    }
-//
-//    public void addBuddy(BuddyEntity buddyEntity) {
-//        AppDatabase.dbWriteExecutor.execute(() -> {
-//            buddyDao.insert(buddyEntity);
-//        });
-//    }
+    public void addCall(CallEntity callEntity) {
+        AppDatabase.dbWriteExecutor.execute(() -> {
+            db.callDao().insert(callEntity);
+        });
+    }
+
+    public void addMessage(MessageEntity messageEntity) {
+        AppDatabase.dbWriteExecutor.execute(() -> {
+            db.messageDao().insert(messageEntity);
+        });
+    }
+
+    public void addBuddy(BuddyEntity buddyEntity) {
+        AppDatabase.dbWriteExecutor.execute(() -> {
+            db.buddyDao().insert(buddyEntity);
+        });
+    }
 }

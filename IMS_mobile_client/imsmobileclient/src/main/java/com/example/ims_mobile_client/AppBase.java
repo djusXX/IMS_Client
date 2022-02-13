@@ -7,7 +7,11 @@ import com.example.ims_mobile_client.data.AppRepository;
 
 public class AppBase extends Application {
 
+    public AppDatabase getDB() {
+        return AppDatabase.getInstance(this);
+    }
+
     public AppRepository getRepository() {
-        return new AppRepository(this);
+        return AppRepository.getInstance(getDB());
     }
 }

@@ -20,7 +20,7 @@ import com.example.ims_mobile_client.data.Entities.MessageEntity;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {CallEntity.class, MessageEntity.class, BuddyEntity.class}, version = 1)
+@Database(entities = {CallEntity.class, MessageEntity.class, BuddyEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "imsmobileclient_database";
