@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Parcelable;
+import android.widget.Toast;
+
+import org.pjsip.pjsua2.pjsip_status_code;
 
 import java.util.ArrayList;
 
@@ -146,10 +149,6 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
     public void onRegistration(String accountID, int registrationStateCode) {
         Logger.debug(LOG_TAG, "onRegistration - accountID: " + accountID +
                 ", registrationStateCode: " + registrationStateCode);
-//        Logger.debug(LOG_TAG, "accountID: [" + accountID +
-//                "], accountID.length: [" + accountID.length() +
-//                "], accountID.isEmpty: [" + accountID.isEmpty() + "]");
-
     }
 
     public void onIncomingCall(String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {
