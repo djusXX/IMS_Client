@@ -16,8 +16,8 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
 import com.example.ims_mobile_client.calls.OutgoingCallActivity;
 import com.example.ims_mobile_client.utils.AppConstants;
-import com.example.ims_mobile_client.utils.MessageType;
 import com.example.ims_mobile_client.utils.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.MessageType;
 
 import net.gotev.sipservice.SipServiceCommand;
 

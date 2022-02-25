@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.utils.AppConstants;
 import com.example.ims_mobile_client.conversation.ConversationActivity;
+import com.example.ims_mobile_client.utils.AppConstants;
 import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
 import net.gotev.sipservice.SipBuddyData;

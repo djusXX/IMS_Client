@@ -15,7 +15,6 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.chats.ChatsActivity;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 
-import net.gotev.sipservice.BroadcastEventReceiver;
 import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;

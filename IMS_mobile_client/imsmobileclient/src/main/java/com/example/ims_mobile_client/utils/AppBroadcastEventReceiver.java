@@ -1,15 +1,11 @@
 package com.example.ims_mobile_client.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.ims_mobile_client.chats.ChatsActivity;
 import com.example.ims_mobile_client.ui.MainActivity;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
-import net.gotev.sipservice.SipAccountData;
-import net.gotev.sipservice.SipServiceCommand;
 
 import org.pjsip.pjsua2.pjsip_status_code;
 

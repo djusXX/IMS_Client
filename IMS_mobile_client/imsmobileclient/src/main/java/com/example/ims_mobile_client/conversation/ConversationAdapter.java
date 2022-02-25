@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.utils.MessageType;
 
-
 import java.util.ArrayList;
 
 
