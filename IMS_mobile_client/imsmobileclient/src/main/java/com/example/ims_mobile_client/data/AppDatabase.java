@@ -13,9 +13,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.ims_mobile_client.data.DAOs.BuddyDao;
 import com.example.ims_mobile_client.data.DAOs.CallDao;
 import com.example.ims_mobile_client.data.DAOs.MessageDao;
-import com.example.ims_mobile_client.data.Entities.BuddyEntity;
-import com.example.ims_mobile_client.data.Entities.CallEntity;
-import com.example.ims_mobile_client.data.Entities.MessageEntity;
+import com.example.ims_mobile_client.data.entities.BuddyEntity;
+import com.example.ims_mobile_client.data.entities.CallEntity;
+import com.example.ims_mobile_client.data.entities.MessageEntity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

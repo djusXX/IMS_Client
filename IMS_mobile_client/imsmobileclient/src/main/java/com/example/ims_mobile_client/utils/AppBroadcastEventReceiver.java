@@ -25,7 +25,7 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
         if (accountID.isEmpty() && 400 == registrationStateCode) {
             ((MainActivity) appContext).setAccount();
         } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
-            ((MainActivity) appContext).addConversationsFragment();
+            ((MainActivity) appContext).addBuddyListFragment();
         } else {
             Toast.makeText(appContext, "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
         }

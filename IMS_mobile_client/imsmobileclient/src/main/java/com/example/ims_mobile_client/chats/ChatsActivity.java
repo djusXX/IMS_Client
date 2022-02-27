@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.calls.CallEventsReceiver;
+import com.example.ims_mobile_client.ui.BuddyAdapter;
 import com.example.ims_mobile_client.utils.AppConstants;
 import com.example.ims_mobile_client.utils.AppPreferencesHelper;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class ChatsActivity extends AppCompatActivity {
     protected RecyclerView recyclerView;
-    protected ChatsAdapter chatsAdapter;
+    protected BuddyAdapter buddyAdapter;
     protected RecyclerView.LayoutManager layoutManager;
     public ArrayList<SipBuddyData> sipBuddies = new ArrayList<>();
     protected String accountID;
@@ -37,8 +38,8 @@ public class ChatsActivity extends AppCompatActivity {
         protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
             super.onBuddyAdded(accountID, buddyData);
 //            sipBuddies.add(buddyData);
-            chatsAdapter.addBuddy(buddyData);
-            chatsAdapter.notifyDataSetChanged();
+            buddyAdapter.addBuddy(buddyData);
+            buddyAdapter.notifyDataSetChanged();
         }
     };
 
@@ -56,14 +57,14 @@ public class ChatsActivity extends AppCompatActivity {
 
         eventReceiver.register(this);
 
-        setContentView(R.layout.activity_chats);
+        setContentView(R.layout.buddy_list_fragment);
 
 
-        recyclerView = findViewById(R.id.chats_recycler_viewer);
+//        recyclerView = findViewById(R.id.chats_recycler_viewer);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        chatsAdapter = new ChatsAdapter(ChatsActivity.this, accountID, displayName, sipBuddies);
-        recyclerView.setAdapter(chatsAdapter);
+//        buddyAdapter = new BuddyAdapter(ChatsActivity.this, accountID, displayName, sipBuddies);
+//        recyclerView.setAdapter(buddyAdapter);
     }
 
     @Override

@@ -4,11 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_login.xml" value="0.10005065856129686" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/buddy_list_fragment.xml" value="0.19519927536231885" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/buddy_list_fragment22.xml" value="0.19519927536231885" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/chats_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/login_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/main_activity.xml" value="0.20572916666666666" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/message_in_view.xml" value="0.22" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/single_buddy.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

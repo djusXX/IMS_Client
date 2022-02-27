@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.data.Entities;
+package com.example.ims_mobile_client.data.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

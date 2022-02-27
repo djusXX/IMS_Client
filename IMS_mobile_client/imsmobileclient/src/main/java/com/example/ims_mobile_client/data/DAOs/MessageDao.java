@@ -6,7 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.ims_mobile_client.data.Entities.MessageEntity;
+import com.example.ims_mobile_client.data.entities.MessageEntity;
 
 import java.util.List;
 

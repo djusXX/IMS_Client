@@ -3,9 +3,9 @@ package com.example.ims_mobile_client.data;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-import com.example.ims_mobile_client.data.Entities.BuddyEntity;
-import com.example.ims_mobile_client.data.Entities.CallEntity;
-import com.example.ims_mobile_client.data.Entities.MessageEntity;
+import com.example.ims_mobile_client.data.entities.BuddyEntity;
+import com.example.ims_mobile_client.data.entities.CallEntity;
+import com.example.ims_mobile_client.data.entities.MessageEntity;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.example.ims_mobile_client.ui;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,10 +11,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.chats.ChatsActivity;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 
-import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;
 
@@ -98,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
         SipServiceCommand.setAccount(MainActivity.this, currentUser);
     }
 
-
-    public void addConversationsFragment() {
-        Logger.debug("XDDDDDDDDDDD", "inside addConversationsFragment()");
-        Intent intent = new Intent(MainActivity.this, ChatsActivity.class);
-        startActivity(intent);
-        finish();
+    public void addBuddyListFragment() {
+        BuddyListFragment buddyListFragment = new BuddyListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
+                .commit();
     }
 }

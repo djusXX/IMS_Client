@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.ims_mobile_client.AppBase;
 import com.example.ims_mobile_client.data.AppRepository;
-import com.example.ims_mobile_client.data.Entities.MessageEntity;
+import com.example.ims_mobile_client.data.entities.MessageEntity;
 
 import java.util.List;
 
