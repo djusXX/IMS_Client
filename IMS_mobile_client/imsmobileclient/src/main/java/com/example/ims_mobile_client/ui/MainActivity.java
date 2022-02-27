@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 
 import net.gotev.sipservice.SipAccountData;
@@ -101,5 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
                 .commit();
+    }
+
+    public void showSingleBuddy(BuddyEntity buddyEntity) {
+//        TODO: implement!!!!!!!!!!!!!!!!!!
     }
 }

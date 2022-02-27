@@ -20,13 +20,11 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
 
     List<? extends BuddyEntity> buddyList;
 
-    @Nullable
-    private final BuddyClickCallback buddyClickCallback;
+//    @Nullable
+//    private final MessagesListAdapter messagesListAdapter;
 
 
-    public BuddyAdapter(@Nullable BuddyClickCallback buddyClickCallback) {
-        this.buddyClickCallback = buddyClickCallback;
-        setHasStableIds(true);
+    public BuddyAdapter() {
     }
 
     public void setBuddyList(final List<? extends BuddyEntity> newBuddyList) {

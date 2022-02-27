@@ -57,7 +57,7 @@ public class ChatsActivity extends AppCompatActivity {
 
         eventReceiver.register(this);
 
-        setContentView(R.layout.buddy_list_fragment);
+//        setContentView(R.layout.buddy_list_fragment);
 
 
 //        recyclerView = findViewById(R.id.chats_recycler_viewer);
