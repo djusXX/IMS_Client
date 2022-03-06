@@ -9,10 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
+import com.example.ims_mobile_client.view_models.BuddyViewModel;
 
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;
@@ -96,15 +98,23 @@ public class MainActivity extends AppCompatActivity {
         SipServiceCommand.setAccount(MainActivity.this, currentUser);
     }
 
-    public void addBuddyListFragment() {
-        BuddyListFragment buddyListFragment = new BuddyListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
-                .commit();
+    public void setCurrentUser(SipAccountData accData) {
+        currentUser = accData;
     }
 
-    public void showSingleBuddy(BuddyEntity buddyEntity) {
-//        TODO: implement!!!!!!!!!!!!!!!!!!
+//    public void addBuddyListFragment() {
+//        BuddyListFragment buddyListFragment = new BuddyListFragment();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
+//                .commit();
+//    }
+
+    public void addNewBuddyFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("addNewBuddy")
+                .replace(R.id.main_fragment_container,
+                        new NewBuddyFragment(currentUser.getIdUri()), null).commit();
     }
 }

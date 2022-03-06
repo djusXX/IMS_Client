@@ -62,13 +62,13 @@ public class BroadcastEventEmitter implements SipServiceConstants {
 
     public void buddyAdded(String accountID, SipBuddyData buddyData) {
         final Intent intent = new Intent();
-
+        Logger.debug("BroadcastEventEmitter", "called buddyAdded()");
         intent.setAction(getAction(BroadcastAction.BUDDY_ADDED));
         intent.putExtra(PARAM_ACCOUNT_ID, accountID);
         intent.putExtra(PARAM_BUDDY_DATA, buddyData);
 
-        sendExplicitBroadcast(intent);
-//        mContext.sendBroadcast(intent);
+//        sendExplicitBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     public void buddySubscriptionState(SipBuddy buddy, OnBuddyEvSubStateParam e) {

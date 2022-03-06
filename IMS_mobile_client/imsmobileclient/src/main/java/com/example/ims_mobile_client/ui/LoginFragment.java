@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment {
 
         SipServiceCommand.getRegistrationStatus(requireActivity().getApplicationContext(), accData.getIdUri());
 
+        ((MainActivity) requireActivity()).setCurrentUser(accData);
         setLastUser(accData.getIdUri());
     }
 
@@ -79,6 +80,15 @@ public class LoginFragment extends Fragment {
         binding.username.setText(appPrefs.getString(AppConstants.USER_NAME));
         binding.realm.setText(appPrefs.getString(AppConstants.USER_REALM));
         binding.pcscf.setText(appPrefs.getString(AppConstants.USER_PCSCF));
+
+        // use below only for debugging
+        if(binding.displayName.getText().toString().isEmpty()) {
+            binding.displayName.setText("ALICE");
+            binding.username.setText("alice");
+            binding.realm.setText("open-ims.test");
+            binding.pcscf.setText("10.0.0.9:4060");
+        }
+        binding.password.setText("alice");
     }
 
 }

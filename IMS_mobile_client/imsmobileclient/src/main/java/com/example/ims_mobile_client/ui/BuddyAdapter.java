@@ -1,11 +1,14 @@
 package com.example.ims_mobile_client.ui;
 
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.databinding.SingleBuddyBinding;
 
@@ -20,11 +23,13 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
 
     List<? extends BuddyEntity> buddyList;
 
-//    @Nullable
-//    private final MessagesListAdapter messagesListAdapter;
+    @Nullable
+    private final BuddyClickCallback buddyClickCallback;
 
 
-    public BuddyAdapter() {
+    public BuddyAdapter(BuddyClickCallback buddyClickCallback) {
+        this.buddyClickCallback = buddyClickCallback;
+        setHasStableIds(true);
     }
 
     public void setBuddyList(final List<? extends BuddyEntity> newBuddyList) {
@@ -79,30 +84,22 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
     @NotNull
     @Override
     public BuddyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        ViewDataBinding binding = DataBindingUtil
-//                .inflate(LayoutInflater.from(parent.getContext()), R.layout.single_buddy, parent,false);
-
-        return null;
+        SingleBuddyBinding binding = DataBindingUtil
+                .inflate(LayoutInflater.from(parent.getContext()), R.layout.single_buddy, parent,false);
+        binding.setCallback(buddyClickCallback);
+        return new BuddyViewHolder(binding);
     }
 
     @Override   // Fill holder with data
     public void onBindViewHolder(BuddyViewHolder holder, int position) {
-//        SipBuddyData contact = sipBuddyList.get(position);
-//        holder.name.setText(contact.getDisplayName());
-//        holder.sipUri.setText(contact.getSipUri());
+        holder.binding.setBuddy(buddyList.get(position));
+        holder.binding.executePendingBindings();
     }
 
     @Override
     public int getItemCount() {
-//        return sipBuddyList.size();
-        return 0;
+        return buddyList == null ? 0 : buddyList.size();
+//        return 0;
     }
 
-    public boolean addBuddy(SipBuddyData buddyData) {
-//        if (sipBuddyList.contains(buddyData))
-//            return false;
-//
-//        sipBuddyList.add(buddyData);
-        return true;
-    }
 }

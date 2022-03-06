@@ -31,6 +31,8 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
 
         String action = intent.getAction();
 
+        Logger.debug(LOG_TAG, "called onReceive() with action: " + action);
+
         if (BroadcastEventEmitter.getAction(BroadcastEventEmitter.BroadcastAction.REGISTRATION).equals(action)) {
             int stateCode = intent.getIntExtra(PARAM_REGISTRATION_CODE, -1);
             onRegistration(intent.getStringExtra(PARAM_ACCOUNT_ID), stateCode);
@@ -133,6 +135,8 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
                 BroadcastEventEmitter.BroadcastAction.BUDDY_PRESENCE_CHANGE));
         intentFilter.addAction(BroadcastEventEmitter.getAction(
                 BroadcastEventEmitter.BroadcastAction.MESSAGE_RECEIVED));
+        intentFilter.addAction(BroadcastEventEmitter.getAction(
+                BroadcastEventEmitter.BroadcastAction.BUDDY_ADDED));
         context.registerReceiver(this, intentFilter);
     }
 
