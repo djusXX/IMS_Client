@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.view.Surface;
 
 import org.pjsip.pjsua2.AudDevManager;
+import org.pjsip.pjsua2.Buddy;
 import org.pjsip.pjsua2.BuddyVector2;
 import org.pjsip.pjsua2.CallVidSetStreamParam;
 import org.pjsip.pjsua2.CodecFmtpVector;
@@ -16,6 +17,7 @@ import org.pjsip.pjsua2.Endpoint;
 import org.pjsip.pjsua2.EpConfig;
 import org.pjsip.pjsua2.IpChangeParam;
 import org.pjsip.pjsua2.MediaFormatVideo;
+import org.pjsip.pjsua2.SendInstantMessageParam;
 import org.pjsip.pjsua2.TransportConfig;
 import org.pjsip.pjsua2.VidCodecParam;
 import org.pjsip.pjsua2.VidDevManager;
@@ -185,8 +187,9 @@ public class SipService extends BackgroundService implements SipServiceConstants
                     case ACTION_SEND_MESSAGE:
                         handleSendMessage(intent);
                         break;
-                    case ACTION_GET_BUDDY_LIST:
-                        handleGetBuddyList(intent);
+                    case ACTION_SET_BUDDY_LIST:
+                        handleSetBuddyList(intent);
+                        break;
                     default: break;
                 }
 
@@ -1167,71 +1170,68 @@ public class SipService extends BackgroundService implements SipServiceConstants
         }
 
         String buddyUri = buddyData.getSipUri();
-        if (mSipBuddies.containsKey(buddyUri)) {
-            Logger.debug(TAG, buddyUri + " already added to " + accountID + " buddy list, skipping");
-        } else {
-            SipBuddy sipBuddy = new SipBuddy(this, buddyData);
-            try {
-                sipBuddy.create(loggedAcc);
-                mSipBuddies.put(buddyUri, sipBuddy);
-            } catch (Exception e) {
-                Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
-                return;
-            }
-
-            Logger.debug(TAG, buddyUri + " successfully added to " + accountID + " buddy list");
+        SipBuddy sipBuddy = new SipBuddy(this, buddyData);
+        try {
+            sipBuddy.create(loggedAcc);
+            mSipBuddies.put(buddyUri, sipBuddy);
+        } catch (Exception e) {
+            Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
+            return;
         }
+
+        Logger.debug(TAG, buddyUri + " successfully added to " + accountID + " buddy list");
 
         mBroadcastEmitter.buddyAdded(accountID, buddyData);
     }
 
     private void handleSendMessage(Intent intent) {
+        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
         String contactUri = intent.getStringExtra(PARAM_CONTACT_URI);
         String msgContent = intent.getStringExtra(PARAM_MESSAGE_CONTENT);
 
-//        SipBuddy sipContact = getContact(contactUri);
-//        if (sipContact == null) {
-//            Logger.debug(TAG, contactUri + " is not added to contact list, skipping");
-//            return;
-//        }
-//
-//        SendInstantMessageParam msg = new SendInstantMessageParam();
-//        msg.setContent(msgContent);
-//        try {
-//            sipContact.sendInstantMessage(msg);
-//        } catch (Exception e) {
-//            Logger.error(TAG, "Sending message failed, error: ", e);
-//        }
-    }
-
-    private void handleGetBuddyList(Intent intent) {
-        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
-
+        startStack();
         SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
         if (loggedAcc == null) {
             Logger.debug(TAG, accountID + " is not active (logged in), skipping");
             return;
         }
 
-        ArrayList<SipBuddyData> buddies = new ArrayList<>();
-        for (Map.Entry<String, SipBuddy> entry : mSipBuddies.entrySet()) {
-            String uri = entry.getKey();
-            SipBuddy sipBuddy = entry.getValue();
-            buddies.add(sipBuddy.getData());
+        SendInstantMessageParam msg = new SendInstantMessageParam();
+        msg.setContent(msgContent);
+        try {
+            Buddy buddy = loggedAcc.findBuddy2(contactUri);
+            buddy.sendInstantMessage(msg);
+        } catch (Exception e) {
+            Logger.error(TAG, "Sending message failed, error: ", e);
+            return;
         }
+        Logger.debug(TAG, "Message sent!");
 
+//        mBroadcastEmitter.messageSent(accountID,);
     }
 
-//    public static ArrayList<SipBuddy> getContacts() {
-//        return mConfiguredContacts;
-//    }
+    private void handleSetBuddyList(Intent intent) {
+        String accountID = intent.getStringExtra(PARAM_ACCOUNT_ID);
+        ArrayList<SipBuddyData> buddyList = intent.getParcelableArrayListExtra(PARAM_BUDDY_LIST);
 
-//    public static SipBuddy getContact(String contactUri) {
-//        for(int i = 0; i < mConfiguredContacts.size(); i++) {
-//            SipBuddy sc = mConfiguredContacts.get(i);
-//            String scUri = sc.getConfig().getUri();
-//            if(scUri.equals(contactUri)) return sc;
-//        }
-//        return null;
-//    }
+        startStack();
+        SipAccount loggedAcc = mActiveSipAccounts.get(accountID);
+        if (loggedAcc == null) {
+            Logger.debug(TAG, accountID + " is not active (logged in), skipping");
+            return;
+        }
+
+        for (SipBuddyData buddy : buddyList) {
+            String buddyUri = buddy.getSipUri();
+            SipBuddy sipBuddy = new SipBuddy(this, buddy);
+            try {
+                sipBuddy.create(loggedAcc);
+            } catch (Exception e) {
+                Logger.debug(TAG, "Failed to add " + buddyUri + " to " + accountID + " buddy list");
+                return;
+            }
+        }
+        Logger.debug(TAG, "Successfully added all buddies to " + accountID + " buddy list");
+    }
+
 }

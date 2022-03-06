@@ -37,6 +37,7 @@ public interface SipServiceConstants {
     String ACTION_ADD_BUDDY = "addContact";
     String ACTION_SEND_MESSAGE = "sendMessage";
     String ACTION_GET_BUDDY_LIST = "getContacts";
+    String ACTION_SET_BUDDY_LIST = "setBuddyList";
 
     /*
      * Generic Parameters
@@ -69,6 +70,7 @@ public interface SipServiceConstants {
     String PARAM_PRESENCE_RPID_ID = "presenceRpidId";
     String PARAM_SIP_CONTACTS_ARRAY = "sipContactsArray";
     String PARAM_BUDDY_DATA = "buddyData";
+    String PARAM_BUDDY_LIST = "BuddyList";
 
 
     /**

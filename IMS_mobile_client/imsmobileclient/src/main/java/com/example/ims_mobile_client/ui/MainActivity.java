@@ -26,11 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected AppBroadcastEventReceiver receiver = null;
     protected SipAccountData currentUser;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SipServiceCommand.start(this);
         setContentView(R.layout.main_activity);
         requestPermissions();
         receiver = new AppBroadcastEventReceiver();
@@ -102,19 +101,7 @@ public class MainActivity extends AppCompatActivity {
         currentUser = accData;
     }
 
-//    public void addBuddyListFragment() {
-//        BuddyListFragment buddyListFragment = new BuddyListFragment();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
-//                .commit();
-//    }
+    public SipAccountData getCurrentUser() { return currentUser; }
 
-    public void addNewBuddyFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack("addNewBuddy")
-                .replace(R.id.main_fragment_container,
-                        new NewBuddyFragment(currentUser.getIdUri()), null).commit();
-    }
+
 }

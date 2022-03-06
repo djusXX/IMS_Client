@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.view.Surface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Triggers sip service commands.
@@ -613,11 +614,12 @@ public class SipServiceCommand implements SipServiceConstants {
         return buddyUri;
     }
 
-    public static void sendMessage(Context context, String contactUri, String msgContent) {
+    public static void sendMessage(Context context, String accountID, String contactUri, String msgContent) {
         checkAccount(contactUri);
 
         Intent intent = new Intent(context, SipService.class);
         intent.setAction(ACTION_SEND_MESSAGE);
+        intent.putExtra(PARAM_ACCOUNT_ID, accountID);
         intent.putExtra(PARAM_CONTACT_URI, contactUri);
         intent.putExtra(PARAM_MESSAGE_CONTENT, msgContent);
 
@@ -630,6 +632,15 @@ public class SipServiceCommand implements SipServiceConstants {
         Intent intent = new Intent(context, SipService.class);
         intent.setAction(ACTION_GET_BUDDY_LIST);
         intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+
+        context.startService(intent);
+    }
+
+    public static void updateBuddyList(Context context, String accountID, ArrayList<SipBuddyData> buddyDataList) {
+        Intent intent = new Intent(context, SipService.class);
+        intent.setAction(ACTION_SET_BUDDY_LIST);
+        intent.putExtra(PARAM_ACCOUNT_ID, accountID);
+        intent.putExtra(PARAM_BUDDY_LIST, buddyDataList);
 
         context.startService(intent);
     }

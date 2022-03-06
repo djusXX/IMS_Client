@@ -14,16 +14,17 @@ import androidx.lifecycle.Lifecycle;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.databinding.NewBuddyFragmentBinding;
 
+import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 
 public class NewBuddyFragment extends Fragment {
 
     private NewBuddyFragmentBinding binding;
-    private String loggedUserID;
+    private SipAccountData loggedUser;
 
-    public NewBuddyFragment(String idUri) {
-        loggedUserID = idUri;
+    public NewBuddyFragment(SipAccountData loggedUser) {
+        this.loggedUser = loggedUser;
     }
 
 
@@ -43,14 +44,8 @@ public class NewBuddyFragment extends Fragment {
             SipBuddyData buddyData = new SipBuddyData();
             buddyData.setSipUri(binding.newChatSipUri.getText().toString());
             buddyData.setDisplayName(binding.newChatDisplayName.getText().toString());
-            SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), loggedUserID, buddyData);
+            SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), loggedUser.getIdUri(), buddyData);
 
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_fragment_container,
-                                new BuddyFragment(binding.getNewBuddy()), null).commit();
-            }
         });
     }
 

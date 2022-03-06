@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.data.entities.BuddyEntity;
-import com.example.ims_mobile_client.databinding.SingleBuddyBinding;
-
-import net.gotev.sipservice.SipBuddyData;
+import com.example.ims_mobile_client.databinding.SingleBuddyFragmentBinding;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -73,9 +71,9 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
 
     static class BuddyViewHolder extends RecyclerView.ViewHolder {
 
-        final SingleBuddyBinding binding;
+        final SingleBuddyFragmentBinding binding;
 
-        public BuddyViewHolder(SingleBuddyBinding binding) {
+        public BuddyViewHolder(SingleBuddyFragmentBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
@@ -84,8 +82,8 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
     @NotNull
     @Override
     public BuddyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        SingleBuddyBinding binding = DataBindingUtil
-                .inflate(LayoutInflater.from(parent.getContext()), R.layout.single_buddy, parent,false);
+        SingleBuddyFragmentBinding binding = DataBindingUtil
+                .inflate(LayoutInflater.from(parent.getContext()), R.layout.single_buddy_fragment, parent,false);
         binding.setCallback(buddyClickCallback);
         return new BuddyViewHolder(binding);
     }
@@ -95,6 +93,8 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
         holder.binding.setBuddy(buddyList.get(position));
         holder.binding.executePendingBindings();
     }
+
+
 
     @Override
     public int getItemCount() {
