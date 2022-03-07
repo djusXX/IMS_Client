@@ -4,19 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-public class AppPreferencesHelper {
+public class SavedData {
     private final SharedPreferences sharedPreferences;
 
-    private static AppPreferencesHelper INSTANCE = null;
-    private static final String TAG = AppPreferencesHelper.class.getSimpleName();
+    private static SavedData INSTANCE = null;
+    private static final String TAG = SavedData.class.getSimpleName();
 
-    private AppPreferencesHelper(Context context) {
+    private SavedData(Context context) {
         sharedPreferences = context.getSharedPreferences("imsmobileclient_prefs", Context.MODE_PRIVATE);;
     }
 
-    public static AppPreferencesHelper getInstance(Context context) {
+    public static SavedData getInstance(Context context) {
         if (INSTANCE == null) {
-            INSTANCE = new AppPreferencesHelper(context);
+            INSTANCE = new SavedData(context);
         }
         return INSTANCE;
     }

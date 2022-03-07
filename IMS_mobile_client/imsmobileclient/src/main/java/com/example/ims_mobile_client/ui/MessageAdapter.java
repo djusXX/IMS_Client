@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,14 +21,12 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
-    List<? extends MessageEntity> messageList;
-    private SipAccountData loggedUser;
-    private BuddyEntity buddyEntity;
+    private static List<? extends MessageEntity> messageList;
+    private final String usrSipUri;
 
-    public MessageAdapter(SipAccountData loggedUser, BuddyEntity buddyEntity) {
+    public MessageAdapter(String usrSipUri) {
         setHasStableIds(true);
-        this.loggedUser = loggedUser;
-        this.buddyEntity = buddyEntity;
+        this.usrSipUri = usrSipUri;
     }
 
     @NonNull
@@ -37,12 +36,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return new MessageViewHolder(binding);
     }
 
-
-
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         MessageEntity messageEntity = messageList.get(position);
-        holder.binding.setIsIncomingMessage(messageEntity.sip_uri_TO.equals(loggedUser.getIdUri()));
+        holder.binding.setIsIncomingMessage(messageEntity.sip_uri_TO.equals(usrSipUri));
         holder.binding.setMessage(messageEntity);
         holder.binding.executePendingBindings();
     }
@@ -94,7 +91,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         });
 
         messageList = newMessageList;
-        notifyItemInserted(messageList.size() - 1);
         result.dispatchUpdatesTo(this);
     }
 

@@ -22,7 +22,6 @@ public class CallEntity {
     @NonNull
     public String sip_uri_TO;
 
-    @NonNull
     public boolean is_video;
 
     @NonNull
@@ -31,7 +30,7 @@ public class CallEntity {
     @NonNull
     public String end_timestamp;
 
-    public CallEntity(String sip_uri_FROM, String sip_uri_TO, boolean is_video, String begin_timestamp, String end_timestamp) {
+    public CallEntity(@NonNull String sip_uri_FROM, @NonNull String sip_uri_TO, boolean is_video, @NonNull String begin_timestamp, @NonNull String end_timestamp) {
         this.sip_uri_FROM = sip_uri_FROM;
         this.sip_uri_TO = sip_uri_TO;
         this.is_video = is_video;

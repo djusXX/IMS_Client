@@ -19,7 +19,7 @@ public class BuddyEntity {
     @NonNull
     public String buddy_display_name;
 
-    public BuddyEntity(String user_sip_uri, String buddy_sip_uri, String buddy_display_name) {
+    public BuddyEntity(@NonNull String user_sip_uri, @NonNull String buddy_sip_uri, @NonNull String buddy_display_name) {
         this.user_sip_uri = user_sip_uri;
         this.buddy_sip_uri = buddy_sip_uri;
         this.buddy_display_name = buddy_display_name;

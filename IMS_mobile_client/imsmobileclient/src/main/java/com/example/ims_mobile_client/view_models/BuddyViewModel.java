@@ -26,6 +26,10 @@ public class BuddyViewModel extends AndroidViewModel {
 
     public LiveData<List<BuddyEntity>> getAllBuddies() { return buddies; }
 
+    public LiveData<List<BuddyEntity>> getBuddiesFor(String userSipUri) {
+        return repository.getBuddiesFor(userSipUri);
+    }
+
     public void addBuddy(BuddyEntity buddyEntity) { repository.addBuddy(buddyEntity); }
 
 }

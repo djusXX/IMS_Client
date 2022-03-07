@@ -26,19 +26,15 @@ import net.gotev.sipservice.SipServiceCommand;
 
 import java.util.Date;
 
-/*
-*   Fragment for conversation with current buddy
-*
-* */
 public class ConversationFragment extends Fragment {
 
-    private MessageAdapter messageAdapter;
+    private static MessageAdapter messageAdapter = null;
     private ConversationFragmentBinding binding;
-    private SipAccountData loggedUser;
-    private BuddyEntity buddyEntity;
+    private static String usrSipUri;
+    private final BuddyEntity buddyEntity;
 
-    public ConversationFragment(SipAccountData loggedUser, BuddyEntity buddyEntity) {
-        this.loggedUser = loggedUser;
+    public ConversationFragment(String usrSipUri, BuddyEntity buddyEntity) {
+        ConversationFragment.usrSipUri = usrSipUri;
         this.buddyEntity = buddyEntity;
     }
 
@@ -46,7 +42,7 @@ public class ConversationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.conversation_fragment, container, false);
-        messageAdapter = new MessageAdapter(loggedUser, buddyEntity);
+        messageAdapter = new MessageAdapter(usrSipUri);
         binding.conversationRecyclerViewer.setAdapter(messageAdapter);
         setHasOptionsMenu(true);
         return binding.getRoot();
@@ -57,7 +53,7 @@ public class ConversationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final MessageViewModel messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
 
-        messageViewModel.getAllMessages().observe(getViewLifecycleOwner(), messageEntities -> {
+        messageViewModel.getMessagesFor(usrSipUri, buddyEntity.buddy_sip_uri).observe(getViewLifecycleOwner(), messageEntities -> {
             if(messageEntities != null) {
                 messageAdapter.setMessages(messageEntities);
             }
@@ -66,12 +62,10 @@ public class ConversationFragment extends Fragment {
 
         binding.sendButton.setOnClickListener(v -> {
             Date date = new Date();
-            MessageEntity messageEntity = new MessageEntity(loggedUser.getIdUri(), buddyEntity.buddy_sip_uri, date.toString(), binding.messageInput.getText().toString());
+            MessageEntity messageEntity = new MessageEntity(usrSipUri, buddyEntity.buddy_sip_uri, date.toString(), binding.messageInput.getText().toString());
             messageViewModel.addMessage(messageEntity);
-            SipServiceCommand.sendMessage(requireActivity(), loggedUser.getIdUri(), buddyEntity.buddy_sip_uri, messageEntity.content);
+            SipServiceCommand.sendMessage(requireActivity().getApplicationContext(), usrSipUri, buddyEntity.buddy_sip_uri, messageEntity.content);
             binding.messageInput.setText("");
-            binding.conversationRecyclerViewer.getLayoutManager().scrollToPosition(messageAdapter.getItemCount() - 1);
-//            messageAdapter.notifyItemInserted(messageAdapter.getItemCount());
         });
     }
 
@@ -86,17 +80,17 @@ public class ConversationFragment extends Fragment {
         int id = item.getItemId();
         if (R.id.option_call_audio == id) {
             try {
-                SipServiceCommand.makeCall(requireActivity(), loggedUser.getIdUri(), buddyEntity.buddy_sip_uri);
+                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddyEntity.buddy_sip_uri);
             } catch (Exception exc) {
-                Toast.makeText(requireActivity(), "Error occurred while making Voice call:" + exc, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Error occurred while making Voice call:" + exc, Toast.LENGTH_LONG).show();
             }
             return true;
         }
         if (R.id.option_call_video == id) {
             try {
-                SipServiceCommand.makeCall(requireActivity(), loggedUser.getIdUri(), buddyEntity.buddy_sip_uri, true, false);
+                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddyEntity.buddy_sip_uri, true, false);
             } catch (Exception exc) {
-                Toast.makeText(requireActivity(), "Error occurred while making Video call:" + exc, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Error occurred while making Video call:" + exc, Toast.LENGTH_LONG).show();
             }
             return true;
         }

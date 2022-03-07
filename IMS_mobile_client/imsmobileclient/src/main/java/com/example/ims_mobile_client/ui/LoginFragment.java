@@ -4,54 +4,93 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.databinding.LoginFragmentBinding;
+import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 import com.example.ims_mobile_client.utils.AppConstants;
-import com.example.ims_mobile_client.utils.AppPreferencesHelper;
+import com.example.ims_mobile_client.utils.SavedData;
 
+import net.gotev.sipservice.BroadcastEventReceiver;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;
+
+import org.pjsip.pjsua2.pjsip_status_code;
 
 public class LoginFragment extends Fragment {
 
     public static final String TAG = "LoginFragment";
+    private LoginFragmentBinding binding = null;
 
-    private LoginFragmentBinding binding;
+    private BroadcastEventReceiver broadcastEventReceiver = new AppBroadcastEventReceiver() {
+        @Override
+        public void onRegistration(String accountID, int registrationStateCode) {
+            super.onRegistration(accountID, registrationStateCode);
+            if (accountID.isEmpty() && 400 == registrationStateCode) {
+                logInCurrentUser();
+            } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_fragment_container, new BuddyListFragment(accountID), BuddyListFragment.TAG)
+                        .commit();
+            } else {
+                Toast.makeText(getActivity(), "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        broadcastEventReceiver.register(requireActivity());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        broadcastEventReceiver.unregister(requireActivity());
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
-
         loadLastUser();
-
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.loginButton.setOnClickListener(v -> { logInCurrentUser(); });
+        binding.loginButton.setOnClickListener(v -> { checkRegistrationStatus(); });
     }
 
     @Override
     public void onDestroyView() {
         binding = null;
+        broadcastEventReceiver = null;
         super.onDestroyView();
     }
 
-    private void logInCurrentUser() {
-        SipAccountData accData = new SipAccountData();
+    private void checkRegistrationStatus() {
+        String usrSipUri = SavedData.getInstance(requireContext()).getString(AppConstants.USER_SIP_URI);
+        if (usrSipUri != null && !usrSipUri.isEmpty()) {
+            SipServiceCommand.getRegistrationStatus(requireContext().getApplicationContext(), usrSipUri);
+            return;
+        }
+        logInCurrentUser();
+    }
 
+    public void logInCurrentUser() {
+        SipAccountData accData = new SipAccountData();
         accData.setUsername(binding.username.getText().toString());
         accData.setPassword(binding.password.getText().toString());
         accData.setRealm(binding.realm.getText().toString());
-
         String pcscf = binding.pcscf.getText().toString();
         String host = pcscf.substring(0,pcscf.indexOf(":"));
         String portStr = pcscf.substring(pcscf.indexOf(":") + 1);
@@ -59,14 +98,12 @@ public class LoginFragment extends Fragment {
         accData.setHost(host);
         accData.setPort(port);
 
-        SipServiceCommand.getRegistrationStatus(requireActivity().getApplicationContext(), accData.getIdUri());
-
-        ((MainActivity) requireActivity()).setCurrentUser(accData);
+        SipServiceCommand.setAccount(requireContext().getApplicationContext(), accData);
         setLastUser(accData.getIdUri());
     }
 
     private void setLastUser(String sipUri) {
-        AppPreferencesHelper appPrefs = AppPreferencesHelper.getInstance(getActivity());
+        SavedData appPrefs = SavedData.getInstance(getActivity());
         appPrefs.setString(AppConstants.USER_DISPLAY_NAME, binding.displayName.getText().toString());
         appPrefs.setString(AppConstants.USER_NAME, binding.username.getText().toString());
         appPrefs.setString(AppConstants.USER_REALM, binding.realm.getText().toString());
@@ -75,7 +112,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void loadLastUser() {
-        AppPreferencesHelper appPrefs = AppPreferencesHelper.getInstance(getActivity());
+        SavedData appPrefs = SavedData.getInstance(getActivity());
         binding.displayName.setText(appPrefs.getString(AppConstants.USER_DISPLAY_NAME));
         binding.username.setText(appPrefs.getString(AppConstants.USER_NAME));
         binding.realm.setText(appPrefs.getString(AppConstants.USER_REALM));

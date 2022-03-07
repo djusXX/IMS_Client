@@ -28,6 +28,14 @@ public class CallViewModel extends AndroidViewModel {
         return calls;
     }
 
+    public LiveData<List<CallEntity>> getCallsFor(String usrSipUri) {
+        return repository.getCallsFor(usrSipUri);
+    }
+
+    public LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri) {
+        return repository.getCallsFor(usrSipUri, buddySipUri);
+    }
+
     public void addCall(CallEntity callEntity) {
         repository.addCall(callEntity);
     }

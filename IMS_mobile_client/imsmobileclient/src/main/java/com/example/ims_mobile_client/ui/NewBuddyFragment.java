@@ -20,11 +20,11 @@ import net.gotev.sipservice.SipServiceCommand;
 
 public class NewBuddyFragment extends Fragment {
 
-    private NewBuddyFragmentBinding binding;
-    private SipAccountData loggedUser;
+    private NewBuddyFragmentBinding binding = null;
+    private static String usrSipUri;
 
-    public NewBuddyFragment(SipAccountData loggedUser) {
-        this.loggedUser = loggedUser;
+    public NewBuddyFragment(String usrSipUri) {
+        NewBuddyFragment.usrSipUri = usrSipUri;
     }
 
 
@@ -32,7 +32,6 @@ public class NewBuddyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.new_buddy_fragment, container, false);
-
         return binding.getRoot();
     }
 
@@ -44,14 +43,15 @@ public class NewBuddyFragment extends Fragment {
             SipBuddyData buddyData = new SipBuddyData();
             buddyData.setSipUri(binding.newChatSipUri.getText().toString());
             buddyData.setDisplayName(binding.newChatDisplayName.getText().toString());
-            SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), loggedUser.getIdUri(), buddyData);
-
+            SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), usrSipUri, buddyData);
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
     }
 
     @Override
     public void onDestroyView() {
         binding = null;
+        usrSipUri = null;
         super.onDestroyView();
     }
 

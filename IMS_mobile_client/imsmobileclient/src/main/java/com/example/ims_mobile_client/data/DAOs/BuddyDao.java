@@ -23,4 +23,7 @@ public interface BuddyDao {
 
     @Query("select * from buddies_table")
     LiveData<List<BuddyEntity>> getAll();
+
+    @Query("select * from buddies_table where user_sip_uri = :usrSipUri")
+    LiveData<List<BuddyEntity>> getBuddiesFor(String usrSipUri);
 }

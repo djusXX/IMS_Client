@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="msgAdapter"
+            type="com.example.ims_mobile_client.ui.MessageAdapter" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,8 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/conversation_keyboard_view"
             app:layoutManager="LinearLayoutManager"
-            app:stackFromEnd="true"
-            />
+            app:stackFromEnd="true" />
 
         <RelativeLayout
             android:id="@+id/conversation_keyboard_view"

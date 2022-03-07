@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,13 +20,13 @@ import java.util.List;
 
 public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHolder> {
 
-    List<? extends BuddyEntity> buddyList;
+    private static List<? extends BuddyEntity> buddyList;
 
     @Nullable
     private final BuddyClickCallback buddyClickCallback;
 
 
-    public BuddyAdapter(BuddyClickCallback buddyClickCallback) {
+    public BuddyAdapter(@Nullable BuddyClickCallback buddyClickCallback) {
         this.buddyClickCallback = buddyClickCallback;
         setHasStableIds(true);
     }
@@ -81,7 +82,7 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
 
     @NotNull
     @Override
-    public BuddyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BuddyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         SingleBuddyFragmentBinding binding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()), R.layout.single_buddy_fragment, parent,false);
         binding.setCallback(buddyClickCallback);
@@ -94,12 +95,9 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
         holder.binding.executePendingBindings();
     }
 
-
-
     @Override
     public int getItemCount() {
         return buddyList == null ? 0 : buddyList.size();
-//        return 0;
     }
 
 }

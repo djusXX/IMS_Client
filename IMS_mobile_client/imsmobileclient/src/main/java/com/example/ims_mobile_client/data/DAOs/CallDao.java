@@ -24,4 +24,10 @@ public interface CallDao {
 
     @Query("select * from calls_table")
     LiveData<List<CallEntity>> getAll();
+
+    @Query("select * from calls_table where (sip_uri_TO = :usrSipUri or sip_uri_FROM = :usrSipUri)")
+    LiveData<List<CallEntity>> getCallsFor(String usrSipUri);
+
+    @Query("select * from calls_table where ((sip_uri_FROM = :usrSipUri and sip_uri_TO = :buddySipUri) or (sip_uri_FROM = :buddySipUri and sip_uri_TO = :usrSipUri))")
+    LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri);
 }

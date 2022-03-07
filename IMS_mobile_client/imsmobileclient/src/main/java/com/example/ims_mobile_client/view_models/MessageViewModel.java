@@ -26,6 +26,14 @@ public class MessageViewModel extends AndroidViewModel {
 
     public LiveData<List<MessageEntity>> getAllMessages() { return messages; }
 
+    public LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri) {
+        return repository.getMessagesFor(usrSipUri);
+    }
+
+    public LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri) {
+        return repository.getMessagesFor(usrSipUri, buddySipUri);
+    }
+
     public void addMessage(MessageEntity messageEntity) { repository.addMessage(messageEntity); }
 
 }

@@ -1,6 +1,7 @@
 package com.example.ims_mobile_client.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.databinding.BuddyListFragmentBinding;
 import com.example.ims_mobile_client.view_models.BuddyViewModel;
 
+import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
@@ -31,13 +33,12 @@ public class BuddyListFragment extends Fragment {
 
     public static final String TAG = "BuddyListFragment";
 
-    private BuddyAdapter buddyAdapter;
-    private BuddyListFragmentBinding binding;
+    private static BuddyAdapter buddyAdapter = null;
+    private BuddyListFragmentBinding binding = null;
+    private static String usrSipUri;
 
-    private SipAccountData loggedUser;
-
-    public BuddyListFragment(SipAccountData loggedUser) {
-        this.loggedUser = loggedUser;
+    public BuddyListFragment(String usrSipUri) {
+        BuddyListFragment.usrSipUri = usrSipUri;
     }
 
     @Nullable
@@ -53,9 +54,9 @@ public class BuddyListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
+        final BuddyViewModel buddyViewModel = new ViewModelProvider(this).get(BuddyViewModel.class);
 
-        buddyViewModel.getAllBuddies().observe(getViewLifecycleOwner(), buddies-> {
+        buddyViewModel.getBuddiesFor(usrSipUri).observe(getViewLifecycleOwner(), buddies-> {
             if (buddies != null) {
                 updateSubscription(buddies);
                 buddyAdapter.setBuddyList(buddies);
@@ -72,7 +73,9 @@ public class BuddyListFragment extends Fragment {
             buddyData.setSipUri(buddyEntity.buddy_sip_uri);
             buddyDataList.add(buddyData);
         });
-        SipServiceCommand.updateBuddyList(getActivity(), loggedUser.getIdUri(), buddyDataList);
+        if (usrSipUri != null && buddyDataList.size() > 0) {
+            SipServiceCommand.updateBuddyList(requireActivity().getApplicationContext(), usrSipUri, buddyDataList);
+        }
     }
 
     @Override
@@ -92,9 +95,8 @@ public class BuddyListFragment extends Fragment {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .addToBackStack("addNewBuddy")
-                        .replace(R.id.main_fragment_container,
-                                new NewBuddyFragment(loggedUser), null).commit();
+                        .add(R.id.main_fragment_container,
+                                new NewBuddyFragment(usrSipUri), null).commit();
             }
             return true;
         }
@@ -110,16 +112,17 @@ public class BuddyListFragment extends Fragment {
     public void onDestroyView() {
         binding = null;
         buddyAdapter = null;
+        usrSipUri = null;
         super.onDestroyView();
     }
 
     private final BuddyClickCallback buddyClickCallback = buddyEntity -> {
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            getActivity().getSupportFragmentManager()
+            requireActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .addToBackStack("Buddy")
+                    .addToBackStack("Conversation")
                     .replace(R.id.main_fragment_container,
-                            new ConversationFragment(loggedUser, buddyEntity), null).commit();
+                            new ConversationFragment(usrSipUri, buddyEntity), null).commit();
         }
     };
 

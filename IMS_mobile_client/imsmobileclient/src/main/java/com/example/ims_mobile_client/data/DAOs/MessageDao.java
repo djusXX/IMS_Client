@@ -23,4 +23,10 @@ public interface MessageDao {
 
     @Query("select * from messages_table")
     LiveData<List<MessageEntity>> getAll();
+
+    @Query("select * from messages_table where (sip_uri_FROM = :usrSipUri or sip_uri_TO = :usrSipUri)")
+    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri);
+
+    @Query("select * from messages_table where ((sip_uri_FROM = :usrSipUri and sip_uri_TO = :buddySipUri) or (sip_uri_FROM = :buddySipUri and sip_uri_TO = :usrSipUri))")
+    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri);
 }

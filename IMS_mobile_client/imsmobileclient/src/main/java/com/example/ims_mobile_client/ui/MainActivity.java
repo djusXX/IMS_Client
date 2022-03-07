@@ -9,42 +9,32 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
-import com.example.ims_mobile_client.view_models.BuddyViewModel;
-
-import net.gotev.sipservice.SipAccountData;
-import net.gotev.sipservice.SipServiceCommand;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
 
     protected AppBroadcastEventReceiver receiver = null;
-    protected SipAccountData currentUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SipServiceCommand.start(this);
         setContentView(R.layout.main_activity);
         requestPermissions();
-        receiver = new AppBroadcastEventReceiver();
-        receiver.register(this);
 
         if (savedInstanceState == null) {
             addLoginFragment();
+            receiver = new AppBroadcastEventReceiver();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (receiver != null)
-            receiver.unregister(this);
+        receiver.unregister(this);
     }
 
     @Override
@@ -93,15 +83,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setAccount() {
-        SipServiceCommand.setAccount(MainActivity.this, currentUser);
-    }
-
-    public void setCurrentUser(SipAccountData accData) {
-        currentUser = accData;
-    }
-
-    public SipAccountData getCurrentUser() { return currentUser; }
 
 
 }

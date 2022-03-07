@@ -14,9 +14,9 @@ public class AppRepository {
     private static AppRepository INSTANCE;
 
     private final AppDatabase db;
-    private MediatorLiveData<List<CallEntity>> observedCalls;
-    private MediatorLiveData<List<MessageEntity>> observedMessages;
-    private MediatorLiveData<List<BuddyEntity>> observedBuddies;
+    private final MediatorLiveData<List<CallEntity>> observedCalls;
+    private final MediatorLiveData<List<MessageEntity>> observedMessages;
+    private final MediatorLiveData<List<BuddyEntity>> observedBuddies;
 
     public AppRepository(final AppDatabase db) {
         this.db = db;
@@ -37,7 +37,9 @@ public class AppRepository {
 
         observedBuddies = new MediatorLiveData<>();
         observedBuddies.addSource(db.buddyDao().getAll(), buddyEntities -> {
-            observedBuddies.postValue(buddyEntities);
+            if(this.db.getDBCreated().getValue() != null) {
+                observedBuddies.postValue(buddyEntities);
+            }
         });
     }
 
@@ -80,5 +82,25 @@ public class AppRepository {
         AppDatabase.dbWriteExecutor.execute(() -> {
             db.buddyDao().insert(buddyEntity);
         });
+    }
+
+    public LiveData<List<BuddyEntity>> getBuddiesFor(String userSipUri) {
+        return db.buddyDao().getBuddiesFor(userSipUri);
+    }
+
+    public LiveData<List<MessageEntity>> getMessagesFor(String userSipUri) {
+        return db.messageDao().getMessagesFor(userSipUri);
+    }
+
+    public LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri) {
+        return db.messageDao().getMessagesFor(usrSipUri, buddySipUri);
+    }
+
+    public LiveData<List<CallEntity>> getCallsFor(String userSipUri) {
+        return db.callDao().getCallsFor(userSipUri);
+    }
+
+    public LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri) {
+        return db.callDao().getCallsFor(usrSipUri, buddySipUri);
     }
 }

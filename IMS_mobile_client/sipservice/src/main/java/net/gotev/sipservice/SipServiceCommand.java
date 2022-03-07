@@ -20,7 +20,7 @@ public class SipServiceCommand implements SipServiceConstants {
      * This should be changed on the app side
      * to reflect app version/name/... or whatever might be useful for debugging
      */
-    public static String AGENT_NAME = "AndroidSipService";
+    public static final String AGENT_NAME = "AndroidSipService";
 
     /**
      * Adds a new SIP account.
