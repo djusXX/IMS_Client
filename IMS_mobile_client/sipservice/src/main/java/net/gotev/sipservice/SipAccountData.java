@@ -244,8 +244,6 @@ public class SipAccountData implements Parcelable {
         accountConfig.getRegConfig().setRegistrarUri(getRegistrarUri());
         accountConfig.getRegConfig().setTimeoutSec(regExpirationTimeout);
 
-
-
         // account sip stuff configs
         accountConfig.getSipConfig().getAuthCreds().add(getIMSAuthCredInfo());
         accountConfig.getSipConfig().getProxies().add(getProxyUri());

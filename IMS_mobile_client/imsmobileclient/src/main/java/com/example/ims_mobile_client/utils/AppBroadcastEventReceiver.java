@@ -59,34 +59,34 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
         }
     }
 
-    @Override
-    public void onOutgoingCall(String accountID, int callID, String number, boolean isVideo, boolean isVideoConference) {
-        super.onOutgoingCall(accountID, callID, number, isVideo, isVideoConference);
-        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            OutgoingCallFragment outgoingCallFragment = new OutgoingCallFragment();
-            ((MainActivity) getReceiverContext()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack("outgoingCall")
-                    .setReorderingAllowed(true)
-                    .replace(R.id.main_fragment_container, outgoingCallFragment
-                            , null).commit();
-        }
-    }
-
-    @Override
-    public void onCallState(String accountID, int callID, int callStateCode, int callStatusCode, long connectTimestamp, boolean isLocalHold, boolean isLocalMute, boolean isLocalVideoMute) {
-        super.onCallState(accountID, callID, callStateCode, callStatusCode, connectTimestamp, isLocalHold, isLocalMute, isLocalVideoMute);
-        if (pjsip_inv_state.PJSIP_INV_STATE_NULL < callStateCode && callStateCode < pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED) {
-            if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                OutgoingCallFragment outgoingCallFragment = new OutgoingCallFragment();
-                ((MainActivity) getReceiverContext()).getSupportFragmentManager()
-                        .beginTransaction()
-                        .addToBackStack("outgoingCall")
-                        .setReorderingAllowed(true)
-                        .replace(R.id.main_fragment_container, outgoingCallFragment, null).commit();
-            }
-        }
-    }
+//    @Override
+//    public void onOutgoingCall(String accountID, int callID, String number, boolean isVideo, boolean isVideoConference) {
+//        super.onOutgoingCall(accountID, callID, number, isVideo, isVideoConference);
+//        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+//            OutgoingCallFragment outgoingCallFragment = new OutgoingCallFragment();
+//            ((MainActivity) getReceiverContext()).getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .addToBackStack("outgoingCall")
+//                    .setReorderingAllowed(true)
+//                    .replace(R.id.main_fragment_container, outgoingCallFragment
+//                            , null).commit();
+//        }
+//    }
+//
+//    @Override
+//    public void onCallState(String accountID, int callID, int callStateCode, int callStatusCode, long connectTimestamp, boolean isLocalHold, boolean isLocalMute, boolean isLocalVideoMute) {
+//        super.onCallState(accountID, callID, callStateCode, callStatusCode, connectTimestamp, isLocalHold, isLocalMute, isLocalVideoMute);
+//        if (pjsip_inv_state.PJSIP_INV_STATE_NULL < callStateCode && callStateCode < pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED) {
+//            if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+//                OutgoingCallFragment outgoingCallFragment = new OutgoingCallFragment();
+//                ((MainActivity) getReceiverContext()).getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .addToBackStack("outgoingCall")
+//                        .setReorderingAllowed(true)
+//                        .replace(R.id.main_fragment_container, outgoingCallFragment, null).commit();
+//            }
+//        }
+//    }
 
     @Override
     protected void onMessageReceived(String from, String to, String body) {
