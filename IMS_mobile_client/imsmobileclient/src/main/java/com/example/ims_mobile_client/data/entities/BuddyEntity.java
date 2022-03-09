@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.ims_mobile_client.model.AppBuddy;
+
 @Entity(tableName = "buddies_table")
-public class BuddyEntity {
+public class BuddyEntity implements AppBuddy {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -23,5 +25,15 @@ public class BuddyEntity {
         this.user_sip_uri = user_sip_uri;
         this.buddy_sip_uri = buddy_sip_uri;
         this.buddy_display_name = buddy_display_name;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return buddy_display_name;
+    }
+
+    @Override
+    public String getBuddyUri() {
+        return buddy_sip_uri;
     }
 }

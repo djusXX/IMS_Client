@@ -8,7 +8,6 @@ import android.view.Surface;
 
 import org.pjsip.pjsua2.AudDevManager;
 import org.pjsip.pjsua2.Buddy;
-import org.pjsip.pjsua2.BuddyVector2;
 import org.pjsip.pjsua2.CallVidSetStreamParam;
 import org.pjsip.pjsua2.CodecFmtpVector;
 import org.pjsip.pjsua2.CodecInfo;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -1169,7 +1167,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
             return;
         }
 
-        String buddyUri = buddyData.getSipUri();
+        String buddyUri = buddyData.getBuddyUri();
         SipBuddy sipBuddy = new SipBuddy(this, buddyData);
         try {
             sipBuddy.create(loggedAcc);
@@ -1222,7 +1220,7 @@ public class SipService extends BackgroundService implements SipServiceConstants
         }
 
         for (SipBuddyData buddy : buddyList) {
-            String buddyUri = buddy.getSipUri();
+            String buddyUri = buddy.getBuddyUri();
             SipBuddy sipBuddy = new SipBuddy(this, buddy);
             try {
                 sipBuddy.create(loggedAcc);

@@ -53,7 +53,7 @@ public class BroadcastEventEmitter implements SipServiceConstants {
         final Intent intent = new Intent();
 
         intent.setAction(getAction(BroadcastAction.BUDDY_PRESENCE_CHANGE));
-        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getSipUri());
+        intent.putExtra(PARAM_CONTACT_URI, sipBuddy.getData().getBuddyUri());
         intent.putExtra(PARAM_DISPLAY_NAME, sipBuddy.getData().getDisplayName());
 
 //        sendExplicitBroadcast(intent);

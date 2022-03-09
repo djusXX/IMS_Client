@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.view.Surface;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Triggers sip service commands.
@@ -413,7 +412,7 @@ public class SipServiceCommand implements SipServiceConstants {
 
     private static void checkAccount(String accountID) {
         if (accountID == null || accountID.isEmpty() || !accountID.startsWith("sip:")) {
-            throw new IllegalArgumentException("Invalid accountID! Example: sip:user@domain");
+            throw new IllegalArgumentException("Invalid accountID (" + accountID + ") Example: sip:user@domain");
         }
     }
 
@@ -601,7 +600,7 @@ public class SipServiceCommand implements SipServiceConstants {
             throw new IllegalArgumentException("buddyData MUST not be null!");
         }
 
-        String buddyUri = buddyData.getSipUri();
+        String buddyUri = buddyData.getBuddyUri();
         checkAccount(buddyUri);
         checkAccount(accountID);
 

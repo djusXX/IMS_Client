@@ -54,7 +54,7 @@ public class BuddyListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final BuddyViewModel buddyViewModel = new ViewModelProvider(this).get(BuddyViewModel.class);
+        final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
         buddyViewModel.getBuddiesFor(usrSipUri).observe(getViewLifecycleOwner(), buddies-> {
             if (buddies != null) {
@@ -65,7 +65,7 @@ public class BuddyListFragment extends Fragment {
         });
     }
 
-    private void updateSubscription(List<BuddyEntity> buddyEntities) {
+    private void updateSubscription(@NonNull List<BuddyEntity> buddyEntities) {
         ArrayList<SipBuddyData> buddyDataList = new ArrayList<SipBuddyData>();
         buddyEntities.forEach(buddyEntity -> {
             SipBuddyData buddyData = new  SipBuddyData();
@@ -85,7 +85,7 @@ public class BuddyListFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 //        if (R.id.contacts_menu_search == id) {
 //            // TODO: implement
@@ -93,10 +93,13 @@ public class BuddyListFragment extends Fragment {
 //        }
         if (R.id.chats_menu_new_chat == id) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                NewBuddyFragment newBuddyFragment =  new NewBuddyFragment(usrSipUri);
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .addToBackStack("NewBuddy")
+                        .setReorderingAllowed(true)
                         .add(R.id.main_fragment_container,
-                                new NewBuddyFragment(usrSipUri), null).commit();
+                                newBuddyFragment, null).commit();
             }
             return true;
         }
@@ -118,11 +121,13 @@ public class BuddyListFragment extends Fragment {
 
     private final BuddyClickCallback buddyClickCallback = buddyEntity -> {
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            ConversationFragment conversationFragment = new ConversationFragment(usrSipUri, buddyEntity.buddy_sip_uri);
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack("Conversation")
+                    .setReorderingAllowed(true)
                     .replace(R.id.main_fragment_container,
-                            new ConversationFragment(usrSipUri, buddyEntity), null).commit();
+                            conversationFragment, null).commit();
         }
     };
 

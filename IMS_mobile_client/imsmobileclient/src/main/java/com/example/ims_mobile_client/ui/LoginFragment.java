@@ -27,16 +27,19 @@ public class LoginFragment extends Fragment {
     public static final String TAG = "LoginFragment";
     private LoginFragmentBinding binding = null;
 
-    private BroadcastEventReceiver broadcastEventReceiver = new AppBroadcastEventReceiver() {
+    private final BroadcastEventReceiver broadcastEventReceiver = new BroadcastEventReceiver() {
         @Override
         public void onRegistration(String accountID, int registrationStateCode) {
             super.onRegistration(accountID, registrationStateCode);
             if (accountID.isEmpty() && 400 == registrationStateCode) {
                 logInCurrentUser();
             } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
+                BuddyListFragment buddyListFragment = new BuddyListFragment(accountID);
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_fragment_container, new BuddyListFragment(accountID), BuddyListFragment.TAG)
+//                        .addToBackStack("Registered")
+//                        .setReorderingAllowed(true)
+                        .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
                         .commit();
             } else {
                 Toast.makeText(getActivity(), "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
@@ -73,9 +76,11 @@ public class LoginFragment extends Fragment {
     @Override
     public void onDestroyView() {
         binding = null;
-        broadcastEventReceiver = null;
+//        broadcastEventReceiver = null;
         super.onDestroyView();
     }
+
+
 
     private void checkRegistrationStatus() {
         String usrSipUri = SavedData.getInstance(requireContext()).getString(AppConstants.USER_SIP_URI);

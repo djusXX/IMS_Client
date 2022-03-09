@@ -41,13 +41,13 @@ public class SipBuddy extends Buddy {
 
     @Override
     public void onBuddyState() {
-        Logger.debug(LOG_TAG, "called onBuddyState() of " + data.getSipUri());
+        Logger.debug(LOG_TAG, "called onBuddyState() of " + data.getBuddyUri());
         service.getBroadcastEmitter().buddyState(this);
     }
 
     @Override
     public void onBuddyEvSubState(OnBuddyEvSubStateParam prm) {
-        Logger.debug(LOG_TAG, "called onBuddyEvSubState() of " + data.getSipUri() + ", event type: " + prm.getE().getType());
+        Logger.debug(LOG_TAG, "called onBuddyEvSubState() of " + data.getBuddyUri() + ", event type: " + prm.getE().getType());
         Logger.debug(LOG_TAG, "whole message: " + prm.getE().getBody().getTxMsg().getTdata().getWholeMsg());
 
         service.getBroadcastEmitter().buddySubscriptionState(this, prm);

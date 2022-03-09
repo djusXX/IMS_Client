@@ -9,11 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.databinding.NewBuddyFragmentBinding;
+import com.example.ims_mobile_client.view_models.BuddyViewModel;
 
+import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
@@ -38,13 +43,15 @@ public class NewBuddyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
         binding.newChatAdd.setOnClickListener(v -> {
             SipBuddyData buddyData = new SipBuddyData();
             buddyData.setSipUri(binding.newChatSipUri.getText().toString());
             buddyData.setDisplayName(binding.newChatDisplayName.getText().toString());
             SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), usrSipUri, buddyData);
-            requireActivity().getSupportFragmentManager().popBackStack();
+            buddyViewModel.addBuddy(new BuddyEntity(usrSipUri, buddyData.getBuddyUri(), buddyData.getDisplayName()));
+            requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         });
     }
 

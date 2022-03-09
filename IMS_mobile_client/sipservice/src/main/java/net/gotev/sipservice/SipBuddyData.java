@@ -63,7 +63,7 @@ public class SipBuddyData implements Parcelable {
         return this;
     }
 
-    public String getSipUri() {
+    public String getBuddyUri() {
         return sipUri;
     }
 

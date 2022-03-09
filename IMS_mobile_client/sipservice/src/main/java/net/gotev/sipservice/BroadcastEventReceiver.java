@@ -4,10 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Parcelable;
-import android.widget.Toast;
-
-import org.pjsip.pjsua2.pjsip_status_code;
 
 import java.util.ArrayList;
 
@@ -216,7 +212,7 @@ public class BroadcastEventReceiver extends BroadcastReceiver implements SipServ
     }
 
     protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
-        Logger.debug(LOG_TAG, buddyData.getDisplayName() + "(" + buddyData.getSipUri() + ") added to " + accountID + " buddy list");
+        Logger.debug(LOG_TAG, buddyData.getDisplayName() + "(" + buddyData.getBuddyUri() + ") added to " + accountID + " buddy list");
     }
 
     protected void onMessageReceived(String from, String to, String body) {

@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
 
-    protected AppBroadcastEventReceiver receiver = null;
+    protected static AppBroadcastEventReceiver receiver = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addLoginFragment() {
+        LoginFragment loginFragment = new LoginFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_fragment_container, new LoginFragment(), LoginFragment.TAG)
+                .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
                 .commit();
     }
 

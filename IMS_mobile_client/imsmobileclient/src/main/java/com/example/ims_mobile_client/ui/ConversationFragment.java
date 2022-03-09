@@ -19,9 +19,10 @@ import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.data.entities.MessageEntity;
 import com.example.ims_mobile_client.databinding.ConversationFragmentBinding;
+import com.example.ims_mobile_client.model.AppBuddy;
 import com.example.ims_mobile_client.view_models.MessageViewModel;
 
-import net.gotev.sipservice.SipAccountData;
+import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 
 import java.util.Date;
@@ -31,11 +32,11 @@ public class ConversationFragment extends Fragment {
     private static MessageAdapter messageAdapter = null;
     private ConversationFragmentBinding binding;
     private static String usrSipUri;
-    private final BuddyEntity buddyEntity;
+    private static String buddySipUri;
 
-    public ConversationFragment(String usrSipUri, BuddyEntity buddyEntity) {
+    public ConversationFragment(String usrSipUri, String buddySipUri) {
         ConversationFragment.usrSipUri = usrSipUri;
-        this.buddyEntity = buddyEntity;
+        ConversationFragment.buddySipUri = buddySipUri;
     }
 
     @Nullable
@@ -53,7 +54,7 @@ public class ConversationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final MessageViewModel messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
 
-        messageViewModel.getMessagesFor(usrSipUri, buddyEntity.buddy_sip_uri).observe(getViewLifecycleOwner(), messageEntities -> {
+        messageViewModel.getMessagesFor(usrSipUri, buddySipUri).observe(getViewLifecycleOwner(), messageEntities -> {
             if(messageEntities != null) {
                 messageAdapter.setMessages(messageEntities);
             }
@@ -62,9 +63,9 @@ public class ConversationFragment extends Fragment {
 
         binding.sendButton.setOnClickListener(v -> {
             Date date = new Date();
-            MessageEntity messageEntity = new MessageEntity(usrSipUri, buddyEntity.buddy_sip_uri, date.toString(), binding.messageInput.getText().toString());
+            MessageEntity messageEntity = new MessageEntity(usrSipUri, buddySipUri, date.toString(), binding.messageInput.getText().toString());
             messageViewModel.addMessage(messageEntity);
-            SipServiceCommand.sendMessage(requireActivity().getApplicationContext(), usrSipUri, buddyEntity.buddy_sip_uri, messageEntity.content);
+            SipServiceCommand.sendMessage(requireActivity().getApplicationContext(), usrSipUri, buddySipUri, messageEntity.content);
             binding.messageInput.setText("");
         });
     }
@@ -80,7 +81,7 @@ public class ConversationFragment extends Fragment {
         int id = item.getItemId();
         if (R.id.option_call_audio == id) {
             try {
-                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddyEntity.buddy_sip_uri);
+                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddySipUri);
             } catch (Exception exc) {
                 Toast.makeText(getActivity(), "Error occurred while making Voice call:" + exc, Toast.LENGTH_LONG).show();
             }
@@ -88,7 +89,7 @@ public class ConversationFragment extends Fragment {
         }
         if (R.id.option_call_video == id) {
             try {
-                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddyEntity.buddy_sip_uri, true, false);
+                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddySipUri, true, false);
             } catch (Exception exc) {
                 Toast.makeText(getActivity(), "Error occurred while making Video call:" + exc, Toast.LENGTH_LONG).show();
             }
