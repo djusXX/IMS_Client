@@ -21,7 +21,6 @@ public interface SipServiceConstants {
     String ACTION_TOGGLE_HOLD = "callToggleHold";
     String ACTION_TOGGLE_MUTE = "callToggleMute";
     String ACTION_TRANSFER_CALL = "callTransfer";
-    String ACTION_ATTENDED_TRANSFER_CALL = "callAttendedTransfer";
     String ACTION_GET_CODEC_PRIORITIES = "codecPriorities";
     String ACTION_SET_CODEC_PRIORITIES = "setCodecPriorities";
     String ACTION_GET_REGISTRATION_STATUS = "getRegistrationStatus";
@@ -47,7 +46,6 @@ public interface SipServiceConstants {
     String PARAM_ACCOUNT_ID = "accountID";
     String PARAM_NUMBER = "number";
     String PARAM_CALL_ID = "callId";
-    String PARAM_CALL_ID_DEST = "callIdDest";
     String PARAM_DTMF = "dtmf";
     String PARAM_HOLD = "hold";
     String PARAM_MUTE = "mute";
@@ -62,7 +60,6 @@ public interface SipServiceConstants {
     String PARAM_GUEST_NAME = "guestName";
     String PARAM_DIRECT_CALL_URI = "sipUri";
     String PARAM_DIRECT_CALL_SIP_SERVER = "sipServer";
-    String PARAM_IS_TRANSFER = "isTransfer";
     String PARAM_CONTACT_URI = "contactUri";
     String PARAM_CONTACT_SUBSCRIBE = "contactSubscribe";
     String PARAM_MESSAGE_CONTENT = "messageContent";
@@ -75,6 +72,7 @@ public interface SipServiceConstants {
     String PARAM_BUDDY_DATA = "buddyData";
     String PARAM_BUDDY_LIST = "BuddyList";
 
+
     /**
      * Specific Parameters passed in the broadcast intents.
      */
@@ -86,8 +84,9 @@ public interface SipServiceConstants {
     String PARAM_CONNECT_TIMESTAMP = "connectTimestamp";
     String PARAM_STACK_STARTED = "stackStarted";
     String PARAM_CODEC_PRIORITIES_LIST = "codecPrioritiesList";
-    String PARAM_MEDIA_STATE_KEY = "mediaStateKey";
-    String PARAM_MEDIA_STATE_VALUE = "mediaStateValue";
+    String PARAM_LOCAL_HOLD = "localHold";
+    String PARAM_LOCAL_MUTE = "localMute";
+    String PARAM_LOCAL_VIDEO_MUTE = "localVideoMute";
     String PARAM_VIDEO_MUTE = "videoMute";
     String PARAM_SUCCESS = "success";
     String PARAM_INCOMING_VIDEO_WIDTH = "incomingVideoWidth";
@@ -124,5 +123,5 @@ public interface SipServiceConstants {
     /**
      * Generic Constants
      */
-    int DELAYED_JOB_DEFAULT_DELAY = 5000;
+    int DELAYED_JOB_DEFAULT_DELAY = 10000;// 5000;
 }

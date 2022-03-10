@@ -11,8 +11,6 @@ import org.pjsip.pjsua2.pjsip_status_code;
 import java.util.HashMap;
 import java.util.Set;
 
-import static net.gotev.sipservice.ObfuscationHelper.getValue;
-
 /**
  * Wrapper around PJSUA2 Account object.
  * @author gotev (Aleksandar Gotev)
@@ -68,13 +66,11 @@ public class SipAccount extends Account {
 
         SipCall call = new SipCall(this, callId);
         activeCalls.put(callId, call);
-        Logger.debug(LOG_TAG, "Added incoming call with ID " + callId
-                + " to " + getValue(service.getApplicationContext(), data.getIdUri())
-        );
+        Logger.debug(LOG_TAG, "Added incoming call with ID " + callId + " to " + data.getIdUri());
         return call;
     }
 
-    public SipCall addOutgoingCall(final String numberToDial, boolean isVideo, boolean isVideoConference, boolean isTransfer) {
+    public SipCall addOutgoingCall(final String numberToDial, boolean isVideo, boolean isVideoConference) {
 
         // check if there's already an ongoing call
         int totalCalls = 0;
@@ -83,7 +79,7 @@ public class SipAccount extends Account {
         }
 
         // allow calls only if there are no other ongoing calls
-        if (totalCalls <= (isTransfer ? 1 : 0)) {
+        if (totalCalls == 0) {
             SipCall call = new SipCall(this);
             call.setVideoParams(isVideo, isVideoConference);
 
@@ -112,7 +108,7 @@ public class SipAccount extends Account {
     }
 
     public SipCall addOutgoingCall(final String numberToDial) {
-        return addOutgoingCall(numberToDial, false, false, false);
+        return addOutgoingCall(numberToDial, false, false);
     }
 
     @Override
@@ -224,8 +220,10 @@ public class SipAccount extends Account {
             CallInfo callInfo = call.getInfo();
             boolean isVideo = (callInfo.getRemOfferer() && callInfo.getRemVideoCount() > 0);
 
+            Logger.debug(LOG_TAG, "Sending incomingCall broadcast!");
             service.getBroadcastEmitter().incomingCall(data.getIdUri(), prm.getCallId(),
                             displayName, remoteUri, isVideo);
+            Logger.debug(LOG_TAG, "incomingCall broadcast sent!");
 
         } catch (Exception ex) {
             Logger.error(LOG_TAG, "Error while getting caller info", ex);
