@@ -33,19 +33,6 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
 
     private static final String LOG_TAG = "AppBroadcastEventReceiver";
 
-//    private static MainActivity mainActivity = null;
-//
-//    @Override
-//    public void register(Context context) {
-//        super.register(context);
-//        mainActivity = (MainActivity) context;
-//    }
-//
-//    @Override
-//    public void unregister(Context context) {
-//        super.unregister(context);
-//    }
-
     @Override
     protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
         super.onBuddyAdded(accountID, buddyData);

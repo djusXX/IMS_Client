@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.databinding.LoginFragmentBinding;
-import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 import com.example.ims_mobile_client.utils.AppConstants;
 import com.example.ims_mobile_client.utils.SavedData;
 
@@ -27,7 +26,7 @@ public class LoginFragment extends Fragment {
     public static final String TAG = "LoginFragment";
     private LoginFragmentBinding binding = null;
 
-    private final BroadcastEventReceiver broadcastEventReceiver = new BroadcastEventReceiver() {
+    private final BroadcastEventReceiver receiver = new BroadcastEventReceiver() {
         @Override
         public void onRegistration(String accountID, int registrationStateCode) {
             super.onRegistration(accountID, registrationStateCode);
@@ -50,13 +49,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        broadcastEventReceiver.register(requireActivity());
+        receiver.register(requireActivity());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        broadcastEventReceiver.unregister(requireActivity());
+        receiver.unregister(requireActivity());
     }
 
     @Nullable
@@ -76,7 +75,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onDestroyView() {
         binding = null;
-//        broadcastEventReceiver = null;
         super.onDestroyView();
     }
 
