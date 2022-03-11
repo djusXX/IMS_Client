@@ -23,39 +23,17 @@ import org.pjsip.pjsua2.pjsip_status_code;
 
 public class LoginFragment extends Fragment {
 
-    public static final String TAG = "LoginFragment";
+    public static final String TAG = LoginFragment.class.getName();
     private LoginFragmentBinding binding = null;
-
-    private final BroadcastEventReceiver receiver = new BroadcastEventReceiver() {
-        @Override
-        public void onRegistration(String accountID, int registrationStateCode) {
-            super.onRegistration(accountID, registrationStateCode);
-            if (accountID.isEmpty() && 400 == registrationStateCode) {
-                logInCurrentUser();
-            } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
-                BuddyListFragment buddyListFragment = new BuddyListFragment(accountID);
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-//                        .addToBackStack("Registered")
-//                        .setReorderingAllowed(true)
-                        .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
-                        .commit();
-            } else {
-                Toast.makeText(getActivity(), "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
 
     @Override
     public void onResume() {
         super.onResume();
-        receiver.register(requireActivity());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        receiver.unregister(requireActivity());
     }
 
     @Nullable

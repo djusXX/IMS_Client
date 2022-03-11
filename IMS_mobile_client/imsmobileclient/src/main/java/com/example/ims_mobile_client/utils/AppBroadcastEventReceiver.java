@@ -31,19 +31,32 @@ import java.util.Date;
 
 public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
 
-    private static final String LOG_TAG = "AppBroadcastEventReceiver";
+    private static final String TAG = AppBroadcastEventReceiver.class.getName();
+
+    @Override
+    public void onRegistration(String accountID, int registrationStateCode) {
+        super.onRegistration(accountID, registrationStateCode);
+        if (accountID.isEmpty() && 400 == registrationStateCode) {
+            ((MainActivity) getReceiverContext()).logInUser();
+        } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
+            ((MainActivity) getReceiverContext()).onUserLogged(accountID);
+        } else {
+            ((MainActivity) getReceiverContext()).onLoginError(registrationStateCode);
+        }
+    }
 
     @Override
     protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
         super.onBuddyAdded(accountID, buddyData);
-        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            ConversationFragment conversationFragment = new ConversationFragment(accountID, buddyData.getBuddyUri());
-            ((MainActivity) getReceiverContext()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack("BuddyAdded")
-                    .setReorderingAllowed(true)
-                    .replace(R.id.main_fragment_container, conversationFragment , null).commit();
-        }
+        final BuddyViewModel buddyViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(BuddyViewModel.class);
+        buddyViewModel.addBuddy(new BuddyEntity(accountID, buddyData));
+    }
+
+    @Override
+    protected void onMessageReceived(String from, String to, String body) {
+        super.onMessageReceived(from, to, body);
+        final MessageViewModel messageViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(MessageViewModel.class);
+        messageViewModel.addMessage(new MessageEntity(from, to, new Date().toString(), body));
     }
 
 //    @Override
@@ -75,12 +88,6 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
 //        }
 //    }
 
-    @Override
-    protected void onMessageReceived(String from, String to, String body) {
-        super.onMessageReceived(from, to, body);
-        final MessageViewModel messageViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(MessageViewModel.class);
-        messageViewModel.addMessage(new MessageEntity(from, to, new Date().toString(), body));
-    }
 
     @Override
     public void onIncomingCall(String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {

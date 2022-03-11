@@ -31,9 +31,9 @@ import java.util.List;
 
 public class BuddyListFragment extends Fragment {
 
-    public static final String TAG = "BuddyListFragment";
+    public static final String TAG = BuddyListFragment.class.getName();
 
-    private static BuddyAdapter buddyAdapter = null;
+    private BuddyAdapter buddyAdapter = null;
     private BuddyListFragmentBinding binding = null;
     private static String usrSipUri;
 
@@ -44,6 +44,7 @@ public class BuddyListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Logger.debug(TAG, "inside method onCreateView()===================================================================================");
         binding = DataBindingUtil.inflate(inflater, R.layout.buddy_list_fragment, container, false);
         buddyAdapter = new BuddyAdapter(buddyClickCallback);
         binding.buddyListRecyclerView.setAdapter(buddyAdapter);
@@ -53,6 +54,7 @@ public class BuddyListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Logger.debug(TAG, "inside method onViewCreated()===================================================================================");
         super.onViewCreated(view, savedInstanceState);
         final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
@@ -113,6 +115,7 @@ public class BuddyListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        Logger.debug(TAG, "inside method onDestroyView()===================================================================================");
         binding = null;
         buddyAdapter = null;
         usrSipUri = null;
@@ -121,13 +124,7 @@ public class BuddyListFragment extends Fragment {
 
     private final BuddyClickCallback buddyClickCallback = buddyEntity -> {
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            ConversationFragment conversationFragment = new ConversationFragment(usrSipUri, buddyEntity.buddy_sip_uri);
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack("Conversation")
-                    .setReorderingAllowed(true)
-                    .replace(R.id.main_fragment_container,
-                            conversationFragment, null).commit();
+            ((MainActivity) requireActivity()).loadConversationFragment(usrSipUri, buddyEntity.buddy_sip_uri);
         }
     };
 

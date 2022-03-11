@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
 
-    protected static AppBroadcastEventReceiver receiver = null;
+    protected AppBroadcastEventReceiver receiver = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions();
 
         if (savedInstanceState == null) {
-            addLoginFragment();
             receiver = new AppBroadcastEventReceiver();
+            addLoginFragment();
         }
     }
 
@@ -51,6 +51,36 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void logInUser() {
+        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(LoginFragment.TAG);
+        if (loginFragment != null) { loginFragment.logInCurrentUser(); }
+    }
+
+    public void onUserLogged(String accountID) {
+        BuddyListFragment buddyListFragment = new BuddyListFragment(accountID);
+        getSupportFragmentManager()
+                .beginTransaction()
+//                        .addToBackStack("Registered")
+//                        .setReorderingAllowed(true)
+                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
+                .commit();
+    }
+
+    public void onLoginError(int registrationStateCode) {
+        Toast.makeText(this, "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadConversationFragment(String usrSipUri, String buddy_sip_uri) {
+        ConversationFragment conversationFragment = new ConversationFragment(usrSipUri, buddy_sip_uri);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("Conversation")
+                .setReorderingAllowed(true)
+                .replace(R.id.main_fragment_container,
+                        conversationFragment, ConversationFragment.TAG).commit();
+    }
+
+    /** TODO: Consider update below checking permissions!!!!!!!!!!!!!!!!! **/
     private void requestPermissions() {
         String[] p = {
                 Manifest.permission.RECORD_AUDIO,
@@ -83,7 +113,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "ALL required permissions granted :)", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 }

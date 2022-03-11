@@ -25,6 +25,8 @@ import net.gotev.sipservice.SipServiceCommand;
 
 public class NewBuddyFragment extends Fragment {
 
+    public static final String TAG = NewBuddyFragment.class.getName();
+
     private NewBuddyFragmentBinding binding = null;
     private static String usrSipUri;
 
@@ -36,27 +38,34 @@ public class NewBuddyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Logger.debug(TAG, "inside method onCreateView()===================================================================================");
+        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
+        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
         binding = DataBindingUtil.inflate(inflater, R.layout.new_buddy_fragment, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Logger.debug(TAG, "inside method onViewCreated()===================================================================================");
+        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
+        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
         super.onViewCreated(view, savedInstanceState);
-        final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
         binding.newChatAdd.setOnClickListener(v -> {
             SipBuddyData buddyData = new SipBuddyData();
             buddyData.setSipUri(binding.newChatSipUri.getText().toString());
             buddyData.setDisplayName(binding.newChatDisplayName.getText().toString());
-            SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), usrSipUri, buddyData);
-            buddyViewModel.addBuddy(new BuddyEntity(usrSipUri, buddyData.getBuddyUri(), buddyData.getDisplayName()));
-            requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+            SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), NewBuddyFragment.usrSipUri, buddyData);
+            requireActivity().getSupportFragmentManager().beginTransaction().remove(NewBuddyFragment.this).commit();
         });
     }
 
     @Override
     public void onDestroyView() {
+        Logger.debug(TAG, "inside method onDestroyView()===================================================================================");
+        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
+        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
         binding = null;
         usrSipUri = null;
         super.onDestroyView();

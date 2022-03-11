@@ -29,6 +29,8 @@ import java.util.Date;
 
 public class ConversationFragment extends Fragment {
 
+    public static final String TAG = ConversationFragment.class.getName();
+
     private static MessageAdapter messageAdapter = null;
     private ConversationFragmentBinding binding;
     private static String usrSipUri;
