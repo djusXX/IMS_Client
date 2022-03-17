@@ -7,11 +7,13 @@
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_incoming_call.xml" value="0.16259057971014493" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_login.xml" value="0.10005065856129686" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_new_chat.xml" value="0.16259057971014493" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_outgoing_call.xml" value="0.16530797101449277" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/buddies_list_fragment.xml" value="0.12318840579710146" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/buddy_list_fragment.xml" value="0.19519927536231885" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/buddy_list_fragment22.xml" value="0.19519927536231885" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/chats_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/conversation_fragment.xml" value="0.18" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/incoming_call_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/login_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/main_activity.xml" value="0.20572916666666666" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/message_fragment.xml" value="0.19972826086956522" />
@@ -21,6 +23,7 @@
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/message_out_view.xml" value="0.16259057971014493" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/new_buddy_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/new_chat_fragment.xml" value="0.19972826086956522" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/pre_call_fragment.xml" value="0.22" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/single_buddy.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/single_buddy_fragment.xml" value="0.1" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/menu/chats_menu.xml" value="0.20572916666666666" />

@@ -13,11 +13,16 @@ import androidx.core.content.ContextCompat;
 import com.example.ims_mobile_client.R;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 
+import net.gotev.sipservice.Logger;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
+    private static final String TAG = MainActivity.class.getName();
 
     protected AppBroadcastEventReceiver receiver = null;
+
+    private static String usrSipUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onUserLogged(String accountID) {
+        usrSipUri = accountID;
         BuddyListFragment buddyListFragment = new BuddyListFragment(accountID);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -78,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container,
                         conversationFragment, ConversationFragment.TAG).commit();
+    }
+
+    public void loadPreCallFragment(boolean isIncoming, String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {
+        if (!accountID.equals(usrSipUri)) {
+            Logger.debug(TAG, "call for not logged user: " + remoteUri);
+            return;
+        }
+
+        PreCallFragment preCallFragment = new PreCallFragment(isIncoming, accountID, callID, displayName, remoteUri, isVideo);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("preCall")
+                .setReorderingAllowed(true)
+                .replace(R.id.main_fragment_container, preCallFragment, null).commit();
+    }
+
+    public void loadActiveCallFragment() {
     }
 
     /** TODO: Consider update below checking permissions!!!!!!!!!!!!!!!!! **/
