@@ -1,3 +1,4 @@
 rootProject.name='IMS_mobile_client'
 include ':imsmobileclient'
 include ':sipservice'
+project(':sipservice').projectDir = new File('../pjsip-android/sipservice')
