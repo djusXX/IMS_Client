@@ -47,26 +47,27 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
         messageViewModel.addMessage(new MessageEntity(from, to, new Date().toString(), body));
     }
 
-//    @Override
-//    public void onOutgoingCall(String accountID, int callID, String number, boolean isVideo, boolean isVideoConference) {
-//        super.onOutgoingCall(accountID, callID, number, isVideo, isVideoConference);
-//        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-//            OutgoingCallFragment outgoingCallFragment = new OutgoingCallFragment();
-//            ((MainActivity) getReceiverContext()).getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .addToBackStack("outgoingCall")
-//                    .setReorderingAllowed(true)
-//                    .replace(R.id.main_fragment_container, outgoingCallFragment
-//                            , null).commit();
-//        }
-//    }
+    @Override
+    public void onOutgoingCall(String accountID, int callID, String number, boolean isVideo, boolean isVideoConference, boolean isTransfer) {
+        super.onOutgoingCall(accountID, callID, number, isVideo, isVideoConference, isTransfer);
+        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            ((MainActivity) getReceiverContext()).loadPreCallFragment(false, accountID, callID, "", number, isVideo);
+        }
+    }
 
     @Override
     public void onCallState(String accountID, int callID, int callStateCode, int callStatusCode, long connectTimestamp) {
         super.onCallState(accountID, callID, callStateCode, callStatusCode, connectTimestamp);
-        if (callStateCode == pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED
-                && ((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            ((MainActivity) getReceiverContext()).loadActiveCallFragment();
+
+        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            if (callStateCode == pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED) {
+                ((MainActivity) getReceiverContext()).loadActiveCallFragment();
+            }
+
+            if (callStatusCode == pjsip_status_code.PJSIP_SC_DECLINE) {
+                ((MainActivity) getReceiverContext()).getSupportFragmentManager().popBackStack();
+            }
+
         }
 
     }
