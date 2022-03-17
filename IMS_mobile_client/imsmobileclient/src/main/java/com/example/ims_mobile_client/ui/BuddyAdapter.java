@@ -100,4 +100,8 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
         return buddyList == null ? 0 : buddyList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return buddyList.get(position).id;
+    }
 }

@@ -44,7 +44,7 @@ public class BuddyListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.debug(TAG, "inside method onCreateView()===================================================================================");
+//        Logger.debug(TAG, "inside method BuddyListFragment::onCreateView()===================================================================================");
         binding = DataBindingUtil.inflate(inflater, R.layout.buddy_list_fragment, container, false);
         buddyAdapter = new BuddyAdapter(buddyClickCallback);
         binding.buddyListRecyclerView.setAdapter(buddyAdapter);
@@ -54,7 +54,7 @@ public class BuddyListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Logger.debug(TAG, "inside method onViewCreated()===================================================================================");
+//        Logger.debug(TAG, "inside method BuddyListFragment::onViewCreated()===================================================================================");
         super.onViewCreated(view, savedInstanceState);
         final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
@@ -100,8 +100,8 @@ public class BuddyListFragment extends Fragment {
                         .beginTransaction()
                         .addToBackStack("NewBuddy")
                         .setReorderingAllowed(true)
-                        .add(R.id.main_fragment_container,
-                                newBuddyFragment, null).commit();
+                        .replace(R.id.main_fragment_container,
+                                newBuddyFragment, NewBuddyFragment.TAG).commit();
             }
             return true;
         }
@@ -115,10 +115,9 @@ public class BuddyListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Logger.debug(TAG, "inside method onDestroyView()===================================================================================");
+//        Logger.debug(TAG, "inside method BuddyListFragment::onDestroyView()===================================================================================");
         binding = null;
         buddyAdapter = null;
-        usrSipUri = null;
         super.onDestroyView();
     }
 

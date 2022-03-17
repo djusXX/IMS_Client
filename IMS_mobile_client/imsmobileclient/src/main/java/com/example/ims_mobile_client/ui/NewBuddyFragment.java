@@ -38,18 +38,18 @@ public class NewBuddyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.debug(TAG, "inside method onCreateView()===================================================================================");
-        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
-        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
+//        Logger.debug(TAG, "inside method onCreateView()===================================================================================");
+//        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
+//        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
         binding = DataBindingUtil.inflate(inflater, R.layout.new_buddy_fragment, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Logger.debug(TAG, "inside method onViewCreated()===================================================================================");
-        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
-        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
+//        Logger.debug(TAG, "inside method onViewCreated()===================================================================================");
+//        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
+//        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
         super.onViewCreated(view, savedInstanceState);
 
         binding.newChatAdd.setOnClickListener(v -> {
@@ -57,17 +57,20 @@ public class NewBuddyFragment extends Fragment {
             buddyData.setSipUri(binding.newChatSipUri.getText().toString());
             buddyData.setDisplayName(binding.newChatDisplayName.getText().toString());
             SipServiceCommand.addBuddy(requireActivity().getApplicationContext(), NewBuddyFragment.usrSipUri, buddyData);
-            requireActivity().getSupportFragmentManager().beginTransaction().remove(NewBuddyFragment.this).commit();
+            requireActivity().getSupportFragmentManager().popBackStack();
+
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                ((MainActivity) requireActivity()).loadConversationFragment(usrSipUri, buddyData.getBuddyUri());
+            }
         });
     }
 
     @Override
     public void onDestroyView() {
-        Logger.debug(TAG, "inside method onDestroyView()===================================================================================");
-        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
-        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
+//        Logger.debug(TAG, "inside method onDestroyView()===================================================================================");
+//        Logger.debug(TAG, "binding(" + binding + ")===================================================================================");
+//        Logger.debug(TAG, "usrSipUri(" + usrSipUri + ")===================================================================================");
         binding = null;
-        usrSipUri = null;
         super.onDestroyView();
     }
 
