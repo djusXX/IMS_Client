@@ -4,9 +4,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ims_mobile_client.data.entities.BuddyEntity;
+import com.example.ims_mobile_client.data.entities.CallEntity;
 import com.example.ims_mobile_client.data.entities.MessageEntity;
 import com.example.ims_mobile_client.ui.MainActivity;
 import com.example.ims_mobile_client.view_models.BuddyViewModel;
+import com.example.ims_mobile_client.view_models.CallViewModel;
 import com.example.ims_mobile_client.view_models.MessageViewModel;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
@@ -61,7 +63,7 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
 
         if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             if (callStateCode == pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED) {
-                ((MainActivity) getReceiverContext()).loadActiveCallFragment();
+                ((MainActivity) getReceiverContext()).loadActiveCallFragment(accountID, callID);
             }
 
             if (callStatusCode == pjsip_status_code.PJSIP_SC_DECLINE) {
@@ -76,6 +78,10 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
     @Override
     public void onIncomingCall(String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {
         super.onIncomingCall(accountID, callID, displayName, remoteUri, isVideo);
+
+        final CallViewModel callViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(CallViewModel.class);
+        callViewModel.addCall(new CallEntity(remoteUri, accountID, isVideo, "", ""));
+
         if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             ((MainActivity) getReceiverContext()).loadPreCallFragment(true, accountID, callID, displayName, remoteUri, isVideo);
         }

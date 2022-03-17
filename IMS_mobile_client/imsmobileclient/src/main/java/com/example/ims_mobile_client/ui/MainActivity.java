@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.ims_mobile_client.R;
+import com.example.ims_mobile_client.data.entities.CallEntity;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 
 import net.gotev.sipservice.Logger;
@@ -100,7 +101,15 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.main_fragment_container, preCallFragment, null).commit();
     }
 
-    public void loadActiveCallFragment() {
+    public void loadActiveCallFragment(String accountID, int callID) {
+
+        ActiveCallFragment activeCallFragment = new ActiveCallFragment(accountID, callID, true);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("activeCall")
+                .setReorderingAllowed(true)
+                .replace(R.id.main_fragment_container, activeCallFragment, null).commit();
+
     }
 
     /** TODO: Consider update below checking permissions!!!!!!!!!!!!!!!!! **/
