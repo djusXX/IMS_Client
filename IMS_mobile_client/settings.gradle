@@ -1,4 +1,5 @@
 rootProject.name='IMS_mobile_client'
 include ':imsmobileclient'
 include ':sipservice'
+// comment below line and sync gradle project to copy sipservice files to IMS_Client repository
 project(':sipservice').projectDir = new File('../pjsip-android/sipservice')
