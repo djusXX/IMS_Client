@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void logInUser() {
+    public void logInUser(int registrationStateCode) {
         LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(LoginFragment.TAG);
-        if (loginFragment != null) { loginFragment.logInCurrentUser(); }
+        if (loginFragment != null) { loginFragment.logInCurrentUser(registrationStateCode); }
     }
 
     public void onUserLogged(String accountID) {
@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         BuddyListFragment buddyListFragment = new BuddyListFragment(accountID);
         getSupportFragmentManager()
                 .beginTransaction()
-//                        .addToBackStack("Registered")
-//                        .setReorderingAllowed(true)
                 .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
                 .commit();
     }

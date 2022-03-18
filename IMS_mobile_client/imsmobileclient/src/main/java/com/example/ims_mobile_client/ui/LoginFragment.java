@@ -64,10 +64,10 @@ public class LoginFragment extends Fragment {
             SipServiceCommand.getRegistrationStatus(requireContext().getApplicationContext(), usrSipUri);
             return;
         }
-        logInCurrentUser();
+        logInCurrentUser(-1);
     }
 
-    public void logInCurrentUser() {
+    public void logInCurrentUser(int registrationStateCode) {
         SipAccountData accData = new SipAccountData();
         accData.setUsername(binding.username.getText().toString());
         accData.setPassword(binding.password.getText().toString());
@@ -79,7 +79,8 @@ public class LoginFragment extends Fragment {
         accData.setHost(host);
         accData.setPort(port);
 
-        SipServiceCommand.setAccount(requireContext().getApplicationContext(), accData);
+        boolean isAKAAuth = registrationStateCode == 401;
+        SipServiceCommand.setAccount(requireContext().getApplicationContext(), accData, isAKAAuth);
         setLastUser(accData.getIdUri());
     }
 

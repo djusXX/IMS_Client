@@ -26,10 +26,10 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
     @Override
     public void onRegistration(String accountID, int registrationStateCode) {
         super.onRegistration(accountID, registrationStateCode);
-        if (accountID.isEmpty() && 400 == registrationStateCode) {
-            ((MainActivity) getReceiverContext()).logInUser();
-        } else if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
+        if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
             ((MainActivity) getReceiverContext()).onUserLogged(accountID);
+        } else if (accountID.isEmpty() && (400 == registrationStateCode || 401 == registrationStateCode)) {
+            ((MainActivity) getReceiverContext()).logInUser(registrationStateCode);
         } else {
             ((MainActivity) getReceiverContext()).onLoginError(registrationStateCode);
         }
@@ -66,9 +66,14 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
                 ((MainActivity) getReceiverContext()).loadActiveCallFragment(accountID, callID);
             }
 
+            if (callStateCode == pjsip_inv_state.PJSIP_INV_STATE_DISCONNECTED || callStateCode == pjsip_inv_state.PJSIP_INV_STATE_NULL) {
+                ((MainActivity) getReceiverContext()).getSupportFragmentManager().popBackStack();
+            }
+
             if (callStatusCode == pjsip_status_code.PJSIP_SC_DECLINE) {
                 ((MainActivity) getReceiverContext()).getSupportFragmentManager().popBackStack();
             }
+
 
         }
 
