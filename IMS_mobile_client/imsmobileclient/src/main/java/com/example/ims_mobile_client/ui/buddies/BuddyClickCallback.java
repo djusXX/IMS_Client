@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.ui;
+package com.example.ims_mobile_client.ui.buddies;
 
 import com.example.ims_mobile_client.data.entities.BuddyEntity;
 

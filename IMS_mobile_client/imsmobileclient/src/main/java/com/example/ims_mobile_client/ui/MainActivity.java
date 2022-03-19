@@ -11,7 +11,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.data.entities.CallEntity;
+import com.example.ims_mobile_client.ui.buddies.BuddyListFragment;
+import com.example.ims_mobile_client.ui.calls.ActiveCallFragment;
+import com.example.ims_mobile_client.ui.calls.PreCallFragment;
+import com.example.ims_mobile_client.ui.conversations.ConversationFragment;
 import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
 
 import net.gotev.sipservice.Logger;

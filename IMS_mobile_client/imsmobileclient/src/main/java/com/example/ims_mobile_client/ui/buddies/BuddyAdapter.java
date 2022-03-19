@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.ui;
+package com.example.ims_mobile_client.ui.buddies;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;

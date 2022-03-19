@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.ui;
+package com.example.ims_mobile_client.ui.conversations;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -6,16 +6,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ObservableInt;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.data.entities.MessageEntity;
 import com.example.ims_mobile_client.databinding.MessageFragmentBinding;
-
-import net.gotev.sipservice.SipAccountData;
 
 import java.util.List;
 

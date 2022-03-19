@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.ui;
+package com.example.ims_mobile_client.ui.buddies;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,17 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.databinding.NewBuddyFragmentBinding;
-import com.example.ims_mobile_client.view_models.BuddyViewModel;
+import com.example.ims_mobile_client.ui.MainActivity;
 
-import net.gotev.sipservice.Logger;
-import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 

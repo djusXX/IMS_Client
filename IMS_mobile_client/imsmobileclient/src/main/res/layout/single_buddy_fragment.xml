@@ -6,7 +6,7 @@
     <variable name="buddy"
         type="com.example.ims_mobile_client.data.entities.BuddyEntity"/>
     <variable name="callback"
-        type="com.example.ims_mobile_client.ui.BuddyClickCallback"/>
+        type="com.example.ims_mobile_client.ui.buddies.BuddyClickCallback"/>
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

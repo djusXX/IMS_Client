@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client.ui;
+package com.example.ims_mobile_client.ui.conversations;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,13 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.data.entities.BuddyEntity;
 import com.example.ims_mobile_client.data.entities.MessageEntity;
 import com.example.ims_mobile_client.databinding.ConversationFragmentBinding;
-import com.example.ims_mobile_client.model.AppBuddy;
 import com.example.ims_mobile_client.view_models.MessageViewModel;
 
-import net.gotev.sipservice.SipBuddyData;
 import net.gotev.sipservice.SipServiceCommand;
 
 import java.util.Date;
@@ -31,8 +28,8 @@ public class ConversationFragment extends Fragment {
 
     public static final String TAG = ConversationFragment.class.getName();
 
-    private static MessageAdapter messageAdapter = null;
     private ConversationFragmentBinding binding;
+    private static MessageAdapter messageAdapter = null;
     private static String usrSipUri;
     private static String buddySipUri;
 
