@@ -12,3 +12,9 @@
     - subscribing buddy's presence status
 
 ## TODO:
+    - add subscribing and receiving presence status
+    - add views for presence status
+    - update view on subscription state change
+    
+
+
