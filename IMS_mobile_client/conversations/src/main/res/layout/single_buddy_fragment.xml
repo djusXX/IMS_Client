@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+  <data>
+    <variable name="buddy"
+        type="com.example.repository.data.entities.BuddyEntity"/>
+    <variable name="callback"
+        type="com.example.conversations.view.BuddyClickCallback"/>
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:padding="@dimen/contact_view_padding"
+      android:layout_height="wrap_content"
+      android:onClick="@{()->callback.onClick(buddy)}">
+
+    <ImageView
+        android:id="@+id/contact_avatar"
+        android:layout_width="@dimen/contact_avatar_size"
+        android:layout_height="@dimen/contact_avatar_size"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_sharp_person_24" />
+
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/contact_name_size"
+        android:layout_marginStart="@dimen/contact_view_padding"
+        android:text="@{buddy.buddy_display_name}"
+        app:layout_constraintStart_toEndOf="@id/contact_avatar"
+        app:layout_constraintTop_toTopOf="@id/contact_avatar"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:id="@+id/contact_sip_uri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/contact_view_padding"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sip_uri_size"
+        android:text="@{buddy.buddy_sip_uri}"
+        app:layout_constraintBaseline_toBaselineOf="@id/contact_name"
+        app:layout_constraintStart_toEndOf="@id/contact_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names"/>
+
+    <TextView
+        android:id="@+id/contact_status_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="STATUS"
+        android:text="@{buddy.buddy_status_type}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/contact_avatar"
+        app:layout_constraintTop_toBottomOf="@id/contact_name"
+        android:layout_marginStart="@dimen/contact_view_padding" />
+
+    <TextView
+        android:id="@+id/contact_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@tools:sample/lorem[4:10]"
+        android:text="@{buddy.buddy_status_text}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/contact_status_type"
+        app:layout_constraintTop_toBottomOf="@id/contact_name"
+        android:layout_marginStart="@dimen/contact_view_padding" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
