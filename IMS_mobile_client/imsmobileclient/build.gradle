@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdk 31
@@ -22,10 +25,16 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildFeatures {
         dataBinding true
         viewBinding true
     }
+    dynamicFeatures = [':login', ':calls', ':conversations', ':repository']
 
 }
 
@@ -51,5 +60,9 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.4.1"
     androidTestImplementation "androidx.navigation:navigation-testing:2.4.1"
     implementation "androidx.navigation:navigation-compose:2.4.1"
+
+    implementation "com.google.dagger:hilt-android:2.41"
+    kapt "com.google.dagger:hilt-compiler:2.41"
+
 
 }

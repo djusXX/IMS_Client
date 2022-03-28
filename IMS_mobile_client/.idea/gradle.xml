@@ -11,7 +11,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/calls" />
+            <option value="$PROJECT_DIR$/conversations" />
             <option value="$PROJECT_DIR$/imsmobileclient" />
+            <option value="$PROJECT_DIR$/login" />
+            <option value="$PROJECT_DIR$/repository" />
             <option value="$PROJECT_DIR$/../pjsip-android/sipservice" />
           </set>
         </option>

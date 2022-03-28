@@ -23,6 +23,10 @@ public class BuddyEntity implements AppBuddy {
     @NonNull
     public String buddy_display_name;
 
+    public String buddy_status_type;
+
+    public String buddy_status_text;
+
     public BuddyEntity(@NonNull String user_sip_uri, @NonNull String buddy_sip_uri, @NonNull String buddy_display_name) {
         this.user_sip_uri = user_sip_uri;
         this.buddy_sip_uri = buddy_sip_uri;

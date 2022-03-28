@@ -70,6 +70,13 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
         result.dispatchUpdatesTo(this);
     }
 
+    public void updateBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
+        if (buddyList != null) {
+            buddyList.get(0).buddy_status_type = presStatus;
+            buddyList.get(0).buddy_status_text = presText;
+        }
+    }
+
     static class BuddyViewHolder extends RecyclerView.ViewHolder {
 
         final SingleBuddyFragmentBinding binding;

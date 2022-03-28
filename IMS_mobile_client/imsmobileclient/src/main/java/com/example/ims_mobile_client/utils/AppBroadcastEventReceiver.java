@@ -12,6 +12,7 @@ import com.example.ims_mobile_client.view_models.CallViewModel;
 import com.example.ims_mobile_client.view_models.MessageViewModel;
 
 import net.gotev.sipservice.BroadcastEventReceiver;
+import net.gotev.sipservice.Logger;
 import net.gotev.sipservice.SipBuddyData;
 
 import org.pjsip.pjsua2.pjsip_inv_state;
@@ -40,6 +41,14 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
         super.onBuddyAdded(accountID, buddyData);
         final BuddyViewModel buddyViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(BuddyViewModel.class);
         buddyViewModel.addBuddy(new BuddyEntity(accountID, buddyData));
+    }
+
+    @Override
+    protected void onBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
+        super.onBuddyState(ownerSipUri, contactUri, presStatus, presText);
+        if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            ((MainActivity) getReceiverContext()).updateBuddyState(ownerSipUri, contactUri, presStatus, presText);
+        }
     }
 
     @Override

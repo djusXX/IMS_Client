@@ -25,16 +25,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_sharp_person_24" />
 
-    <ImageView
-        android:id="@+id/contact_status_image"
-        android:layout_height="@dimen/contact_status_size"
-        android:layout_width="@dimen/contact_status_size"
-        android:layout_marginStart="@dimen/contact_view_padding"
-        android:scaleType="fitXY"
-        app:layout_constraintStart_toEndOf="@id/contact_avatar"
-        app:layout_constraintTop_toTopOf="@id/contact_avatar"
-        android:src="@android:drawable/presence_offline" />
-
     <TextView
         android:id="@+id/contact_name"
         android:layout_width="wrap_content"
@@ -43,8 +33,8 @@
         android:textSize="@dimen/contact_name_size"
         android:layout_marginStart="@dimen/contact_view_padding"
         android:text="@{buddy.buddy_display_name}"
-        app:layout_constraintStart_toEndOf="@id/contact_status_image"
-        app:layout_constraintTop_toTopOf="@id/contact_status_image"
+        app:layout_constraintStart_toEndOf="@id/contact_avatar"
+        app:layout_constraintTop_toTopOf="@id/contact_avatar"
         tools:text="@tools:sample/full_names" />
 
     <TextView
@@ -57,16 +47,29 @@
         android:text="@{buddy.buddy_sip_uri}"
         app:layout_constraintBaseline_toBaselineOf="@id/contact_name"
         app:layout_constraintStart_toEndOf="@id/contact_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names"/>
+
+    <TextView
+        android:id="@+id/contact_status_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="STATUS"
+        android:text="@{buddy.buddy_status_type}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/contact_avatar"
+        app:layout_constraintTop_toBottomOf="@id/contact_name"
+        android:layout_marginStart="@dimen/contact_view_padding" />
 
     <TextView
         android:id="@+id/contact_status_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@tools:sample/lorem[4:10]"
+        android:text="@{buddy.buddy_status_text}"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/contact_avatar"
-        app:layout_constraintTop_toBottomOf="@id/contact_status_image"
+        app:layout_constraintStart_toEndOf="@id/contact_status_type"
+        app:layout_constraintTop_toBottomOf="@id/contact_name"
         android:layout_marginStart="@dimen/contact_view_padding" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,4 +17,8 @@
     <string name="start">Start</string>
     <string name="cancel">Cancel</string>
     <string name="add">ADD</string>
+    <string name="title_login">login</string>
+    <string name="title_calls">calls</string>
+    <string name="title_conversations">conversations</string>
+    <string name="title_repository">repository</string>
 </resources>

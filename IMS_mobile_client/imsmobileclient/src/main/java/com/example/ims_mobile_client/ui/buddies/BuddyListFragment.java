@@ -42,7 +42,6 @@ public class BuddyListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        Logger.debug(TAG, "inside method BuddyListFragment::onCreateView()===================================================================================");
         binding = DataBindingUtil.inflate(inflater, R.layout.buddy_list_fragment, container, false);
         buddyAdapter = new BuddyAdapter(buddyClickCallback);
         binding.buddyListRecyclerView.setAdapter(buddyAdapter);
@@ -52,7 +51,6 @@ public class BuddyListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        Logger.debug(TAG, "inside method BuddyListFragment::onViewCreated()===================================================================================");
         super.onViewCreated(view, savedInstanceState);
         final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
@@ -68,7 +66,7 @@ public class BuddyListFragment extends Fragment {
     private void updateSubscription(@NonNull List<BuddyEntity> buddyEntities) {
         ArrayList<SipBuddyData> buddyDataList = new ArrayList<SipBuddyData>();
         buddyEntities.forEach(buddyEntity -> {
-            SipBuddyData buddyData = new  SipBuddyData();
+            SipBuddyData buddyData = new SipBuddyData();
             buddyData.setDisplayName(buddyEntity.buddy_display_name);
             buddyData.setSipUri(buddyEntity.buddy_sip_uri);
             buddyDataList.add(buddyData);
@@ -113,7 +111,6 @@ public class BuddyListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-//        Logger.debug(TAG, "inside method BuddyListFragment::onDestroyView()===================================================================================");
         binding = null;
         buddyAdapter = null;
         super.onDestroyView();
@@ -125,4 +122,7 @@ public class BuddyListFragment extends Fragment {
         }
     };
 
+    public void updateBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
+        buddyAdapter.updateBuddyState(ownerSipUri, contactUri, presStatus, presText);
+    }
 }

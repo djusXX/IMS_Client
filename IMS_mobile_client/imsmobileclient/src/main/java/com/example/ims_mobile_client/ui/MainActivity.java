@@ -74,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void updateBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
+        BuddyListFragment buddyListFragment = (BuddyListFragment) getSupportFragmentManager().findFragmentByTag(BuddyListFragment.TAG);
+
+        if (buddyListFragment != null) {
+            buddyListFragment.updateBuddyState(ownerSipUri, contactUri, presStatus, presText);
+        }
+    }
+
     public void onLoginError(int registrationStateCode) {
         Toast.makeText(this, "error: " + registrationStateCode, Toast.LENGTH_SHORT).show();
     }
