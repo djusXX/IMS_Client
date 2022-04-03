@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    implementation project(':app')
     implementation project(path: ':repository')
     implementation project(path: ':sipservice')
     implementation 'androidx.cardview:cardview:1.0.0'

@@ -3,31 +3,20 @@ package com.example.ims_mobile_client.utils;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.calls.viewmodel.CallViewModel;
-import com.example.conversations.viewmodel.BuddyViewModel;
-import com.example.conversations.viewmodel.MessageViewModel;
+import com.example.ims_mobile_client.model.LocalBroadcastReceiver;
+import com.example.ims_mobile_client.model.BuddyData;
 import com.example.ims_mobile_client.view.MainActivity;
-import com.example.repository.data.entities.BuddyEntity;
-import com.example.repository.data.entities.CallEntity;
-import com.example.repository.data.entities.MessageEntity;
-
-import net.gotev.sipservice.BroadcastEventReceiver;
-import net.gotev.sipservice.SipBuddyData;
-
-import org.pjsip.pjsua2.pjsip_inv_state;
-import org.pjsip.pjsua2.pjsip_status_code;
 
 import java.util.Date;
 
-public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
+public class AppLocalBroadcastEventReceiver implements LocalBroadcastReceiver {
 
-    private static final String TAG = AppBroadcastEventReceiver.class.getName();
+    private static final String TAG = AppLocalBroadcastEventReceiver.class.getName();
 
     @Override
     public void onRegistration(String accountID, int registrationStateCode) {
-        super.onRegistration(accountID, registrationStateCode);
-        if (registrationStateCode == pjsip_status_code.PJSIP_SC_OK) {
-            ((MainActivity) getReceiverContext()).onUserLogged(accountID);
+        if (registrationStateCode == 200) {
+            ((MainActivity) requireActivity()).onUserLogged(accountID);
         } else if (accountID.isEmpty() && (400 == registrationStateCode || 401 == registrationStateCode)) {
             ((MainActivity) getReceiverContext()).logInUser(registrationStateCode);
         } else {
@@ -35,31 +24,28 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
         }
     }
 
+
     @Override
-    protected void onBuddyAdded(String accountID, SipBuddyData buddyData) {
-        super.onBuddyAdded(accountID, buddyData);
+    public void onBuddyAdded(String accountID, BuddyData buddyData) {
         final BuddyViewModel buddyViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(BuddyViewModel.class);
         buddyViewModel.addBuddy(new BuddyEntity(accountID, buddyData));
     }
 
     @Override
-    protected void onBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
-        super.onBuddyState(ownerSipUri, contactUri, presStatus, presText);
+    public void onBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
         if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             ((MainActivity) getReceiverContext()).updateBuddyState(ownerSipUri, contactUri, presStatus, presText);
         }
     }
 
     @Override
-    protected void onMessageReceived(String from, String to, String body) {
-        super.onMessageReceived(from, to, body);
+    public void onMessageReceived(String from, String to, String body) {
         final MessageViewModel messageViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(MessageViewModel.class);
         messageViewModel.addMessage(new MessageEntity(from, to, new Date().toString(), body));
     }
 
     @Override
     public void onOutgoingCall(String accountID, int callID, String number, boolean isVideo, boolean isVideoConference, boolean isTransfer) {
-        super.onOutgoingCall(accountID, callID, number, isVideo, isVideoConference, isTransfer);
         if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             ((MainActivity) getReceiverContext()).loadPreCallFragment(false, accountID, callID, "", number, isVideo);
         }
@@ -67,7 +53,6 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
 
     @Override
     public void onCallState(String accountID, int callID, int callStateCode, int callStatusCode, long connectTimestamp) {
-        super.onCallState(accountID, callID, callStateCode, callStatusCode, connectTimestamp);
 
         if (((MainActivity) getReceiverContext()).getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             if (callStateCode == pjsip_inv_state.PJSIP_INV_STATE_CONFIRMED) {
@@ -90,7 +75,6 @@ public class AppBroadcastEventReceiver extends BroadcastEventReceiver {
 
     @Override
     public void onIncomingCall(String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {
-        super.onIncomingCall(accountID, callID, displayName, remoteUri, isVideo);
 
         final CallViewModel callViewModel = new ViewModelProvider(((MainActivity) getReceiverContext())).get(CallViewModel.class);
         callViewModel.addCall(new CallEntity(remoteUri, accountID, isVideo, "", ""));

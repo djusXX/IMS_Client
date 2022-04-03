@@ -20,6 +20,8 @@
     - update view on subscription state change
     - add keep logged logic
     - add keep logged user interface 
+    - create swiped tabs for messages and calls history using ViewPager2
+    - add navigation graphs instead of fragmentManager transactions
     
 
 ## APP Architecture:

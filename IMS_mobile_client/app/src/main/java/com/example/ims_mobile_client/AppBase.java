@@ -2,11 +2,10 @@ package com.example.ims_mobile_client;
 
 import android.app.Application;
 
-import com.example.conversations.model.BaseApp;
-import com.example.repository.data.AppDatabase;
-import com.example.repository.data.AppRepository;
+import dagger.hilt.android.HiltAndroidApp;
 
-public class AppBase extends Application implements BaseApp {
+@HiltAndroidApp
+public class AppBase extends Application {
 
     public AppDatabase getDB() {
         return AppDatabase.getInstance(this);

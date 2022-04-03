@@ -10,22 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.calls.view.ActiveCallFragment;
-import com.example.calls.view.PreCallFragment;
-import com.example.conversations.view.BuddyListFragment;
-import com.example.conversations.view.ConversationFragment;
 import com.example.ims_mobile_client.R;
-import com.example.ims_mobile_client.utils.AppBroadcastEventReceiver;
-import com.example.login.view.LoginFragment;
+import com.example.ims_mobile_client.utils.AppLocalBroadcastEventReceiver;
 
-import net.gotev.sipservice.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     private static final String TAG = MainActivity.class.getName();
 
-    protected AppBroadcastEventReceiver receiver = null;
+    protected AppLocalBroadcastEventReceiver receiver = null;
 
     private static String usrSipUri;
 
@@ -36,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions();
 
         if (savedInstanceState == null) {
-            receiver = new AppBroadcastEventReceiver();
+            receiver = new AppLocalBroadcastEventReceiver();
             addLoginFragment();
         }
     }

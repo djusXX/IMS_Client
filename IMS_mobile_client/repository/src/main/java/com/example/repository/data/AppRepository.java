@@ -3,13 +3,14 @@ package com.example.repository.data;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
+import com.example.ims_mobile_client.model.DatabaseModel;
 import com.example.repository.data.entities.BuddyEntity;
 import com.example.repository.data.entities.CallEntity;
 import com.example.repository.data.entities.MessageEntity;
 
 import java.util.List;
 
-public class AppRepository {
+public class AppRepository implements DatabaseModel {
 
     private static AppRepository INSTANCE;
 
