@@ -1,0 +1,70 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+
+android {
+    compileSdkVersion Ver.compileSdkVersion
+    buildToolsVersion Ver.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Ver.minSdkVersion
+        targetSdkVersion Ver.targetSdkVersion
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    kapt {
+        javacOptions {
+            // Increase the max count of errors from annotation processors.
+            // Default is 100.
+            option("-Xmaxerrs", 500)
+        }
+        // Configure kapt to correct error types for Hilt
+        correctErrorTypes true
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+
+dependencies {
+    //Loads packaged libraries in the libs folder
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation Libs.hilt
+    implementation Libs.hiltJetpack
+    kapt Libs.hiltCompiler
+    kapt Libs.hiltJetpackCompiler
+
+    // For instrumentation tests
+    androidTestImplementation Libs.hiltAndroidTest
+    kaptAndroidTest Libs.hiltAndroidTestCompiler
+
+    // For local unit tests
+    testImplementation Libs.hiltAndroidUnitTest
+    kaptTest Libs.hiltAndroidUnitTestCompiler
+
+    implementation TestLibs.androidTestRunner
+    implementation TestLibs.junit
+    implementation TestLibs.espresso
+    implementation TestLibs.espressoContrib
+}

@@ -22,6 +22,7 @@
     - add keep logged user interface 
     - create swiped tabs for messages and calls history using ViewPager2
     - add navigation graphs instead of fragmentManager transactions
+    - use buildSrc dependencies in build.gradle files
     
 
 ## APP Architecture:
@@ -57,4 +58,5 @@
 
     FEATURE_MODULE_5 (REPO)         [Data]                      :repository
     - module repository
+
 

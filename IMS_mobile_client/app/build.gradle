@@ -1,60 +1,27 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
+apply from: '../commons.gradle'
 
 android {
-    compileSdk rootProject.compileSdkVersion
-    buildToolsVersion "30.0.3"
-
     defaultConfig {
-        applicationId "com.example.ims_mobile_client"
-        minSdk rootProject.minSdkVersion
-        targetSdk rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId ApplicationId.id
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    buildFeatures {
-        dataBinding true
-        viewBinding true
-    }
 }
 
 dependencies {
-    implementation "com.google.android.material:material:$googleMaterial"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
-    implementation "androidx.constraintlayout:constraintlayout-compose:$constraintlayoutCompose"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensions"
-    implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview"
-    implementation "androidx.annotation:annotation:$annotation"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleLivedataKtx"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleViewmodelKtx"
-    testImplementation "junit:junit:$junit"
-    androidTestImplementation "androidx.test.ext:junit:$testExtJunit"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore"
-    implementation "androidx.room:room-runtime:$roomRuntime"
-    kapt "androidx.room:room-compiler:$roomCompiler"
-    implementation "com.google.dagger:hilt-android:$hiltAndroid"
-    kapt "com.google.dagger:hilt-compiler:$hiltCompiler"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp3"
-//    implementation "com.squareup.okhttp3:okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"
+    implementation project(Modules.common)
+    implementation project(Modules.data)
+    implementation project(Modules.domain)
+    implementation project(Modules.presentation)
+    implementation project(Modules.navigation)
 
+    implementation project(Modules.login)
+    implementation project(Modules.calls)
+    implementation project(Modules.conversations)
+    implementation project(Modules.sipservice)
 
+    implementation Libs.appcompat
+    implementation Libs.constraintLayout
+    implementation Libs.materialDesign
+    implementation Libs.recyclerview
 }
