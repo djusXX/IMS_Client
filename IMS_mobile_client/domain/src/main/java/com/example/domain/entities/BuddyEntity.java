@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 
 
 
-import net.gotev.sipservice.SipBuddyData;
 
 @Entity(tableName = "buddies_table")
 public class BuddyEntity {
@@ -31,12 +30,6 @@ public class BuddyEntity {
         this.user_sip_uri = user_sip_uri;
         this.buddy_sip_uri = buddy_sip_uri;
         this.buddy_display_name = buddy_display_name;
-    }
-
-    public BuddyEntity(@NonNull String user_sip_uri, @NonNull SipBuddyData buddyData) {
-        this.user_sip_uri = user_sip_uri;
-        buddy_sip_uri = buddyData.getBuddyUri();
-        buddy_display_name = buddyData.getDisplayName();
     }
 
 }

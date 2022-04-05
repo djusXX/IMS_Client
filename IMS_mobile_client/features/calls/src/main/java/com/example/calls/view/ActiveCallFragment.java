@@ -14,8 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.example.calls.R;
 import com.example.calls.databinding.ActiveCallFragmentBinding;
 
-import net.gotev.sipservice.Logger;
-import net.gotev.sipservice.SipServiceCommand;
 
 public class ActiveCallFragment extends Fragment {
 
@@ -74,18 +72,15 @@ public class ActiveCallFragment extends Fragment {
             binding.remoteUserView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                    Logger.debug(TAG, "remote surfaceCreated()");
                 }
 
                 @Override
                 public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                    Logger.debug(TAG, "remote surfaceChanged()");
                     SipServiceCommand.setupIncomingVideoFeed(requireActivity(), usrSipUri, callID, surfaceHolder.getSurface());
                 }
 
                 @Override
                 public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                    Logger.debug(TAG, "remote surfaceDestroyed()");
                     SipServiceCommand.setupIncomingVideoFeed(requireActivity(), usrSipUri, callID, null);
                 }
             });

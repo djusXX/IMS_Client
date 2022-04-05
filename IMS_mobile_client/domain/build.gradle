@@ -7,4 +7,5 @@ dependencies {
     implementation Libs.workRxJava
     implementation Libs.workRuntime
     implementation Libs.workMultiProc
+    implementation Libs.roomCommon
 }

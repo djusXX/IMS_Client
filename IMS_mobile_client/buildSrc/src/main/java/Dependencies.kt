@@ -84,6 +84,8 @@ object Libs {
     // ROOM
     val room = "androidx.room:room-runtime:${Ver.room}"
     val roomCompiler = "androidx.room:room-compiler:${Ver.room}"
+    val roomCommon = "androidx.room:room-common:${Ver.room}"
+    val roomRxJava2 = "androidx.room:room-rxjava2:${Ver.room}"
     ////////////////////////////
 
     ////////////////////////////
