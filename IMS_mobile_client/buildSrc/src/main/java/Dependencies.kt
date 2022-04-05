@@ -58,7 +58,7 @@ object Ver {
     val testExtJunit = "1.1.3"
     val okhttp3 = "4.9.3"
     val voismartCrypto = "0.1.0"
-
+    val workManager = "2.7.1"
 }
 
 
@@ -106,6 +106,11 @@ object Libs {
 
     val gson = "com.google.code.gson:gson:${Ver.gson}"
     val voismartCrypto = "com.github.voismart:crypto:${Ver.voismartCrypto}"
+
+
+    val workRuntime = "androidx.work:work-runtime:${Ver.workManager}"
+    val workRxJava = "androidx.work:work-rxjava2:${Ver.workManager}"
+    val workMultiProc = "androidx.work:work-multiprocess:${Ver.workManager}"
 }
 
 object TestLibs {
@@ -114,6 +119,7 @@ object TestLibs {
     val espresso = "androidx.test.espresso:espresso-core:${Ver.espressoCore}"
     val espressoContrib = "androidx.test.espresso:espresso-contrib:${Ver.espressoCore}"
     val junit = "androidx.test.ext:junit:${Ver.testExtJunit}"
+    val workTesting = "androidx.work:work-testing:${Ver.workManager}"
 
 }
 

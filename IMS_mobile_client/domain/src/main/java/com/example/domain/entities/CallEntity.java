@@ -1,4 +1,4 @@
-package com.example.data.entities;
+package com.example.domain.entities;
 
 
 import androidx.annotation.NonNull;
