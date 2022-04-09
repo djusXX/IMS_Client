@@ -17,24 +17,24 @@ public class CallEntity {
     public int id;
 
     @NonNull
-    public String sip_uri_FROM;
+    public String sipUriFROM;
 
     @NonNull
-    public String sip_uri_TO;
+    public String sipUriTO;
 
-    public boolean is_video;
-
-    @NonNull
-    public String begin_timestamp;
+    public boolean isVideo;
 
     @NonNull
-    public String end_timestamp;
+    public String beginTimestamp;
 
-    public CallEntity(@NonNull String sip_uri_FROM, @NonNull String sip_uri_TO, boolean is_video, @NonNull String begin_timestamp, @NonNull String end_timestamp) {
-        this.sip_uri_FROM = sip_uri_FROM;
-        this.sip_uri_TO = sip_uri_TO;
-        this.is_video = is_video;
-        this.begin_timestamp = begin_timestamp;
-        this.end_timestamp = end_timestamp;
+    @NonNull
+    public String endTimestamp;
+
+    public CallEntity(@NonNull String sipUriFROM, @NonNull String sipUriTO, boolean isVideo, @NonNull String beginTimestamp, @NonNull String endTimestamp) {
+        this.sipUriFROM = sipUriFROM;
+        this.sipUriTO = sipUriTO;
+        this.isVideo = isVideo;
+        this.beginTimestamp = beginTimestamp;
+        this.endTimestamp = endTimestamp;
     }
 }

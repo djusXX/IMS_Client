@@ -6,7 +6,10 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.example.data.local.datasource.LocalDataSource;
+import com.example.data.local.datasource.LocalDataSourceImpl;
 import com.example.data.local.room.AppDatabase;
+import com.example.domain.repository.ImsMobileClientRepository;
 
 import javax.inject.Singleton;
 
@@ -24,5 +27,11 @@ public class DatabaseModule {
     @Provides
     public AppDatabase getDB(@ApplicationContext Context context) {
         return Room.databaseBuilder(context, AppDatabase.class, DB_NAME).build();
+    }
+
+    @Singleton
+    @Provides
+    public LocalDataSource getLDS(AppDatabase db) {
+        return new LocalDataSourceImpl(db);
     }
 }

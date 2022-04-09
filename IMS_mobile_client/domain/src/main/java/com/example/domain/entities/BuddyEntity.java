@@ -14,22 +14,22 @@ public class BuddyEntity {
     public int id;
 
     @NonNull
-    public String user_sip_uri;
+    public String userSipUri;
 
     @NonNull
-    public String buddy_sip_uri;
+    public String buddySipUri;
 
     @NonNull
-    public String buddy_display_name;
+    public String buddyDisplayName;
 
-    public String buddy_status_type;
+    public String buddyStatusType;
 
-    public String buddy_status_text;
+    public String buddyStatusText;
 
-    public BuddyEntity(@NonNull String user_sip_uri, @NonNull String buddy_sip_uri, @NonNull String buddy_display_name) {
-        this.user_sip_uri = user_sip_uri;
-        this.buddy_sip_uri = buddy_sip_uri;
-        this.buddy_display_name = buddy_display_name;
+    public BuddyEntity(@NonNull String userSipUri, @NonNull String buddySipUri, @NonNull String buddyDisplayName) {
+        this.userSipUri = userSipUri;
+        this.buddySipUri = buddySipUri;
+        this.buddyDisplayName = buddyDisplayName;
     }
 
 }
