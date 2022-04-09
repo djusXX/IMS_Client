@@ -1,5 +1,7 @@
 package com.example.domain.usecases.messages;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.domain.entities.MessageEntity;
 import com.example.domain.repository.ImsMobileClientRepository;
 
@@ -14,7 +16,7 @@ public class GetAllMessagesUseCase {
         this.repository = repository;
     }
 
-    Flowable<List<MessageEntity>> execute() {
+    LiveData<List<MessageEntity>> execute() {
         return repository.getAllMessages();
     }
 }

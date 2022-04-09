@@ -1,5 +1,7 @@
 package com.example.domain.usecases.calls;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.domain.entities.CallEntity;
 import com.example.domain.repository.ImsMobileClientRepository;
 
@@ -14,7 +16,7 @@ public class GetCallsForUseCase {
         this.repository = repository;
     }
 
-    Flowable<List<CallEntity>> execute(String usrSipUri) {
+    LiveData<List<CallEntity>> execute(String usrSipUri) {
         return repository.getCallsFor(usrSipUri);
     }
 }

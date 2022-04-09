@@ -1,5 +1,7 @@
 package com.example.domain.usecases.messages;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.domain.entities.CallEntity;
 import com.example.domain.entities.MessageEntity;
 import com.example.domain.repository.ImsMobileClientRepository;
@@ -15,7 +17,7 @@ public class GetMessagesForPair {
         this.repository = repository;
     }
 
-    Flowable<List<MessageEntity>> execute(String usrSipUri, String buddySipUri) {
+    LiveData<List<MessageEntity>> execute(String usrSipUri, String buddySipUri) {
         return repository.getMessagesFor(usrSipUri, buddySipUri);
     }
 }

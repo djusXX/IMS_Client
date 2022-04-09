@@ -16,7 +16,9 @@ import com.example.login.viewmodel.SavedData;
 import net.gotev.sipservice.SipAccountData;
 import net.gotev.sipservice.SipServiceCommand;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();

@@ -11,6 +11,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.example.login.view.LoginFragment;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         requestPermissions();
 
         if (savedInstanceState == null) {
-//            addLoginFragment();
+            addLoginFragment();
         }
     }
 
@@ -44,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-//    private void addLoginFragment() {
-//        LoginFragment loginFragment = new LoginFragment();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
-//                .commit();
-//    }
+    private void addLoginFragment() {
+        LoginFragment loginFragment = new LoginFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
+                .commit();
+    }
 
 //    public void logInUser(int registrationStateCode) {
 //        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(LoginFragment.TAG);

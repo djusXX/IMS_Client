@@ -60,3 +60,19 @@
     - module repository
 
 
+
+
+
+
+## TMP_TODO:
+    - add (logged) user table to DB
+    - add dependecy injections for DB & Repository in :data
+    - add appExecutors
+    - add workerManager and di for it to provide sipservice in background 
+
+
+
+
+
+
+

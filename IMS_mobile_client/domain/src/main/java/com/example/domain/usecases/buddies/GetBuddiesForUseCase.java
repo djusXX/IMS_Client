@@ -1,5 +1,7 @@
 package com.example.domain.usecases.buddies;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.domain.entities.BuddyEntity;
 import com.example.domain.repository.ImsMobileClientRepository;
 
@@ -14,7 +16,7 @@ public class GetBuddiesForUseCase {
         this.repository = repository;
     }
 
-    Flowable<List<BuddyEntity>> getBuddiesForUseCase(String usrSipUri) {
+    LiveData<List<BuddyEntity>> getBuddiesForUseCase(String usrSipUri) {
         return repository.getBuddiesFor(usrSipUri);
     }
 }

@@ -10,17 +10,14 @@ import com.example.domain.entities.CallEntity;
 
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-
 @Dao
 public interface CallDao {
 
     @Insert
-    Completable insert(CallEntity callEntity);
+    void insert(CallEntity callEntity);
 
     @Insert
-    Completable insert(List<CallEntity> calls);
+    void insert(List<CallEntity> calls);
 
     @Delete
     void delete(CallEntity callEntity);
@@ -29,11 +26,11 @@ public interface CallDao {
     void deleteAll();
 
     @Query("select * from calls_table")
-    Flowable<List<CallEntity>> getAll();
+    LiveData<List<CallEntity>> getAll();
 
     @Query("select * from calls_table where (sip_uri_TO = :usrSipUri or sip_uri_FROM = :usrSipUri)")
-    Flowable<List<CallEntity>> getCallsFor(String usrSipUri);
+    LiveData<List<CallEntity>> getCallsFor(String usrSipUri);
 
     @Query("select * from calls_table where ((sip_uri_FROM = :usrSipUri and sip_uri_TO = :buddySipUri) or (sip_uri_FROM = :buddySipUri and sip_uri_TO = :usrSipUri))")
-    Flowable<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri);
+    LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri);
 }

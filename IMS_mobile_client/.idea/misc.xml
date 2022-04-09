@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app/src/main/res/layout/main_activity.xml" value="0.36822916666666666" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/calls/src/main/res/layout/active_call_fragment.xml" value="0.17572463768115942" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/conversations/src/main/res/layout/message_fragment.xml" value="0.17572463768115942" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/conversations/src/main/res/layout/single_buddy_fragment.xml" value="0.17572463768115942" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/conversations/src/main/res/menu/chats_menu.xml" value="0.20572916666666666" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/conversations/src/main/res/menu/conversation_menu.xml" value="0.20572916666666666" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/features/login/src/main/res/layout/login_fragment.xml" value="0.1078125" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/active_call_fragment.xml" value="0.20516304347826086" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_active_call.xml" value="0.16259057971014493" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/layout/activity_incoming_call.xml" value="0.16259057971014493" />

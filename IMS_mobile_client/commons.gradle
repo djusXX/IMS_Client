@@ -52,8 +52,8 @@ dependencies {
 
     implementation Libs.hilt
     implementation Libs.hiltJetpack
-    kapt Libs.hiltCompiler
-    kapt Libs.hiltJetpackCompiler
+//    kapt Libs.hiltCompiler
+//    kapt Libs.hiltJetpackCompiler
 
     // For instrumentation tests
     androidTestImplementation Libs.hiltAndroidTest

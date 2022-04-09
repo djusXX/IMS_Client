@@ -6,11 +6,13 @@ dependencies {
 
     implementation project(Modules.domain)
 
-    implementation Libs.room
+    api Libs.room
     kapt Libs.roomCompiler
-    implementation Libs.workRxJava
-    implementation Libs.workRuntime
-    implementation Libs.workMultiProc
-    implementation Libs.roomRxJava2
+
+
+//    implementation Libs.workRxJava
+//    implementation Libs.workRuntime
+//    implementation Libs.workMultiProc
+//    implementation Libs.roomRxJava2
 }
 

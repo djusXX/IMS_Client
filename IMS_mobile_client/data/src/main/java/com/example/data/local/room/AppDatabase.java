@@ -15,7 +15,7 @@ public abstract class AppDatabase extends RoomDatabase {
     abstract MessageDao messageDao();
     abstract BuddyDao buddyDao();
 
-    private static final String DB_NAME = "imsmobileclient_database";
+    public static final String DB_NAME = "imsmobileclient_database";
 
 
 }

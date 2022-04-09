@@ -11,16 +11,13 @@ import com.example.domain.entities.MessageEntity;
 
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-
 @Dao
 public interface MessageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(MessageEntity messageEntity);
+    void insert(MessageEntity messageEntity);
 
     @Insert
-    Completable insert(List<MessageEntity> messages);
+    void insert(List<MessageEntity> messages);
 
     @Delete
     void delete(MessageEntity messageEntity);
@@ -29,11 +26,11 @@ public interface MessageDao {
     void deleteAll();
 
     @Query("select * from messages_table")
-    Flowable<List<MessageEntity>> getAll();
+    LiveData<List<MessageEntity>> getAll();
 
     @Query("select * from messages_table where (sip_uri_FROM = :usrSipUri or sip_uri_TO = :usrSipUri)")
-    Flowable<List<MessageEntity>> getMessagesFor(String usrSipUri);
+    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri);
 
     @Query("select * from messages_table where ((sip_uri_FROM = :usrSipUri and sip_uri_TO = :buddySipUri) or (sip_uri_FROM = :buddySipUri and sip_uri_TO = :usrSipUri))")
-    Flowable<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri);
+    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri);
 }
