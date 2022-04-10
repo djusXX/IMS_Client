@@ -13,6 +13,7 @@ import java.util.List;
 public interface LocalDataSource {
 
     UserEntity getUser(String usrSpiUri);
+    UserEntity getLastUser();
     void addUser(UserEntity userEntity);
 
     LiveData<List<BuddyEntity>> getAllBuddies();

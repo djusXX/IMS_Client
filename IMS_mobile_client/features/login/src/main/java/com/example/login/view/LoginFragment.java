@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.login.AppConstants;
 import com.example.login.databinding.LoginFragmentBinding;
-import com.example.login.viewmodel.SavedData;
+import com.example.presentation.models.LocalUser;
+import com.example.presentation.viewmodels.LocalUserViewModel;
 
-import net.gotev.sipservice.SipAccountData;
-import net.gotev.sipservice.SipServiceCommand;
+//import net.gotev.sipservice.SipAccountData;
+//import net.gotev.sipservice.SipServiceCommand;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -23,28 +25,23 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
     private LoginFragmentBinding binding = null;
+    private final LocalUserViewModel localUserVM;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public LoginFragment() {
+        localUserVM = new ViewModelProvider(requireActivity()).get(LocalUserViewModel.class);;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
-        loadLastUser();
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setAlice();
         binding.loginButton.setOnClickListener(v -> { checkRegistrationStatus(); });
     }
 
@@ -54,57 +51,42 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
     }
 
-
-
     private void checkRegistrationStatus() {
-        String usrSipUri = SavedData.getInstance(requireContext()).getString(AppConstants.USER_SIP_URI);
-        if (usrSipUri != null && !usrSipUri.isEmpty()) {
-            SipServiceCommand.getRegistrationStatus(requireContext().getApplicationContext(), usrSipUri);
+        LocalUser localUser = localUserVM.getLastUser().getValue();
+        if (localUser != null) {
+//            SipServiceCommand.getRegistrationStatus(requireActivity(), localUser.getSipUri());
             return;
         }
         logInCurrentUser(-1);
     }
 
     public void logInCurrentUser(int registrationStateCode) {
-        SipAccountData accData = new SipAccountData();
-        accData.setUsername(binding.username.getText().toString());
-        accData.setPassword(binding.password.getText().toString());
-        accData.setRealm(binding.realm.getText().toString());
-        String pcscf = binding.pcscf.getText().toString();
-        String host = pcscf.substring(0,pcscf.indexOf(":"));
-        String portStr = pcscf.substring(pcscf.indexOf(":") + 1);
-        int port = Integer.parseInt(portStr);
-        accData.setHost(host);
-        accData.setPort(port);
+        LocalUser localUser = createFromBinding();
 
-        boolean isAKAAuth = registrationStateCode == 401;
-        SipServiceCommand.setAccount(requireContext().getApplicationContext(), accData, isAKAAuth);
-        setLastUser(accData.getIdUri());
+//        SipAccountData accData = new SipAccountData();
+//        accData.setUsername(localUser.userName);
+//        accData.setPassword(binding.password.getText().toString());
+//        accData.setRealm(localUser.realm);
+//        accData.setHost(localUser.pcscfGetHost());
+//        accData.setPort(localUser.pcscfGetPort());
+//
+//        boolean isAKAAuth = registrationStateCode == 401;
+//        SipServiceCommand.setAccount(requireActivity(), accData, isAKAAuth);
     }
 
-    private void setLastUser(String sipUri) {
-        SavedData appPrefs = SavedData.getInstance(getActivity());
-        appPrefs.setString(AppConstants.USER_DISPLAY_NAME, binding.displayName.getText().toString());
-        appPrefs.setString(AppConstants.USER_NAME, binding.username.getText().toString());
-        appPrefs.setString(AppConstants.USER_REALM, binding.realm.getText().toString());
-        appPrefs.setString(AppConstants.USER_PCSCF, binding.pcscf.getText().toString());
-        appPrefs.setString(AppConstants.USER_SIP_URI, sipUri);
+    private LocalUser createFromBinding() {
+        return new LocalUser(
+                binding.displayName.getText().toString(),
+                binding.username.getText().toString(),
+                binding.realm.getText().toString(),
+                binding.pcscf.getText().toString());
     }
 
-    private void loadLastUser() {
-        SavedData appPrefs = SavedData.getInstance(getActivity());
-        binding.displayName.setText(appPrefs.getString(AppConstants.USER_DISPLAY_NAME));
-        binding.username.setText(appPrefs.getString(AppConstants.USER_NAME));
-        binding.realm.setText(appPrefs.getString(AppConstants.USER_REALM));
-        binding.pcscf.setText(appPrefs.getString(AppConstants.USER_PCSCF));
-
-        // use below only for debugging
-        if(binding.displayName.getText().toString().isEmpty()) {
-            binding.displayName.setText("ALICE");
-            binding.username.setText("alice");
-            binding.realm.setText("open-ims.test");
-            binding.pcscf.setText("10.0.0.9:4060");
-        }
+    private void setAlice() {
+        binding.displayName.setText("ALICE");
+        binding.username.setText("alice");
+        binding.realm.setText("open-ims.test");
+        binding.pcscf.setText("10.0.0.9:4060");
         binding.password.setText("alice");
     }
 

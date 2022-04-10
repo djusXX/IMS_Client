@@ -19,4 +19,7 @@ public interface UserDao {
 
     @Query("select * from local_users_table where usrSipUri = :usrSipUri")
     UserEntity getUser(String usrSipUri);
+
+    @Query("select * from local_users_table where lastLogged is 1")
+    UserEntity getLastLogged();
 }

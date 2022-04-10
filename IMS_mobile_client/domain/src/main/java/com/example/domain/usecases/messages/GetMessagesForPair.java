@@ -8,11 +8,12 @@ import com.example.domain.repository.ImsMobileClientRepository;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import javax.inject.Inject;
 
 public class GetMessagesForPair {
     private final ImsMobileClientRepository repository;
 
+    @Inject
     public GetMessagesForPair(ImsMobileClientRepository repository) {
         this.repository = repository;
     }

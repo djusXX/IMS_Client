@@ -3,7 +3,7 @@
  * */
 
 object ApplicationId {
-    val id = "com.app.ims_mobile_client"
+    val id = "com.example.ims_mobile_client"
 }
 
 object Modules {
@@ -43,13 +43,13 @@ object Ver {
     val constraintlayoutCompose = "1.0.0"
     val espressoCore = "3.4.0"
     val googleMaterial = "1.5.0"
-    val gradle = "7.1.2"
+    val gradle = "7.1.3"
     val gson = "2.9.0"
-    val hiltAndroid = "2.41"
+    val hiltAndroid = "2.38.1"
     val hiltAndroidGradlePlugin = "2.38.1"
     val hiltJetpack = "1.0.0-alpha02"
     val junit = "4.13.2"
-    val kotlinVersion = "1.6.10"
+    val kotlinVersion = "1.6.20"
     val lifecycleExtensions = "2.2.0"
     val lifecycle = "2.4.1"
     val mavenGradlePlugin = "1.4.1"

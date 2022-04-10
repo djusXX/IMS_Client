@@ -7,12 +7,12 @@ import com.example.domain.repository.ImsMobileClientRepository;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-
+import javax.inject.Inject;
 
 public class GetAllBuddiesUseCase {
     private final ImsMobileClientRepository repository;
 
+    @Inject
     public GetAllBuddiesUseCase(ImsMobileClientRepository repository) {
         this.repository = repository;
     }

@@ -1,4 +1,4 @@
-package com.example.data.di;
+package com.example.ims_mobile_client;
 
 import android.os.Handler;
 import android.os.Looper;

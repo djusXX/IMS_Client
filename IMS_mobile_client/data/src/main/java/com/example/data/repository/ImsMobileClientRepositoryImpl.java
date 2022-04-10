@@ -1,11 +1,9 @@
 package com.example.data.repository;
 
-import android.service.autofill.UserData;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
-import com.example.data.di.AppExecutors;
+
 import com.example.data.local.datasource.LocalDataSource;
 import com.example.domain.entities.BuddyEntity;
 import com.example.domain.entities.CallEntity;
@@ -15,22 +13,14 @@ import com.example.domain.repository.ImsMobileClientRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public class ImsMobileClientRepositoryImpl implements ImsMobileClientRepository {
 
     private final LocalDataSource dataSource;
-    private final AppExecutors appExecutors;
 
-    @Inject
-    public ImsMobileClientRepositoryImpl(AppExecutors appExecutors, LocalDataSource dataSource) {
+    public ImsMobileClientRepositoryImpl(LocalDataSource dataSource) {
         this.dataSource = dataSource;
-        this.appExecutors = appExecutors;
     }
-
-
 
     @Override
     public LiveData<UserEntity> getUser(String usrSpiUri) {
@@ -40,8 +30,15 @@ public class ImsMobileClientRepositoryImpl implements ImsMobileClientRepository 
     }
 
     @Override
+    public LiveData<UserEntity> getLastUser() {
+        MediatorLiveData<UserEntity> ret = new MediatorLiveData<>();
+        ret.setValue(dataSource.getLastUser());
+        return ret;
+    }
+
+    @Override
     public void addUser(UserEntity userEntity) {
-        appExecutors.diskIO().execute(() -> {dataSource.addUser(userEntity);});
+        dataSource.addUser(userEntity);
     }
 
     @Override

@@ -13,6 +13,7 @@ public interface ImsMobileClientRepository {
 
     // User
     LiveData<UserEntity> getUser(String usrSpiUri);
+    LiveData<UserEntity> getLastUser();
     void addUser(UserEntity userEntity);
 
     // Buddies
@@ -28,4 +29,5 @@ public interface ImsMobileClientRepository {
     LiveData<List<CallEntity>> getAllCalls();
     LiveData<List<CallEntity>> getCallsFor(String userSipUri);
     LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri);
+
 }

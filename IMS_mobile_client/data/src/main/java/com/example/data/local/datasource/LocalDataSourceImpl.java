@@ -28,6 +28,11 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
+    public UserEntity getLastUser() {
+        return db.userDao().getLastLogged();
+    }
+
+    @Override
     public void addUser(UserEntity userEntity) {
         db.userDao().insert(userEntity);
     }

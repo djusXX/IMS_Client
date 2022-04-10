@@ -2,7 +2,6 @@ package com.example.data.di;
 
 
 import com.example.data.local.datasource.LocalDataSource;
-import com.example.data.local.room.AppDatabase;
 import com.example.data.repository.ImsMobileClientRepositoryImpl;
 import com.example.domain.repository.ImsMobileClientRepository;
 
@@ -19,7 +18,7 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    public ImsMobileClientRepository getRepo(AppExecutors appExecutors, LocalDataSource dataSource) {
-        return new ImsMobileClientRepositoryImpl(appExecutors, dataSource);
+    public ImsMobileClientRepository getRepo(LocalDataSource dataSource) {
+        return new ImsMobileClientRepositoryImpl(dataSource);
     }
 }
