@@ -1,5 +1,6 @@
 package com.example.presentation.viewmodels;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
@@ -42,7 +43,7 @@ public class LocalUserViewModel extends ViewModel {
         return localUserMLD;
     }
 
-    public void setUser(LocalUser localUser) {
+    public void setUser(@NonNull LocalUser localUser) {
         setUserUseCase.execute(localUser.toUserEntity());
     }
 }

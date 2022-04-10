@@ -2,7 +2,8 @@ apply plugin: 'com.android.library'
 apply from: '../../commons.gradle'
 
 dependencies {
-    implementation Libs.constraintLayout
-    implementation project(path: ':sipservice')
+    implementation project(Modules.presentation)
+//    implementation project(Modules.sipservice)
 
+    implementation Libs.constraintLayout
 }

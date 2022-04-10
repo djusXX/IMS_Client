@@ -49,7 +49,7 @@ object Ver {
     val hiltAndroidGradlePlugin = "2.38.1"
     val hiltJetpack = "1.0.0-alpha02"
     val junit = "4.13.2"
-    val kotlinVersion = "1.6.20"
+    val kotlinVersion = "1.5.21"
     val lifecycleExtensions = "2.2.0"
     val lifecycle = "2.4.1"
     val mavenGradlePlugin = "1.4.1"
@@ -110,6 +110,7 @@ object Libs {
     val voismartCrypto = "com.github.voismart:crypto:${Ver.voismartCrypto}"
 
 
+    // RxJava
     val workRuntime = "androidx.work:work-runtime:${Ver.workManager}"
     val workRxJava = "androidx.work:work-rxjava2:${Ver.workManager}"
     val workMultiProc = "androidx.work:work-multiprocess:${Ver.workManager}"

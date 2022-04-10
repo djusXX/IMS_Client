@@ -3,16 +3,10 @@ apply from: '../commons.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation project(Modules.domain)
 
     api Libs.room
     kapt Libs.roomCompiler
 
-
-//    implementation Libs.workRxJava
-//    implementation Libs.workRuntime
-//    implementation Libs.workMultiProc
-//    implementation Libs.roomRxJava2
 }
 

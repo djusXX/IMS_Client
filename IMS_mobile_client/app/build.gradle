@@ -9,16 +9,16 @@ android {
 }
 
 dependencies {
-    implementation project(Modules.common)
+//    implementation project(Modules.common)
     implementation project(Modules.data)
     implementation project(Modules.domain)
     implementation project(Modules.presentation)
-    implementation project(Modules.navigation)
+//    implementation project(Modules.navigation)
 
     implementation project(Modules.login)
 //    implementation project(Modules.calls)
 //    implementation project(Modules.conversations)
-    implementation project(Modules.sipservice)
+//    implementation project(Modules.sipservice)
 
     implementation Libs.appcompat
     implementation Libs.constraintLayout

@@ -1,5 +1,6 @@
 package com.example.presentation.models;
 
+
 import com.example.domain.entities.UserEntity;
 
 public class LocalUser {
