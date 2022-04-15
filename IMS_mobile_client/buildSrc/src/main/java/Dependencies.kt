@@ -7,18 +7,13 @@ object ApplicationId {
 }
 
 object Modules {
-    val app = ":app"
-    val common = ":common"
     val data = ":data"
     val domain = ":domain"
-    val sipservice = ":sipservice"
-    val presentation = ":presentation"
-    val navigation = ":navigation"
 
-    // Features
-    val login = ":features:login"
-    val calls = ":features:calls"
-    val conversations = ":features:conversations"
+    // presentation modules
+    val login = ":presentation:login"
+    val calls = ":presentation:calls"
+    val conversations = ":presentation:conversations"
 }
 
 object Releases {
