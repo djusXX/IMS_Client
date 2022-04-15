@@ -23,6 +23,7 @@
     - create swiped tabs for messages and calls history using ViewPager2
     - add navigation graphs instead of fragmentManager transactions
     - use buildSrc dependencies in build.gradle files
+    - add paging library for loading messages/buddies
     
 
 ## APP Architecture:
@@ -69,6 +70,54 @@
     - add dependecy injections for DB & Repository in :data
     - add appExecutors
     - add workerManager and di for it to provide sipservice in background 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================================================================================================
+
+classpath 'com.android.tools.build:gradle:7.1.2'
+classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1'
+        
+
+
+implementation 'com.google.android.material:material:1.5.0'
+implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.0'
+implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+implementation 'androidx.appcompat:appcompat:1.4.1'
+implementation 'androidx.recyclerview:recyclerview:1.2.1'
+implementation 'androidx.annotation:annotation:1.3.0'
+implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+testImplementation 'junit:junit:4.13.2'
+androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+implementation 'androidx.room:room-runtime:2.4.2'
+annotationProcessor 'androidx.room:room-compiler:2.4.2'
+
+<!-- implementation "androidx.navigation:navigation-fragment:2.4.1"
+implementation "androidx.navigation:navigation-ui:2.4.1"
+implementation "androidx.navigation:navigation-dynamic-features-fragment:2.4.1"
+androidTestImplementation "androidx.navigation:navigation-testing:2.4.1"
+implementation "androidx.navigation:navigation-compose:2.4.1" -->
+
+
+
+
+
 
 
 

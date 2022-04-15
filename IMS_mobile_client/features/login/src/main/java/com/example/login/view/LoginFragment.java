@@ -4,19 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.login.databinding.LoginFragmentBinding;
 import com.example.presentation.models.LocalUser;
 import com.example.presentation.viewmodels.LocalUserViewModel;
 
-//import net.gotev.sipservice.SipAccountData;
-//import net.gotev.sipservice.SipServiceCommand;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -25,11 +21,6 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
     private LoginFragmentBinding binding = null;
-    private final LocalUserViewModel localUserVM;
-
-    public LoginFragment() {
-        localUserVM = new ViewModelProvider(requireActivity()).get(LocalUserViewModel.class);;
-    }
 
     @Nullable
     @Override
@@ -52,11 +43,10 @@ public class LoginFragment extends Fragment {
     }
 
     private void checkRegistrationStatus() {
-        LocalUser localUser = localUserVM.getLastUser().getValue();
-        if (localUser != null) {
+//        if (localUser != null) {
 //            SipServiceCommand.getRegistrationStatus(requireActivity(), localUser.getSipUri());
-            return;
-        }
+//            return;
+//        }
         logInCurrentUser(-1);
     }
 
@@ -69,8 +59,8 @@ public class LoginFragment extends Fragment {
 //        accData.setRealm(localUser.realm);
 //        accData.setHost(localUser.pcscfGetHost());
 //        accData.setPort(localUser.pcscfGetPort());
-//
-//        boolean isAKAAuth = registrationStateCode == 401;
+
+        boolean isAKAAuth = registrationStateCode == 401;
 //        SipServiceCommand.setAccount(requireActivity(), accData, isAKAAuth);
     }
 

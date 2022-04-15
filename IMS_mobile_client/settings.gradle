@@ -1,7 +1,4 @@
 include ':app', ':buildsrc'
-include ':sipservice'
-// comment below line and sync gradle project to copy sipservice files to IMS_Client repository
-//project(':sipservice').projectDir = new File('../pjsip-android/sipservice')
 include ':features:login'
 include ':features:calls'
 include ':features:conversations'
