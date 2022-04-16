@@ -38,17 +38,17 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
-    public LiveData<List<BuddyEntity>> getAllBuddies() {
+    public List<BuddyEntity> getAllBuddies() {
         return db.buddyDao().getAll();
     }
 
     @Override
-    public LiveData<List<BuddyEntity>> getBuddiesFor(String userSipUri) {
+    public List<BuddyEntity> getBuddiesFor(String userSipUri) {
         return db.buddyDao().getBuddiesFor(userSipUri);
     }
 
     @Override
-    public LiveData<BuddyEntity> getBuddy(String usrSipUri, String buddySipUri) {
+    public BuddyEntity getBuddy(String usrSipUri, String buddySipUri) {
         return db.buddyDao().getBuddy(usrSipUri, buddySipUri);
     }
 
@@ -58,17 +58,17 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
-    public LiveData<List<MessageEntity>> getAllMessages() {
+    public List<MessageEntity> getAllMessages() {
         return db.messageDao().getAll();
     }
 
     @Override
-    public LiveData<List<MessageEntity>> getMessagesFor(String userSipUri) {
+    public List<MessageEntity> getMessagesFor(String userSipUri) {
         return db.messageDao().getMessagesFor(userSipUri);
     }
 
     @Override
-    public LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri) {
+    public List<MessageEntity> getMessagesFor(String usrSipUri, String buddySipUri) {
         return db.messageDao().getMessagesFor(usrSipUri, buddySipUri);
     }
 
@@ -78,17 +78,17 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
-    public LiveData<List<CallEntity>> getAllCalls() {
+    public List<CallEntity> getAllCalls() {
         return db.callDao().getAll();
     }
 
     @Override
-    public LiveData<List<CallEntity>> getCallsFor(String userSipUri) {
+    public List<CallEntity> getCallsFor(String userSipUri) {
         return db.callDao().getCallsFor(userSipUri);
     }
 
     @Override
-    public LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri) {
+    public List<CallEntity> getCallsFor(String usrSipUri, String buddySipUri) {
         return db.callDao().getCallsFor(usrSipUri, buddySipUri);
     }
 

@@ -1,7 +1,7 @@
 package com.example.data.repository;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 
 
 import com.example.data.local.datasource.LocalDataSource;
@@ -24,16 +24,12 @@ public class ImsMobileClientRepositoryImpl implements ImsMobileClientRepository 
 
     @Override
     public LiveData<UserEntity> getUser(String usrSpiUri) {
-        MediatorLiveData<UserEntity> data = new MediatorLiveData<>();
-        data.setValue(dataSource.getUser(usrSpiUri));
-        return data;
+        return new MutableLiveData<>(dataSource.getUser(usrSpiUri));
     }
 
     @Override
     public LiveData<UserEntity> getLastUser() {
-        MediatorLiveData<UserEntity> ret = new MediatorLiveData<>();
-        ret.setValue(dataSource.getLastUser());
-        return ret;
+        return new MutableLiveData<>(dataSource.getLastUser());
     }
 
     @Override
@@ -43,41 +39,41 @@ public class ImsMobileClientRepositoryImpl implements ImsMobileClientRepository 
 
     @Override
     public LiveData<List<BuddyEntity>> getAllBuddies() {
-        return dataSource.getAllBuddies();
+        return new MutableLiveData<>(dataSource.getAllBuddies());
     }
 
     @Override
     public LiveData<List<BuddyEntity>> getBuddiesFor(String userSipUri) {
-        return dataSource.getBuddiesFor(userSipUri);
+        return new MutableLiveData<>(dataSource.getBuddiesFor(userSipUri));
     }
 
     @Override
     public LiveData<List<MessageEntity>> getAllMessages() {
-        return dataSource.getAllMessages();
+        return new MutableLiveData<>(dataSource.getAllMessages());
     }
 
     @Override
     public LiveData<List<MessageEntity>> getMessagesFor(String userSipUri) {
-        return dataSource.getMessagesFor(userSipUri);
+        return new MutableLiveData<>(dataSource.getMessagesFor(userSipUri));
     }
 
     @Override
     public LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri) {
-        return dataSource.getMessagesFor(usrSipUri, buddySipUri);
+        return new MutableLiveData<>(dataSource.getMessagesFor(usrSipUri, buddySipUri));
     }
 
     @Override
     public LiveData<List<CallEntity>> getAllCalls() {
-        return dataSource.getAllCalls();
+        return new MutableLiveData<>(dataSource.getAllCalls());
     }
 
     @Override
     public LiveData<List<CallEntity>> getCallsFor(String userSipUri) {
-        return dataSource.getCallsFor(userSipUri);
+        return new MutableLiveData<>(dataSource.getCallsFor(userSipUri));
     }
 
     @Override
     public LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri) {
-        return dataSource.getCallsFor(usrSipUri, buddySipUri);
+        return new MutableLiveData<>(dataSource.getCallsFor(usrSipUri, buddySipUri));
     }
 }

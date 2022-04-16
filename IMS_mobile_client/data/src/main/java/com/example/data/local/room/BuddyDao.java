@@ -25,11 +25,11 @@ public interface BuddyDao {
     void deleteAll();
 
     @Query("select * from buddies_table")
-    LiveData<List<BuddyEntity>> getAll();
+    List<BuddyEntity> getAll();
 
     @Query("select * from buddies_table where userSipUri = :usrSipUri")
-    LiveData<List<BuddyEntity>> getBuddiesFor(String usrSipUri);
+    List<BuddyEntity> getBuddiesFor(String usrSipUri);
 
     @Query("select * from buddies_table where (userSipUri = :usrSipUri and buddySipUri = :buddySipUri)")
-    LiveData<BuddyEntity> getBuddy(String usrSipUri, String buddySipUri);
+    BuddyEntity getBuddy(String usrSipUri, String buddySipUri);
 }

@@ -26,11 +26,11 @@ public interface CallDao {
     void deleteAll();
 
     @Query("select * from calls_table")
-    LiveData<List<CallEntity>> getAll();
+    List<CallEntity> getAll();
 
     @Query("select * from calls_table where (sipUriTO = :usrSipUri or sipUriFROM = :usrSipUri)")
-    LiveData<List<CallEntity>> getCallsFor(String usrSipUri);
+    List<CallEntity> getCallsFor(String usrSipUri);
 
     @Query("select * from calls_table where ((sipUriFROM = :usrSipUri and sipUriTO = :buddySipUri) or (sipUriFROM = :buddySipUri and sipUriTO = :usrSipUri))")
-    LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri);
+    List<CallEntity> getCallsFor(String usrSipUri, String buddySipUri);
 }

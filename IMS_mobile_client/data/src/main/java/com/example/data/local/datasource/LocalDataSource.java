@@ -16,19 +16,19 @@ public interface LocalDataSource {
     UserEntity getLastUser();
     void addUser(UserEntity userEntity);
 
-    LiveData<List<BuddyEntity>> getAllBuddies();
-    LiveData<List<BuddyEntity>> getBuddiesFor(String userSipUri);
-    LiveData<BuddyEntity> getBuddy(String usrSipUri, String buddySipUri);
+    List<BuddyEntity> getAllBuddies();
+    List<BuddyEntity> getBuddiesFor(String userSipUri);
+    BuddyEntity getBuddy(String usrSipUri, String buddySipUri);
     void addBuddy(BuddyEntity buddyEntity);
 
-    LiveData<List<MessageEntity>> getAllMessages();
-    LiveData<List<MessageEntity>> getMessagesFor(String userSipUri);
-    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri);
+    List<MessageEntity> getAllMessages();
+    List<MessageEntity> getMessagesFor(String userSipUri);
+    List<MessageEntity> getMessagesFor(String usrSipUri, String buddySipUri);
     void addMessage(MessageEntity message);
 
-    LiveData<List<CallEntity>> getAllCalls();
-    LiveData<List<CallEntity>> getCallsFor(String userSipUri);
-    LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri);
+    List<CallEntity> getAllCalls();
+    List<CallEntity> getCallsFor(String userSipUri);
+    List<CallEntity> getCallsFor(String usrSipUri, String buddySipUri);
     void saveCall(CallEntity call);
 
 }

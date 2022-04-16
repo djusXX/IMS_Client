@@ -26,11 +26,11 @@ public interface MessageDao {
     void deleteAll();
 
     @Query("select * from messages_table")
-    LiveData<List<MessageEntity>> getAll();
+    List<MessageEntity> getAll();
 
     @Query("select * from messages_table where (sipUriFROM = :usrSipUri or sipUriTO = :usrSipUri)")
-    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri);
+    List<MessageEntity> getMessagesFor(String usrSipUri);
 
     @Query("select * from messages_table where ((sipUriFROM = :usrSipUri and sipUriTO = :buddySipUri) or (sipUriFROM = :buddySipUri and sipUriTO = :usrSipUri))")
-    LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri);
+    List<MessageEntity> getMessagesFor(String usrSipUri, String buddySipUri);
 }
