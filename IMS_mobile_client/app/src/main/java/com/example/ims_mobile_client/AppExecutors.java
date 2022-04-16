@@ -21,7 +21,7 @@ public class AppExecutors {
     public AppExecutors() {
         diskIO = Executors.newSingleThreadExecutor();
         networkIO = Executors.newFixedThreadPool(3);
-        pjsuaIO = Executors.newFixedThreadPool(2);
+        pjsuaIO = Executors.newFixedThreadPool(4);
         mainThread = new MainThreadExecutor();
     }
 
