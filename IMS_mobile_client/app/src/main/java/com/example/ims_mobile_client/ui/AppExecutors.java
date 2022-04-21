@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client;
+package com.example.ims_mobile_client.ui;
 
 import android.os.Handler;
 import android.os.Looper;

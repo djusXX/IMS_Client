@@ -1,4 +1,4 @@
-package com.example.ims_mobile_client;
+package com.example.ims_mobile_client.ui;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -11,9 +11,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.example.ims_mobile_client.R;
 import com.example.login.view.LoginFragment;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

@@ -41,6 +41,14 @@ dependencies {
     //Loads packaged libraries in the libs folder
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation Libs.timber
+    implementation Libs.rxJava
+    implementation Libs.rxAndroid
+    implementation Libs.dagger
+    kapt Libs.daggerCompiler
+    implementation Libs.daggerAndroidSupport
+    kapt Libs.daggerAndroidProcessor
+
     implementation Libs.hilt
     implementation Libs.hiltJetpack
     kapt Libs.hiltCompiler

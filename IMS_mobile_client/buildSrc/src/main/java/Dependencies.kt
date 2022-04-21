@@ -24,6 +24,8 @@ object Releases {
 // Versions
 object Ver {
 
+
+
     // Sdk and tools
     val minSdkVersion = 29
     val targetSdkVersion = 31
@@ -36,6 +38,7 @@ object Ver {
     val appcompat = "1.4.1"
     val constraintlayout = "2.1.3"
     val constraintlayoutCompose = "1.0.0"
+    val dagger = "2.41"
     val espressoCore = "3.4.0"
     val googleMaterial = "1.5.0"
     val gradle = "7.1.3"
@@ -50,8 +53,11 @@ object Ver {
     val mavenGradlePlugin = "1.4.1"
     val recyclerview = "1.2.1"
     val room = "2.4.2"
+    val rxJava = "2.2.21"
+    val rxAndroid = "2.1.1"
     val testExtJunit = "1.1.3"
     val okhttp3 = "4.9.3"
+    val timber = "5.0.1"
     val voismartCrypto = "0.1.0"
     val workManager = "2.7.1"
 }
@@ -59,7 +65,13 @@ object Ver {
 
 object Libs {
 
-    ////////////////////////////
+    val dagger = "com.google.dagger:dagger:${Ver.dagger}"
+    val daggerCompiler = "com.google.dagger:dagger-compiler:${Ver.dagger}"
+    val daggerAndroidSupport = "com.google.dagger:dagger-android-support:${Ver.dagger}"
+    val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Ver.dagger}"
+
+    val timber = "com.jakewharton.timber:timber:${Ver.timber}"
+
     // HILT
     val hilt = "com.google.dagger:hilt-android:${Ver.hiltAndroid}"
     val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Ver.hiltAndroid}"
@@ -106,6 +118,8 @@ object Libs {
 
 
     // RxJava
+    val rxJava = "io.reactivex.rxjava2:rxjava:${Ver.rxJava}"
+    val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Ver.rxAndroid}"
     val workRuntime = "androidx.work:work-runtime:${Ver.workManager}"
     val workRxJava = "androidx.work:work-rxjava2:${Ver.workManager}"
     val workMultiProc = "androidx.work:work-multiprocess:${Ver.workManager}"
