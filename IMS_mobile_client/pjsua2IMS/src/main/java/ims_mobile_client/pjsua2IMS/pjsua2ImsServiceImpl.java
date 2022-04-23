@@ -6,6 +6,7 @@ import ims_mobile_client.domain.entities.Message;
 import ims_mobile_client.domain.entities.User;
 import ims_mobile_client.domain.service.pjsua2ImsService;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 public class pjsua2ImsServiceImpl implements pjsua2ImsService {
     @Override
@@ -34,7 +35,7 @@ public class pjsua2ImsServiceImpl implements pjsua2ImsService {
     }
 
     @Override
-    public Completable refreshBuddyPresence(Buddy buddy) {
+    public Flowable<Buddy> getBuddyPresence(Buddy buddy) {
         return null;
     }
 
@@ -93,10 +94,6 @@ public class pjsua2ImsServiceImpl implements pjsua2ImsService {
         return null;
     }
 
-    @Override
-    public Completable reconnectCall() {
-        return null;
-    }
 
     //    boolean startLib();
 //    boolean stopLib();
@@ -132,7 +129,7 @@ public class pjsua2ImsServiceImpl implements pjsua2ImsService {
 //    void setOutgoingVideoFeed(CallEntity call, Surface surface);
 //    void unsetOutgoingVideoFeed(CallEntity call, Surface surface);
 //    void setOutgoingVideoOrientation(CallEntity call, int orientation); // Surface.ROTATION_0/90/180/270
-//
+//    void reconnectCall(); // caused changed IP, managed by Endpoint
 //
 //    /*** BUDDIES ***/
 //    void addBuddy(BuddyEntity buddy);

@@ -5,6 +5,7 @@ import ims_mobile_client.domain.entities.Call;
 import ims_mobile_client.domain.entities.Message;
 import ims_mobile_client.domain.entities.User;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 public interface pjsua2ImsService {
 
@@ -14,7 +15,7 @@ public interface pjsua2ImsService {
 
     Completable addBuddy(Buddy buddy);
     Completable removeBuddy(Buddy buddy);
-    Completable refreshBuddyPresence(Buddy buddy);
+    Flowable<Buddy> getBuddyPresence(Buddy buddy);
     Completable sendMessage(Message message);
 
     Completable makeCall(Call call);
@@ -27,6 +28,5 @@ public interface pjsua2ImsService {
     Completable toggleVideoMute(Call call);
     Completable switchCamera(Call call);
     Completable sendDTMF(Call call, String sequence);
-    Completable reconnectCall(); // caused changed IP, managed by Endpoint
 
 }
