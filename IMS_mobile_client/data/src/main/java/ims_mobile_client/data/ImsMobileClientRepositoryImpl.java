@@ -1,81 +1,64 @@
 package ims_mobile_client.data;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-
-import com.example.data.local.datasource.LocalDataSource;
-import com.example.domain.entities.BuddyEntity;
-import com.example.domain.entities.CallEntity;
-import com.example.domain.entities.MessageEntity;
-import com.example.domain.entities.UserEntity;
-import com.example.domain.repository.ImsMobileClientRepository;
-
 import java.util.List;
 
+import ims_mobile_client.data.repository.dataLocal;
+import ims_mobile_client.domain.entities.Buddy;
+import ims_mobile_client.domain.entities.Call;
+import ims_mobile_client.domain.entities.Message;
 import ims_mobile_client.domain.entities.User;
+import ims_mobile_client.domain.repository.ImsMobileClientRepository;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 
 public class ImsMobileClientRepositoryImpl implements ImsMobileClientRepository {
 
-    private final LocalDataSource dataSource;
+    private final dataLocal dataSource;
 
-    public ImsMobileClientRepositoryImpl(LocalDataSource dataSource) {
+    public ImsMobileClientRepositoryImpl(dataLocal dataSource) {
         this.dataSource = dataSource;
     }
 
+
     @Override
-    public io.reactivex.Single<User> getUser(String usrSpiUri) {
-        return new MutableLiveData<>(dataSource.getUser(usrSpiUri));
+    public Flowable<User> getLastUser() {
+        return null;
     }
 
     @Override
-    public io.reactivex.Flowable<User> getLastUser() {
-        return new MutableLiveData<>(dataSource.getLastUser());
+    public Completable addUser(User user) {
+        return null;
     }
 
     @Override
-    public io.reactivex.Completable addUser(User user) {
-        dataSource.addUser(user);
+    public Flowable<List<Buddy>> getBuddiesFor(String userSipUri) {
+        return null;
     }
 
     @Override
-    public LiveData<List<BuddyEntity>> getAllBuddies() {
-        return new MutableLiveData<>(dataSource.getAllBuddies());
+    public Completable addBuddy(Buddy buddy) {
+        return null;
     }
 
     @Override
-    public LiveData<List<BuddyEntity>> getBuddiesFor(String userSipUri) {
-        return new MutableLiveData<>(dataSource.getBuddiesFor(userSipUri));
+    public Flowable<List<Message>> getMessagesFor(String usrSipUri, String buddySipUri) {
+        return null;
     }
 
     @Override
-    public LiveData<List<MessageEntity>> getAllMessages() {
-        return new MutableLiveData<>(dataSource.getAllMessages());
+    public Completable addMessage(Message message) {
+        return null;
     }
 
     @Override
-    public LiveData<List<MessageEntity>> getMessagesFor(String userSipUri) {
-        return new MutableLiveData<>(dataSource.getMessagesFor(userSipUri));
+    public Flowable<List<Call>> getCallsFor(String usrSipUri, String buddySipUri) {
+        return null;
     }
 
     @Override
-    public LiveData<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri) {
-        return new MutableLiveData<>(dataSource.getMessagesFor(usrSipUri, buddySipUri));
-    }
-
-    @Override
-    public LiveData<List<CallEntity>> getAllCalls() {
-        return new MutableLiveData<>(dataSource.getAllCalls());
-    }
-
-    @Override
-    public LiveData<List<CallEntity>> getCallsFor(String userSipUri) {
-        return new MutableLiveData<>(dataSource.getCallsFor(userSipUri));
-    }
-
-    @Override
-    public LiveData<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri) {
-        return new MutableLiveData<>(dataSource.getCallsFor(usrSipUri, buddySipUri));
+    public Completable addCall(Call call) {
+        return null;
     }
 }

@@ -26,6 +26,18 @@ public class Buddy {
         this.rpidId = rpidId;
     }
 
+    public Buddy(int id, String usrSipUri, String buddySipUri, String buddyDisplayName) {
+        this.id = id;
+        this.usrSipUri = usrSipUri;
+        this.buddySipUri = buddySipUri;
+        this.buddyDisplayName = buddyDisplayName;
+        this.buddyStatusType = null;
+        this.buddyStatusActivity = null;
+        this.buddyStatusText = null;
+        this.note = null;
+        this.rpidId = null;
+    }
+
 
     public int getId() {
         return id;

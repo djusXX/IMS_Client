@@ -14,10 +14,10 @@ import com.example.domain.entities.UserEntity;
 
 import java.util.List;
 
-public class LocalDataSourceImpl implements LocalDataSource {
+public class LocalDataStoreImpl implements LocalDataSource {
 
     private final AppDatabase db;
-    public LocalDataSourceImpl(AppDatabase db) {
+    public LocalDataStoreImpl(AppDatabase db) {
         this.db = db;
     }
 

@@ -29,6 +29,20 @@ public class Call {
         this.statusText = statusText;
     }
 
+    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideo, long beginTime, long endTime) {
+        this.id = id;
+        this.sipUriFrom = sipUriFrom;
+        this.sipUriTo = sipUriTo;
+        this.isVideo = isVideo;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.isActive = false;
+        this.stateType = null;
+        this.stateText = null;
+        this.statusCode = -1;
+        this.statusText = null;
+    }
+
 
     public int getId() {
         return id;

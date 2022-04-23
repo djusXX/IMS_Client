@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String displayName;
     private String realm;
+    private String pcscf;
     private long lastLogged;    // UTC time of last logout
     private String regStatus;
 
@@ -16,11 +17,12 @@ public class User {
     private String note;
     private String rpidId;
 
-    public User(int id, String name, String displayName, String realm, long lastLogged, String regStatus, String userStatusType, String userStatusActivity, String userStatusText, String note, String rpidId) {
+    public User(int id, String name, String displayName, String realm, String pcscf, long lastLogged, String regStatus, String userStatusType, String userStatusActivity, String userStatusText, String note, String rpidId) {
         this.id = id;
         this.name = name;
         this.displayName = displayName;
         this.realm = realm;
+        this.pcscf = pcscf;
         this.lastLogged = lastLogged;
         this.regStatus = regStatus;
         this.userStatusType = userStatusType;
@@ -28,6 +30,21 @@ public class User {
         this.userStatusText = userStatusText;
         this.note = note;
         this.rpidId = rpidId;
+    }
+
+    public User(int id, String name, String displayName, String realm, String pcscf, long lastLogged) {
+        this.id = id;
+        this.name = name;
+        this.displayName = displayName;
+        this.realm = realm;
+        this.pcscf = pcscf;
+        this.lastLogged = lastLogged;
+        this.regStatus = null;
+        this.userStatusType = null;
+        this.userStatusActivity = null;
+        this.userStatusText = null;
+        this.note = null;
+        this.rpidId = null;
     }
 
     public int getId() {
@@ -120,5 +137,13 @@ public class User {
 
     public void setRpidId(String rpidId) {
         this.rpidId = rpidId;
+    }
+
+    public String getPcscf() {
+        return pcscf;
+    }
+
+    public void setPcscf(String pcscf) {
+        this.pcscf = pcscf;
     }
 }
