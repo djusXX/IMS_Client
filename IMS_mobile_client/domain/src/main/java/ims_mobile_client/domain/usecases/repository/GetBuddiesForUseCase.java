@@ -1,4 +1,4 @@
-package ims_mobile_client.domain.usecases.buddies;
+package ims_mobile_client.domain.usecases.repository;
 
 import java.util.List;
 import javax.inject.Inject;

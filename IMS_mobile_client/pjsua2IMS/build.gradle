@@ -3,4 +3,5 @@ apply from: '../commons.gradle'
 
 dependencies {
     implementation project(Modules.data)
+    implementation project(path: ':domain')
 }

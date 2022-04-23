@@ -6,16 +6,24 @@ public class Buddy {
     private String usrSipUri;
     private String buddySipUri;
     private String buddyDisplayName;
-    private String buddyStatusType;
-    private String buddyStatusText;
 
-    public Buddy(int id, String usrSipUri, String buddySipUri, String buddyDisplayName, String buddyStatusType, String buddyStatusText) {
+    // Buddy Presence
+    private String buddyStatusType;
+    private String buddyStatusActivity;
+    private String buddyStatusText;
+    private String note;
+    private String rpidId;
+
+    public Buddy(int id, String usrSipUri, String buddySipUri, String buddyDisplayName, String buddyStatusType, String buddyStatusActivity, String buddyStatusText, String note, String rpidId) {
         this.id = id;
         this.usrSipUri = usrSipUri;
         this.buddySipUri = buddySipUri;
         this.buddyDisplayName = buddyDisplayName;
         this.buddyStatusType = buddyStatusType;
+        this.buddyStatusActivity = buddyStatusActivity;
         this.buddyStatusText = buddyStatusText;
+        this.note = note;
+        this.rpidId = rpidId;
     }
 
 
@@ -65,5 +73,29 @@ public class Buddy {
 
     public void setBuddyStatusText(String buddyStatusText) {
         this.buddyStatusText = buddyStatusText;
+    }
+
+    public String getBuddyStatusActivity() {
+        return buddyStatusActivity;
+    }
+
+    public void setBuddyStatusActivity(String buddyStatusActivity) {
+        this.buddyStatusActivity = buddyStatusActivity;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getRpidId() {
+        return rpidId;
+    }
+
+    public void setRpidId(String rpidId) {
+        this.rpidId = rpidId;
     }
 }

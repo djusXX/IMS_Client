@@ -1,4 +1,4 @@
-package ims_mobile_client.domain.usecases.user;
+package ims_mobile_client.domain.usecases.repository;
 
 
 
