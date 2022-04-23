@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+apply from: '../commons.gradle'
+
+android {
+    defaultConfig {
+        applicationId ApplicationId.id
+    }
+
+}
+
+dependencies {
+    implementation project(Modules.data)
+    implementation project(Modules.domain)
+    implementation project(Modules.presentation)
+    implementation project(Modules.dataSourceLocal)
+    implementation project(Modules.pjsua)
+
+
+    implementation Libs.appcompat
+    implementation Libs.constraintLayout
+    implementation Libs.materialDesign
+    implementation Libs.recyclerview
+}

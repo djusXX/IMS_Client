@@ -3,17 +3,15 @@
  * */
 
 object ApplicationId {
-    val id = "com.example.ims_mobile_client"
+    val id = "ims_mobile_client"
 }
 
 object Modules {
     val data = ":data"
     val domain = ":domain"
-
-    // presentation modules
-    val login = ":presentation:login"
-    val calls = ":presentation:calls"
-    val conversations = ":presentation:conversations"
+    val presentation = ":presentation"
+    val dataSourceLocal = ":dataSource-local"
+    val pjsua = ":pjsua2IMS"
 }
 
 object Releases {
@@ -46,6 +44,8 @@ object Ver {
     val hiltAndroid = "2.38.1"
     val hiltAndroidGradlePlugin = "2.38.1"
     val hiltJetpack = "1.0.0-alpha02"
+    val javaxAnnotation = "1.3.2"
+    val javaxInject = "1"
     val junit = "4.13.2"
     val kotlinVersion = "1.5.21"
     val lifecycleExtensions = "2.2.0"
@@ -64,6 +64,9 @@ object Ver {
 
 
 object Libs {
+
+    val javaxAnnotation = "javax.annotation:javax.annotation-api:${Ver.javaxAnnotation}"
+    val javaxInject = "javax.inject:javax.inject:${Ver.javaxInject}"
 
     val dagger = "com.google.dagger:dagger:${Ver.dagger}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Ver.dagger}"

@@ -3,4 +3,9 @@ apply from: '../commons.gradle'
 
 dependencies {
     implementation project(Modules.data)
+
+    api Libs.room
+    kapt Libs.roomCompiler
+
 }
+

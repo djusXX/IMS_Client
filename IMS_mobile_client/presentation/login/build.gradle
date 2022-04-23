@@ -1,8 +1,0 @@
-apply plugin: 'com.android.library'
-apply from: '../../commons.gradle'
-
-dependencies {
-    implementation project(Modules.domain)
-
-    implementation Libs.constraintLayout
-}

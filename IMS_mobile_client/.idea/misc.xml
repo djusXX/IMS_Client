@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/active_call_fragment.xml" value="0.36770833333333336" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/buddy_list_fragment.xml" value="0.36770833333333336" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/conversation_fragment.xml" value="0.36770833333333336" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/main_activity.xml" value="0.36770833333333336" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/message_fragment.xml" value="0.17592592592592593" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/new_buddy_fragment.xml" value="0.36770833333333336" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/pre_call_fragment.xml" value="0.36770833333333336" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app-ui/src/main/res/layout/single_buddy_fragment.xml" value="0.17592592592592593" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/app/src/main/res/layout/main_activity.xml" value="0.36822916666666666" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/calls/src/main/res/layout/active_call_fragment.xml" value="0.17572463768115942" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/conversations/src/main/res/layout/message_fragment.xml" value="0.17572463768115942" />
@@ -37,8 +45,9 @@
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/imsmobileclient/src/main/res/menu/chats_menu.xml" value="0.20572916666666666" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/login/src/main/res/layout/login_fragment.xml" value="0.17572463768115942" />
         <entry key="..\:/repos/IMS_Client/IMS_mobile_client/presentation/login/src/main/res/layout/login_fragment.xml" value="0.28306159420289856" />
+        <entry key="..\:/repos/IMS_Client/IMS_mobile_client/ui/src/main/res/layout/main_activity.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

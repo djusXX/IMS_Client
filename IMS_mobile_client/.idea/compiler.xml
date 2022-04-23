@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11">
+    <bytecodeTargetLevel target="1.8">
       <module name="IMS_Client.IMS_mobile_client.data2" target="11" />
+      <module name="IMS_mobile_client.app-ui" target="11" />
+      <module name="IMS_mobile_client.buildsrc" target="11" />
+      <module name="IMS_mobile_client.buildSrc" target="11" />
+      <module name="IMS_mobile_client.dataSource-local" target="11" />
+      <module name="IMS_mobile_client.pjsua2IMS" target="11" />
+      <module name="IMS_mobile_client.presentation" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
