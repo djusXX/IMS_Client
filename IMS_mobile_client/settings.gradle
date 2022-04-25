@@ -1,6 +1,6 @@
 include ':buildsrc'
 include ':data'
-include ':dataSource-local'
+include ':localDataSource'
 include ':domain'
 include ':pjsua2IMS'
 include ':presentation'

@@ -2,7 +2,7 @@ package ims_mobile_client.data;
 
 import java.util.List;
 
-import ims_mobile_client.data.repository.dataLocal;
+import ims_mobile_client.data.repository.LocalDataStore;
 import ims_mobile_client.domain.entities.Buddy;
 import ims_mobile_client.domain.entities.Call;
 import ims_mobile_client.domain.entities.Message;
@@ -15,9 +15,9 @@ import io.reactivex.Flowable;
 
 public class ImsMobileClientRepositoryImpl implements ImsMobileClientRepository {
 
-    private final dataLocal dataSource;
+    private final LocalDataStore dataSource;
 
-    public ImsMobileClientRepositoryImpl(dataLocal dataSource) {
+    public ImsMobileClientRepositoryImpl(LocalDataStore dataSource) {
         this.dataSource = dataSource;
     }
 

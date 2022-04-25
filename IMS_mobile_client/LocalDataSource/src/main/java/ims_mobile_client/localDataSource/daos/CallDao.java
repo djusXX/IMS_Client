@@ -1,36 +1,36 @@
-package com.example.data.local.room;
+package ims_mobile_client.localDataSource.daos;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.domain.entities.CallEntity;
-
 import java.util.List;
+
+import ims_mobile_client.localDataSource.entities.LocalCall;
 
 @Dao
 public interface CallDao {
 
-    @Insert
-    void insert(CallEntity callEntity);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(LocalCall localCall);
 
-    @Insert
-    void insert(List<CallEntity> calls);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(List<LocalCall> calls);
 
     @Delete
-    void delete(CallEntity callEntity);
+    void delete(LocalCall localCall);
 
     @Query("delete from calls_table")
     void deleteAll();
 
     @Query("select * from calls_table")
-    List<CallEntity> getAll();
+    List<LocalCall> getAll();
 
     @Query("select * from calls_table where (sipUriTO = :usrSipUri or sipUriFROM = :usrSipUri)")
-    List<CallEntity> getCallsFor(String usrSipUri);
+    List<LocalCall> getCallsFor(String usrSipUri);
 
     @Query("select * from calls_table where ((sipUriFROM = :usrSipUri and sipUriTO = :buddySipUri) or (sipUriFROM = :buddySipUri and sipUriTO = :usrSipUri))")
-    List<CallEntity> getCallsFor(String usrSipUri, String buddySipUri);
+    List<LocalCall> getCallsFor(String usrSipUri, String buddySipUri);
 }

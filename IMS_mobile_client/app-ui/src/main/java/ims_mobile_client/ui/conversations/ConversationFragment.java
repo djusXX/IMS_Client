@@ -58,7 +58,7 @@ public class ConversationFragment extends Fragment {
 
         binding.sendButton.setOnClickListener(v -> {
 //            Date date = new Date();
-//            MessageEntity messageEntity = new MessageEntity(usrSipUri, buddySipUri, date.toString(), binding.messageInput.getText().toString());
+//            LocalMessage messageEntity = new LocalMessage(usrSipUri, buddySipUri, date.toString(), binding.messageInput.getText().toString());
 //            messageViewModel.addMessage(messageEntity);
 //            SipServiceCommand.sendMessage(requireActivity().getApplicationContext(), usrSipUri, buddySipUri, messageEntity.content);
 //            binding.messageInput.setText("");

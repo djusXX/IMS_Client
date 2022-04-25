@@ -1,4 +1,4 @@
-package ims_mobile_client.data.source;
+package ims_mobile_client.localDataSource;
 
 import java.util.List;
 
@@ -8,55 +8,69 @@ import ims_mobile_client.data.entities.BuddyEntity;
 import ims_mobile_client.data.entities.CallEntity;
 import ims_mobile_client.data.entities.MessageEntity;
 import ims_mobile_client.data.entities.UserEntity;
-import ims_mobile_client.data.repository.DefaultDataStore;
+import ims_mobile_client.data.repository.LocalDataStore;
+import ims_mobile_client.localDataSource.db.AppDatabase;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
-public class LocalDataStore implements DefaultDataStore {
-    private final ims_mobile_client.data.repository.LocalDataStore LocalDataStore;
+public class LocalDataStoreImpl implements LocalDataStore {
+
+    private final AppDatabase db;
+
 
     @Inject
-    public LocalDataStore(ims_mobile_client.data.repository.LocalDataStore LocalDataStore) {
-        this.LocalDataStore = LocalDataStore;
+    public LocalDataStoreImpl(AppDatabase db) {
+        this.db = db;
+    }
+
+
+    @Override
+    public Flowable<UserEntity> getUser(String usrSpiUri) {
+        return null;
     }
 
     @Override
     public Flowable<UserEntity> getLastUser() {
-        return LocalDataStore.getLastUser();
+        return null;
     }
 
     @Override
     public Completable addUser(UserEntity userEntity) {
-        return LocalDataStore.addUser(userEntity);
+        return null;
     }
 
     @Override
     public Flowable<List<BuddyEntity>> getBuddiesFor(String userSipUri) {
-        return LocalDataStore.getBuddiesFor(userSipUri);
+        return null;
+    }
+
+    @Override
+    public Flowable<BuddyEntity> getBuddy(String usrSipUri, String buddySipUri) {
+        return null;
     }
 
     @Override
     public Completable addBuddy(BuddyEntity buddyEntity) {
-        return LocalDataStore.addBuddy(buddyEntity);
+        return null;
     }
 
     @Override
     public Flowable<List<MessageEntity>> getMessagesFor(String usrSipUri, String buddySipUri) {
-        return LocalDataStore.getMessagesFor(usrSipUri, buddySipUri);
+        return null;
     }
 
     @Override
     public Completable addMessage(MessageEntity message) {
-        return LocalDataStore.addMessage(message);
+        return null;
     }
 
     @Override
     public Flowable<List<CallEntity>> getCallsFor(String usrSipUri, String buddySipUri) {
-        return LocalDataStore.getCallsFor(usrSipUri, buddySipUri);
+        return null;
     }
 
     @Override
     public Completable saveCall(CallEntity call) {
-        return LocalDataStore.saveCall(call);
+        return null;
     }
 }

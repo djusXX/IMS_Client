@@ -9,8 +9,7 @@ import ims_mobile_client.data.entities.UserEntity;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
-
-public interface dataLocal {
+public interface LocalDataStore {
 
     Flowable<UserEntity> getUser(String usrSpiUri);
     Flowable<UserEntity> getLastUser();

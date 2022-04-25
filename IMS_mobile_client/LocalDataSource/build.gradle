@@ -1,7 +1,7 @@
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
-
 
 android {
     compileSdkVersion Ver.compileSdkVersion
@@ -36,33 +36,13 @@ android {
     }
 }
 
-
 dependencies {
-    //Loads packaged libraries in the libs folder
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(Modules.data)
 
-    implementation Libs.rxJava
-//    implementation Libs.rxAndroid
-//    implementation Libs.dagger
-//    kapt Libs.daggerCompiler
-//    implementation Libs.daggerAndroidSupport
-//    kapt Libs.daggerAndroidProcessor
-
+    api Libs.room
+    kapt Libs.roomCompiler
     implementation Libs.hilt
-    implementation Libs.hiltJetpack
     kapt Libs.hiltCompiler
-    kapt Libs.hiltJetpackCompiler
-
-    // For instrumentation tests
-    androidTestImplementation Libs.hiltAndroidTest
-    kaptAndroidTest Libs.hiltAndroidTestCompiler
-
-    // For local unit tests
-    testImplementation Libs.hiltAndroidUnitTest
-    kaptTest Libs.hiltAndroidUnitTestCompiler
-
-    implementation TestLibs.androidTestRunner
-    implementation TestLibs.junit
-    implementation TestLibs.espresso
-    implementation TestLibs.espressoContrib
+    implementation Libs.rxJava
 }
+

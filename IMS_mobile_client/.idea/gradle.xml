@@ -15,8 +15,8 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/buildsrc" />
             <option value="$PROJECT_DIR$/data" />
-            <option value="$PROJECT_DIR$/dataSource-local" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/localDataSource" />
             <option value="$PROJECT_DIR$/pjsua2IMS" />
             <option value="$PROJECT_DIR$/presentation" />
           </set>

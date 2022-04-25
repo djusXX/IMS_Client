@@ -1,36 +1,35 @@
-package com.example.data.local.room;
+package ims_mobile_client.localDataSource.daos;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.domain.entities.MessageEntity;
-
 import java.util.List;
+
+import ims_mobile_client.localDataSource.entities.LocalMessage;
 
 @Dao
 public interface MessageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(MessageEntity messageEntity);
+    void insert(LocalMessage localMessage);
 
-    @Insert
-    void insert(List<MessageEntity> messages);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(List<LocalMessage> messages);
 
     @Delete
-    void delete(MessageEntity messageEntity);
+    void delete(LocalMessage localMessage);
 
     @Query("delete from messages_table")
     void deleteAll();
 
     @Query("select * from messages_table")
-    List<MessageEntity> getAll();
+    List<LocalMessage> getAll();
 
     @Query("select * from messages_table where (sipUriFROM = :usrSipUri or sipUriTO = :usrSipUri)")
-    List<MessageEntity> getMessagesFor(String usrSipUri);
+    List<LocalMessage> getMessagesFor(String usrSipUri);
 
     @Query("select * from messages_table where ((sipUriFROM = :usrSipUri and sipUriTO = :buddySipUri) or (sipUriFROM = :buddySipUri and sipUriTO = :usrSipUri))")
-    List<MessageEntity> getMessagesFor(String usrSipUri, String buddySipUri);
+    List<LocalMessage> getMessagesFor(String usrSipUri, String buddySipUri);
 }
