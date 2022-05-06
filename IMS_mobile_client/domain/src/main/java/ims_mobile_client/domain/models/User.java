@@ -7,7 +7,7 @@ public class User {
     private String displayName;
     private String realm;
     private String pcscf;
-    private long lastLogged;    // UTC time of last logout
+    private long lastLogged;    // expiration time of user's registration (in UTC)
     private String regStatus;
 
     // User Presence
