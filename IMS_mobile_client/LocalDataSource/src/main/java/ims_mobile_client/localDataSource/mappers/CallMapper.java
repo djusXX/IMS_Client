@@ -1,9 +1,17 @@
 package ims_mobile_client.localDataSource.mappers;
 
+import javax.inject.Inject;
+
 import ims_mobile_client.data.models.CallEntity;
 import ims_mobile_client.localDataSource.models.LocalCall;
 
 public class CallMapper implements Mapper<LocalCall, CallEntity> {
+
+    @Inject
+    public CallMapper() {
+        super();
+    }
+
     @Override
     public CallEntity mapToEntity(LocalCall lc) {
         return new CallEntity(lc.getId(), lc.getSipUriFROM(), lc.getSipUriTO(),

@@ -1,24 +1,18 @@
-package ims_mobile_client.conversations;
+package ims_mobile_client.presentation.viewModels;
 
-import android.app.Application;
+import androidx.lifecycle.ViewModel;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-
-import java.util.List;
-
-public class MessageViewModel extends AndroidViewModel {
+public class MessageViewModel extends ViewModel {
 
 //    private final AppRepository repository;
 //    private final LiveData<List<MessageEntity>> messages;
 //
-    public MessageViewModel(@NonNull Application application) {
-        super(application);
-//
-//        repository = ((BaseApp) application).getRepository();;
-//        messages = repository.getAllMessages();
-    }
+//    public MessageViewModel(@NonNull Application application) {
+//        super(application);
+////
+////        repository = ((BaseApp) application).getRepository();;
+////        messages = repository.getAllMessages();
+//    }
 //
 //    public LiveData<List<MessageEntity>> getAllMessages() { return messages; }
 //

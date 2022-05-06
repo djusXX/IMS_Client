@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ims_mobile_client.domain.entities.Message;
+import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMCRepository;

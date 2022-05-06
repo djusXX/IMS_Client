@@ -1,9 +1,17 @@
 package ims_mobile_client.localDataSource.mappers;
 
+import javax.inject.Inject;
+
 import ims_mobile_client.data.models.UserEntity;
 import ims_mobile_client.localDataSource.models.LocalUser;
 
 public class UserMapper implements Mapper<LocalUser, UserEntity> {
+
+    @Inject
+    public UserMapper() {
+        super();
+    }
+
     @Override
     public UserEntity mapToEntity(LocalUser lu) {
         return new UserEntity(lu.getId(), lu.getDisplayName(), lu.getUserName(),

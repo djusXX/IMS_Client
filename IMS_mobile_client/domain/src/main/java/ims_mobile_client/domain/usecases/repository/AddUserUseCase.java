@@ -4,7 +4,7 @@ package ims_mobile_client.domain.usecases.repository;
 
 import javax.inject.Inject;
 
-import ims_mobile_client.domain.entities.User;
+import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMCRepository;

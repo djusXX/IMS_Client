@@ -5,12 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ims_mobile_client.data.mappers.MapperFactory;
-import ims_mobile_client.data.mappers.UserMapper;
 import ims_mobile_client.data.stores.DataStoreFactory;
-import ims_mobile_client.domain.entities.Buddy;
-import ims_mobile_client.domain.entities.Call;
-import ims_mobile_client.domain.entities.Message;
-import ims_mobile_client.domain.entities.User;
+import ims_mobile_client.domain.models.Buddy;
+import ims_mobile_client.domain.models.Call;
+import ims_mobile_client.domain.models.Message;
+import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.repository.IMCRepository;
 
 import io.reactivex.Completable;

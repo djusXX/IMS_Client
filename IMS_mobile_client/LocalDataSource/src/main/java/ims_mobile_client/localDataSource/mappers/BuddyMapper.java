@@ -1,9 +1,17 @@
 package ims_mobile_client.localDataSource.mappers;
 
+import javax.inject.Inject;
+
 import ims_mobile_client.data.models.BuddyEntity;
 import ims_mobile_client.localDataSource.models.LocalBuddy;
 
 public class BuddyMapper implements Mapper<LocalBuddy, BuddyEntity>{
+
+    @Inject
+    public BuddyMapper() {
+        super();
+    }
+
     @Override
     public BuddyEntity mapToEntity(LocalBuddy lb) {
         return new BuddyEntity(lb.getId(), lb.getUserSipUri(),

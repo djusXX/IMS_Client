@@ -1,25 +1,21 @@
-package ims_mobile_client.conversations;
+package ims_mobile_client.presentation.viewModels;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class BuddyViewModel extends AndroidViewModel {
+public class BuddyViewModel extends ViewModel {
 
 //    private final AppRepository repository;
 //    private final LiveData<List<BuddyEntity>> buddies;
 //
 //
-    public BuddyViewModel(@NonNull Application application) {
-        super(application);
+//    public BuddyViewModel(@NonNull Application application) {
+//        super(application);
 //
 //        repository = ((BaseApp) application).getRepository();
 //        buddies = repository.getAllBuddies();
-    }
+//    }
 //
 //    public LiveData<List<BuddyEntity>> getAllBuddies() { return buddies; }
 //

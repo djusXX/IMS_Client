@@ -1,22 +1,19 @@
-package ims_mobile_client.calls;
+package ims_mobile_client.presentation.viewModels;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
 
 
-public class CallViewModel extends AndroidViewModel {
+public class CallViewModel extends ViewModel {
 
 //    private final AppRepository repository;
 //    private final LiveData<List<CallEntity>> calls;
 
-    public CallViewModel(@NonNull Application application) {
-        super(application);
-
-//        repository = ((com.example.conversations.model.BaseApp) application).getRepository();
-//        calls = repository.getAllCalls();
-    }
+//    public CallViewModel(@NonNull Application application) {
+//        super(application);
+//
+////        repository = ((com.example.conversations.model.BaseApp) application).getRepository();
+////        calls = repository.getAllCalls();
+//    }
 
 //    public LiveData<List<CallEntity>> getAllCalls() {
 //        return calls;

@@ -2,10 +2,10 @@ package ims_mobile_client.domain.repository;
 
 import java.util.List;
 
-import ims_mobile_client.domain.entities.Buddy;
-import ims_mobile_client.domain.entities.Call;
-import ims_mobile_client.domain.entities.Message;
-import ims_mobile_client.domain.entities.User;
+import ims_mobile_client.domain.models.Buddy;
+import ims_mobile_client.domain.models.Call;
+import ims_mobile_client.domain.models.Message;
+import ims_mobile_client.domain.models.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 

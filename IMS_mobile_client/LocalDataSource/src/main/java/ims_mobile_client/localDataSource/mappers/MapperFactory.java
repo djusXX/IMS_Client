@@ -2,10 +2,6 @@ package ims_mobile_client.localDataSource.mappers;
 
 import javax.inject.Inject;
 
-import ims_mobile_client.localDataSource.mappers.BuddyMapper;
-import ims_mobile_client.localDataSource.mappers.CallMapper;
-import ims_mobile_client.localDataSource.mappers.MessageMapper;
-import ims_mobile_client.localDataSource.mappers.UserMapper;
 
 public class MapperFactory {
     private final BuddyMapper buddyMapper;
