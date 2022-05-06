@@ -1,4 +1,4 @@
-package ims_mobile_client.data.entities;
+package ims_mobile_client.data.models;
 
 public class CallEntity {
 

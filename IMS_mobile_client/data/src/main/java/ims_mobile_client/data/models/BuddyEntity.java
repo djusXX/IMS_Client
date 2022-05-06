@@ -1,19 +1,13 @@
-package ims_mobile_client.localDataSource.entities;
+package ims_mobile_client.data.models;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+public class BuddyEntity {
 
-@Entity(tableName = "buddies_table")
-public class LocalBuddy {
-
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String userSipUri;
     private String buddySipUri;
     private String buddyDisplayName;
 
-    public LocalBuddy(int id, String userSipUri, String buddySipUri, String buddyDisplayName) {
+    public BuddyEntity(int id, String userSipUri, String buddySipUri, String buddyDisplayName) {
         this.id = id;
         this.userSipUri = userSipUri;
         this.buddySipUri = buddySipUri;

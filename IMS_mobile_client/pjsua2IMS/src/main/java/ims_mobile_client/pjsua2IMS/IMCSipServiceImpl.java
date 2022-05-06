@@ -4,11 +4,11 @@ import ims_mobile_client.domain.entities.Buddy;
 import ims_mobile_client.domain.entities.Call;
 import ims_mobile_client.domain.entities.Message;
 import ims_mobile_client.domain.entities.User;
-import ims_mobile_client.domain.service.pjsua2ImsService;
+import ims_mobile_client.domain.service.IMCSipService;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
-public class pjsua2ImsServiceImpl implements pjsua2ImsService {
+public class IMCSipServiceImpl implements IMCSipService {
     @Override
     public Completable logIn(User user) {
         return null;

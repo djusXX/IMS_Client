@@ -1,20 +1,14 @@
-package ims_mobile_client.localDataSource.entities;
+package ims_mobile_client.data.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+public class MessageEntity {
 
-@Entity(tableName = "messages_table")
-public class LocalMessage {
-
-    @PrimaryKey(autoGenerate = true)
     private int id;
     private String sipUriFrom;
     private String sipUriTo;
     private long time;
     private String content;
 
-
-    public LocalMessage(int id, String sipUriFrom, String sipUriTo, long time, String content) {
+    public MessageEntity(int id, String sipUriFrom, String sipUriTo, long time, String content) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;

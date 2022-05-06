@@ -8,7 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ims_mobile_client.localDataSource.entities.LocalCall;
+import ims_mobile_client.localDataSource.models.LocalCall;
 
 @Dao
 public interface CallDao {

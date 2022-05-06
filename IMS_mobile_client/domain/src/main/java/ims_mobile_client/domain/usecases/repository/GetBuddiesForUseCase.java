@@ -6,15 +6,15 @@ import javax.inject.Inject;
 import ims_mobile_client.domain.entities.Buddy;
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
-import ims_mobile_client.domain.repository.ImsMobileClientRepository;
+import ims_mobile_client.domain.repository.IMCRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
 public class GetBuddiesForUseCase extends FlowableUseCase<List<Buddy>, String> {
-    private final ImsMobileClientRepository repository;
+    private final IMCRepository repository;
 
     @Inject
-    public GetBuddiesForUseCase(ImsMobileClientRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public GetBuddiesForUseCase(IMCRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.repository = repository;
     }

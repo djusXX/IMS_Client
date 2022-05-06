@@ -8,7 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ims_mobile_client.localDataSource.entities.LocalBuddy;
+import ims_mobile_client.localDataSource.models.LocalBuddy;
 
 @Dao
 public interface BuddyDao {

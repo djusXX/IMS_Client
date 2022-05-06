@@ -1,17 +1,17 @@
 package ims_mobile_client.localDataSource.mappers;
 
-import ims_mobile_client.data.entities.UserEntity;
-import ims_mobile_client.localDataSource.entities.LocalUser;
+import ims_mobile_client.data.models.UserEntity;
+import ims_mobile_client.localDataSource.models.LocalUser;
 
 public class UserMapper implements Mapper<LocalUser, UserEntity> {
     @Override
-    public UserEntity mapTo(LocalUser lu) {
+    public UserEntity mapToEntity(LocalUser lu) {
         return new UserEntity(lu.getId(), lu.getDisplayName(), lu.getUserName(),
                 lu.getRealm(), lu.getPcscf(), lu.getLastLogged());
     }
 
     @Override
-    public LocalUser mapFrom(UserEntity ue) {
+    public LocalUser mapFromEntity(UserEntity ue) {
         return new LocalUser(ue.getId(), ue.getDisplayName(), ue.getName(),
                 ue.getRealm(), ue.getPcscf(), ue.getLastLogged());
     }

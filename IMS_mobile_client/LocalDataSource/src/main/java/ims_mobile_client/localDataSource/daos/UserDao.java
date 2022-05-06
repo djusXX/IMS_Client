@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import ims_mobile_client.localDataSource.entities.LocalUser;
+import ims_mobile_client.localDataSource.models.LocalUser;
 
 @Dao
 public interface UserDao {
@@ -20,6 +20,6 @@ public interface UserDao {
     @Query("select * from local_users_table where usrSipUri = :usrSipUri")
     LocalUser getUser(String usrSipUri);
 
-    @Query("select * from local_users_table order by lastLogged desc")
-    LocalUser getUsersSortedByLastLogged();
+    @Query("select * from local_users_table order by lastLogged desc limit 1")
+    LocalUser getLastLoggedUser();
 }

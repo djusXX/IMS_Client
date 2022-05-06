@@ -7,7 +7,7 @@ import ims_mobile_client.domain.entities.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
-public interface pjsua2ImsService {
+public interface IMCSipService {
 
     Completable logIn(User user);
     Completable logOut(User user);

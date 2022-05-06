@@ -8,7 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import ims_mobile_client.localDataSource.entities.LocalMessage;
+import ims_mobile_client.localDataSource.models.LocalMessage;
 
 @Dao
 public interface MessageDao {

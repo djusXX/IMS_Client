@@ -9,14 +9,16 @@ import ims_mobile_client.domain.entities.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
-public interface ImsMobileClientRepository {
+public interface IMCRepository {
 
     // User
     Flowable<User> getLastUser();
+    Flowable<User> getUser(String userSipUri);
     Completable addUser(User user);
 
     // Buddies
     Flowable<List<Buddy>> getBuddiesFor(String userSipUri);
+    Flowable<Buddy> getBuddy(String userSipUri, String buddySipUri);
     Completable addBuddy(Buddy buddy);
 
     // Messages

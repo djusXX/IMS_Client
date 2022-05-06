@@ -1,4 +1,4 @@
-package ims_mobile_client.localDataSource.entities;
+package ims_mobile_client.localDataSource.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
