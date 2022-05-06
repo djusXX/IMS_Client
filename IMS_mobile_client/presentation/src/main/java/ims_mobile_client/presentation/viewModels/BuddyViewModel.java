@@ -2,8 +2,6 @@ package ims_mobile_client.presentation.viewModels;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
-
 public class BuddyViewModel extends ViewModel {
 
 //    private final AppRepository repository;
