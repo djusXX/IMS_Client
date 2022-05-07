@@ -7,10 +7,9 @@ import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.service.IMCSipService;
 import ims_mobile_client.domain.usecases.CompletableUseCase;
-import ims_mobile_client.domain.usecases.Pair;
 import io.reactivex.Completable;
 
-public class SendDTMFUseCase extends CompletableUseCase<Pair<Call,String>> {
+public class SendDTMFUseCase extends CompletableUseCase<SendDTMFUseCase.Params> {
     private final IMCSipService service;
 
     @Inject
@@ -20,7 +19,16 @@ public class SendDTMFUseCase extends CompletableUseCase<Pair<Call,String>> {
     }
 
     @Override
-    protected Completable buildUseCaseObservable(Pair<Call,String> pair) {
-        return service.sendDTMF(pair.first, pair.second);
+    protected Completable buildUseCaseObservable(Params params) {
+        return service.sendDTMF(params.call, params.sequence);
+    }
+
+    public static class Params {
+        Call call;
+        String sequence;
+        public Params(Call call, String sequence) {
+            this.call = call;
+            this.sequence = sequence;
+        }
     }
 }

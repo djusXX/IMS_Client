@@ -1,6 +1,6 @@
 package ims_mobile_client.presentation.data;
 
-public enum ResourceState {
+public enum ResultState {
     ERROR,
     LOADING,
     SUCCESS

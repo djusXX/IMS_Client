@@ -9,10 +9,9 @@ import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMCRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
-import ims_mobile_client.domain.usecases.Pair;
 import io.reactivex.Flowable;
 
-public class GetMessagesForUseCase extends FlowableUseCase<List<Message>, Pair<String,String>> {
+public class GetMessagesForUseCase extends FlowableUseCase<List<Message>, GetMessagesForUseCase.Params> {
     private final IMCRepository repository;
 
     @Inject
@@ -22,7 +21,16 @@ public class GetMessagesForUseCase extends FlowableUseCase<List<Message>, Pair<S
     }
 
     @Override
-    protected Flowable<List<Message>> buildUseCaseObservable(Pair<String, String> uriPair) {
-        return repository.getMessagesFor(uriPair.first, uriPair.second);
+    protected Flowable<List<Message>> buildUseCaseObservable(Params params) {
+        return repository.getMessagesFor(params.usrSipUri, params.buddySipUri);
+    }
+
+    public static class Params {
+        String usrSipUri;
+        String buddySipUri;
+        public Params(String usrSipUri, String buddySipUri) {
+            this.usrSipUri = usrSipUri;
+            this.buddySipUri = buddySipUri;
+        }
     }
 }
