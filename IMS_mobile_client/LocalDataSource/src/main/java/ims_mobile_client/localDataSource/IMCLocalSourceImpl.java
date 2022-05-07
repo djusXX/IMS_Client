@@ -10,21 +10,17 @@ import ims_mobile_client.data.models.MessageEntity;
 import ims_mobile_client.data.models.UserEntity;
 import ims_mobile_client.data.sources.IMCLocalSource;
 import ims_mobile_client.localDataSource.db.AppDatabase;
-import ims_mobile_client.localDataSource.mappers.BuddyMapper;
-import ims_mobile_client.localDataSource.mappers.CallMapper;
-import ims_mobile_client.localDataSource.mappers.MapperFactory;
-import ims_mobile_client.localDataSource.mappers.MessageMapper;
-import ims_mobile_client.localDataSource.mappers.UserMapper;
+import ims_mobile_client.localDataSource.mappers.MapperProvider;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class IMCLocalSourceImpl implements IMCLocalSource {
 
     private final AppDatabase db;
-    private final MapperFactory mappers;
+    private final MapperProvider mappers;
 
     @Inject
-    public IMCLocalSourceImpl(AppDatabase db, MapperFactory mappers) {
+    public IMCLocalSourceImpl(AppDatabase db, MapperProvider mappers) {
         this.db = db;
         this.mappers = mappers;
     }

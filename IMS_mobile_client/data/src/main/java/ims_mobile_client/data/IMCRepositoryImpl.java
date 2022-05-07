@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ims_mobile_client.data.mappers.MapperFactory;
+import ims_mobile_client.data.mappers.MapperProvider;
 import ims_mobile_client.data.stores.DataStoreFactory;
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
@@ -19,10 +19,10 @@ import io.reactivex.Flowable;
 public class IMCRepositoryImpl implements IMCRepository {
 
     private final DataStoreFactory dataStores;
-    private final MapperFactory mappers;
+    private final MapperProvider mappers;
 
     @Inject
-    public IMCRepositoryImpl(DataStoreFactory dataStores, MapperFactory mappers) {
+    public IMCRepositoryImpl(DataStoreFactory dataStores, MapperProvider mappers) {
         this.dataStores = dataStores;
         this.mappers = mappers;
     }
