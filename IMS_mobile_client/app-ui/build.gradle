@@ -1,13 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: '../commons.gradle'
 
-android {
-    defaultConfig {
-        applicationId ApplicationId.id
-    }
-
-}
-
 dependencies {
     implementation project(Modules.data)
     implementation project(Modules.domain)
@@ -16,8 +9,9 @@ dependencies {
     implementation project(Modules.pjsua)
 
 
+    implementation Libs.coreSplashScreen
+    implementation Libs.rxAndroid
     implementation Libs.appcompat
     implementation Libs.constraintLayout
-    implementation Libs.materialDesign
     implementation Libs.recyclerview
 }

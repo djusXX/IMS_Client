@@ -1,9 +1,11 @@
 package ims_mobile_client.presentation.viewModels;
 
-import androidx.hilt.lifecycle.ViewModelInject;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import javax.inject.Inject;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.usecases.repository.GetLastUserUseCase;
 import ims_mobile_client.presentation.mappers.MapperProvider;
@@ -12,12 +14,13 @@ import ims_mobile_client.presentation.utils.Result;
 import ims_mobile_client.presentation.utils.ResultState;
 import io.reactivex.subscribers.DisposableSubscriber;
 
+@HiltViewModel
 public class LoggedUserViewModel extends ViewModel {
     private final GetLastUserUseCase getLastUserUseCase;
     private final MapperProvider mappers;
     private final MutableLiveData<Result<UserView>> loggedUserLiveData;
 
-    @ViewModelInject
+    @Inject
     public LoggedUserViewModel(GetLastUserUseCase getLastUserUseCase, MapperProvider mappers) {
         this.getLastUserUseCase = getLastUserUseCase;
         this.mappers = mappers;
@@ -29,6 +32,10 @@ public class LoggedUserViewModel extends ViewModel {
     protected void onCleared() {
         getLastUserUseCase.dispose();
         super.onCleared();
+    }
+
+    public LiveData<Result<UserView>> getLastUser() {
+        return loggedUserLiveData;
     }
 
     private void getLastLoggedUser() {

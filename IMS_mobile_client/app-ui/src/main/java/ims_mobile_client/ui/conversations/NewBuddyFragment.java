@@ -11,10 +11,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.NewBuddyFragmentBinding;
+import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.ui.R;
+import ims_mobile_client.ui.databinding.NewBuddyFragmentBinding;
 
-
+@AndroidEntryPoint
 public class NewBuddyFragment extends Fragment {
 
     public static final String TAG = NewBuddyFragment.class.getName();

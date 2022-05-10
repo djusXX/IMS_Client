@@ -2,8 +2,6 @@ package ims_mobile_client.data.stores;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import ims_mobile_client.data.models.BuddyEntity;
 import ims_mobile_client.data.models.CallEntity;
 import ims_mobile_client.data.models.MessageEntity;
@@ -15,7 +13,6 @@ import io.reactivex.Flowable;
 public class DataStoreLocal implements DataStore {
     private final IMCLocalSource localSource;
 
-    @Inject
     public DataStoreLocal(IMCLocalSource localSource) {
         this.localSource = localSource;
     }

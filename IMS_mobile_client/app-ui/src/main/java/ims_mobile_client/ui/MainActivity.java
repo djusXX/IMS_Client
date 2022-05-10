@@ -9,9 +9,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.splashscreen.SplashScreen;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.time.Instant;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.R;
+import ims_mobile_client.presentation.utils.ResultState;
+import ims_mobile_client.presentation.viewModels.LoggedUserViewModel;
+import ims_mobile_client.ui.conversations.BuddyListFragment;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -19,23 +25,41 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     private static final String TAG = MainActivity.class.getName();
 
+    private LoggedUserViewModel loggedUserViewModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         requestPermissions();
-
-        if (savedInstanceState == null) {
-            addLoginFragment();
-        }
+        loggedUserViewModel = new ViewModelProvider(this)
+                .get(LoggedUserViewModel.class);
     }
 
-    private void addLoginFragment() {
-        LoginFragment loginFragment = new LoginFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
-                .commit();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loggedUserViewModel.getLastUser().observe(this, result -> {
+            if (result == null || result.getState() == null) {
+                return;
+            }
+            ResultState resultState = result.getState();
+            if (resultState == ResultState.LOADING) {
+                // setLoadingScreen()
+                Toast.makeText(this, "ResultState.LOADING", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (resultState == ResultState.ERROR) {
+                // setErrorScreen()
+                Toast.makeText(this, "ResultState.ERROR", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (resultState == ResultState.SUCCESS) {
+                Toast.makeText(this, "ResultState.SUCCESS", Toast.LENGTH_SHORT).show();
+                onUserLogged(result.getData().getSipUri());
+            }
+        });
     }
 
 //    public void logInUser(int registrationStateCode) {
@@ -43,14 +67,13 @@ public class MainActivity extends AppCompatActivity {
 //        if (loginFragment != null) { loginFragment.logInCurrentUser(registrationStateCode); }
 //    }
 //
-//    public void onUserLogged(String accountID) {
-//        usrSipUri = accountID;
-//        BuddyListFragment buddyListFragment = new BuddyListFragment(accountID, R.id.main_fragment_container);
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
-//                .commit();
-//    }
+    public void onUserLogged(String accountID) {
+        BuddyListFragment buddyListFragment = new BuddyListFragment(accountID, R.id.main_fragment_container);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
+                .commit();
+    }
 //
 //    public void updateBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
 //        BuddyListFragment buddyListFragment = (BuddyListFragment) getSupportFragmentManager().findFragmentByTag(BuddyListFragment.TAG);

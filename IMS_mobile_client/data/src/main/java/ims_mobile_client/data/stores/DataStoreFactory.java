@@ -1,11 +1,8 @@
 package ims_mobile_client.data.stores;
 
-import javax.inject.Inject;
-
 public class DataStoreFactory {
     private final DataStoreLocal dataStoreLocal;
 
-    @Inject
     public DataStoreFactory(DataStoreLocal dataStoreLocal) {
         this.dataStoreLocal = dataStoreLocal;
     }

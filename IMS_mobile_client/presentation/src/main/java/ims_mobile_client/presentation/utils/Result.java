@@ -11,6 +11,18 @@ public class Result<T> {
         this.message = message;
     }
 
+    public ResultState getState() {
+        return state;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
     public final class Error extends Result<T> {
         public Error(String message) {
             super(ResultState.ERROR, null, message);

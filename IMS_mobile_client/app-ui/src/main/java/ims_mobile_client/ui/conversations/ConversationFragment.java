@@ -1,4 +1,4 @@
-package com.example.conversations.view;
+package ims_mobile_client.ui.conversations;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,10 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import java.util.Date;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.ConversationFragmentBinding;
+import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.ui.R;
 import ims_mobile_client.ui.conversations.MessageAdapter;
+import ims_mobile_client.ui.databinding.ConversationFragmentBinding;
 
+@AndroidEntryPoint
 public class ConversationFragment extends Fragment {
 
     public static final String TAG = ConversationFragment.class.getName();
@@ -47,14 +49,14 @@ public class ConversationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final MessageViewModel messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
-
-        messageViewModel.getMessagesFor(usrSipUri, buddySipUri).observe(getViewLifecycleOwner(), messageEntities -> {
-            if(messageEntities != null) {
-                messageAdapter.setMessages(messageEntities);
-            }
-            binding.executePendingBindings();
-        });
+//        final MessageViewModel messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
+//
+//        messageViewModel.getMessagesFor(usrSipUri, buddySipUri).observe(getViewLifecycleOwner(), messageEntities -> {
+//            if(messageEntities != null) {
+//                messageAdapter.setMessages(messageEntities);
+//            }
+//            binding.executePendingBindings();
+//        });
 
         binding.sendButton.setOnClickListener(v -> {
 //            Date date = new Date();

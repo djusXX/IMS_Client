@@ -10,10 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.PreCallFragmentBinding;
+import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.ui.R;
+import ims_mobile_client.ui.databinding.PreCallFragmentBinding;
 
-
+@AndroidEntryPoint
 public class PreCallFragment extends Fragment {
 
     private PreCallFragmentBinding binding;

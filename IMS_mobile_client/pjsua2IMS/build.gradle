@@ -2,6 +2,5 @@ apply plugin: 'com.android.library'
 apply from: '../commons.gradle'
 
 dependencies {
-    implementation project(Modules.data)
-    implementation project(path: ':domain')
+    implementation project(Modules.domain)
 }

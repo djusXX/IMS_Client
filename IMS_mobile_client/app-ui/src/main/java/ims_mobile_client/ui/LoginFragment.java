@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.databinding.LoginFragmentBinding;
+import ims_mobile_client.ui.databinding.LoginFragmentBinding;
 
 @AndroidEntryPoint
 public class LoginFragment extends Fragment {

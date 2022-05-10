@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.MessageFragmentBinding;
+import ims_mobile_client.ui.R;
+import ims_mobile_client.ui.databinding.MessageFragmentBinding;
 import ims_mobile_client.ui.models.Message;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {

@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
@@ -26,10 +24,6 @@ android {
         enabled true
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -40,9 +34,9 @@ dependencies {
     implementation project(Modules.data)
 
     api Libs.room
-    kapt Libs.roomCompiler
+    annotationProcessor Libs.roomCompiler
     implementation Libs.hilt
-    kapt Libs.hiltCompiler
+    annotationProcessor Libs.hiltCompiler
     implementation Libs.rxJava
 }
 

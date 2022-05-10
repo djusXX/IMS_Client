@@ -14,8 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.SingleBuddyFragmentBinding;
+import ims_mobile_client.ui.R;
+import ims_mobile_client.ui.databinding.SingleBuddyFragmentBinding;
 import ims_mobile_client.ui.models.Buddy;
 
 public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHolder> {
@@ -107,8 +107,8 @@ public class BuddyAdapter extends RecyclerView.Adapter<BuddyAdapter.BuddyViewHol
         return buddyList == null ? 0 : buddyList.size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return buddyList.get(position).id;
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        return buddyList.get(position).getId();
+//    }
 }

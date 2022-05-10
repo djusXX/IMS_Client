@@ -1,5 +1,3 @@
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 
@@ -26,10 +24,6 @@ android {
         enabled true
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
@@ -42,24 +36,16 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation Libs.rxJava
-//    implementation Libs.rxAndroid
-//    implementation Libs.dagger
-//    kapt Libs.daggerCompiler
-//    implementation Libs.daggerAndroidSupport
-//    kapt Libs.daggerAndroidProcessor
-
     implementation Libs.hilt
-    implementation Libs.hiltJetpack
-    kapt Libs.hiltCompiler
-    kapt Libs.hiltJetpackCompiler
+    annotationProcessor Libs.hiltCompiler
 
     // For instrumentation tests
     androidTestImplementation Libs.hiltAndroidTest
-    kaptAndroidTest Libs.hiltAndroidTestCompiler
+    androidTestAnnotationProcessor Libs.hiltCompiler
 
     // For local unit tests
     testImplementation Libs.hiltAndroidUnitTest
-    kaptTest Libs.hiltAndroidUnitTestCompiler
+    testAnnotationProcessor Libs.hiltCompiler
 
     implementation TestLibs.androidTestRunner
     implementation TestLibs.junit

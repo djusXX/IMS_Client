@@ -29,11 +29,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE = null;
 
-    @Inject
-    public AppDatabase() {
-        super();
-    }
-
     public final AppDatabase getInstance(final Context context) {
         if (INSTANCE == null) {
             synchronized(AppDatabase.class) {

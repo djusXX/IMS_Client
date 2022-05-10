@@ -2,8 +2,6 @@ package ims_mobile_client.localDataSource;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import ims_mobile_client.data.models.BuddyEntity;
 import ims_mobile_client.data.models.CallEntity;
 import ims_mobile_client.data.models.MessageEntity;
@@ -19,7 +17,6 @@ public class IMCLocalSourceImpl implements IMCLocalSource {
     private final AppDatabase db;
     private final MapperProvider mappers;
 
-    @Inject
     public IMCLocalSourceImpl(AppDatabase db, MapperProvider mappers) {
         this.db = db;
         this.mappers = mappers;

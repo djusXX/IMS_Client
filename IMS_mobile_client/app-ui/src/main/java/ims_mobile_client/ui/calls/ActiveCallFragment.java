@@ -11,10 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.ActiveCallFragmentBinding;
+import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.ui.R;
+import ims_mobile_client.ui.databinding.ActiveCallFragmentBinding;
 
-
+@AndroidEntryPoint
 public class ActiveCallFragment extends Fragment {
 
     private static final String TAG = ActiveCallFragment.class.getName();

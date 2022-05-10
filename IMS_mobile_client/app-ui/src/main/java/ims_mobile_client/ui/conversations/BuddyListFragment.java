@@ -17,11 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
-import ims_mobile_client.R;
-import ims_mobile_client.databinding.BuddyListFragmentBinding;
+import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.ui.R;
+import ims_mobile_client.ui.databinding.BuddyListFragmentBinding;
 import ims_mobile_client.ui.models.Buddy;
 
-
+@AndroidEntryPoint
 public class BuddyListFragment extends Fragment {
 
     public static final String TAG = BuddyListFragment.class.getName();
@@ -49,15 +50,15 @@ public class BuddyListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
+//        final BuddyViewModel buddyViewModel = new ViewModelProvider(requireActivity()).get(BuddyViewModel.class);
 
-        buddyViewModel.getBuddiesFor(usrSipUri).observe(getViewLifecycleOwner(), buddies-> {
-            if (buddies != null) {
-                updateSubscription(buddies);
-                buddyAdapter.setBuddyList(buddies);
-            }
-            binding.executePendingBindings();
-        });
+//        buddyViewModel.getBuddiesFor(usrSipUri).observe(getViewLifecycleOwner(), buddies-> {
+//            if (buddies != null) {
+//                updateSubscription(buddies);
+//                buddyAdapter.setBuddyList(buddies);
+//            }
+//            binding.executePendingBindings();
+//        });
     }
 
     private void updateSubscription(final List<Buddy> buddyEntities) {
