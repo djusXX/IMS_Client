@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply from: '../commons.gradle'
 
+android {
+    namespace 'ims_mobile_client.presentation'
+}
+
 dependencies {
     implementation project(Modules.domain)
 }

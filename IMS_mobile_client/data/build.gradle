@@ -8,10 +8,18 @@ java {
 dependencies {
     implementation project(Modules.domain)
 
+//    implementation Libs.androidxSavedState
+//    implementation Libs.androidxActivity
+//    implementation Libs.androidxFragment
+//    implementation Libs.lifecycleViewModel
+//    implementation Libs.lifecycleSavedState
+
     implementation Libs.rxJava
     implementation Libs.javaxInject
     implementation Libs.dagger
+    implementation Libs.hiltCore
     annotationProcessor Libs.daggerCompiler
+
 }
 
 

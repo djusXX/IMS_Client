@@ -1,4 +1,4 @@
-package ims_mobile_client.data.mappers;
+package ims_mobile_client.localStorage.mappers;
 
 import javax.inject.Inject;
 
@@ -17,19 +17,19 @@ public class MapperProvider {
     }
 
 
-    public BuddyMapper forBuddy() {
+    public BuddyMapper getBuddyMapper() {
         return buddyMapper;
     }
 
-    public CallMapper forCall() {
+    public CallMapper getCallMapper() {
         return callMapper;
     }
 
-    public MessageMapper forMessage() {
+    public MessageMapper getMessageMapper() {
         return messageMapper;
     }
 
-    public UserMapper forUser() {
+    public UserMapper getUserMapper() {
         return userMapper;
     }
 }

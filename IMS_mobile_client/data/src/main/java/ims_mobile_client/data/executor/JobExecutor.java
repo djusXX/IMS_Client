@@ -5,6 +5,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import ims_mobile_client.domain.executors.ThreadExecutor;
 
 public class JobExecutor implements ThreadExecutor {
@@ -12,6 +14,7 @@ public class JobExecutor implements ThreadExecutor {
     private final ThreadPoolExecutor threadPoolExecutor;
     private final ThreadFactory threadFactory;
 
+    @Inject
     public JobExecutor() {
         workQueue = new LinkedBlockingQueue<>();
         threadFactory = new ThreadFactory() {

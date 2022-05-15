@@ -10,7 +10,7 @@ object Modules {
     val data = ":data"
     val domain = ":domain"
     val presentation = ":presentation"
-    val dataSourceLocal = ":localDataSource"
+    val localStorage = ":localStorage"
     val pjsua = ":pjsua2IMS"
 }
 
@@ -28,31 +28,45 @@ object Ver {
     val buildToolsVersion = "30.0.3"
 
     // App dependencies
+    val androidxSavedState = "1.1.0"
+    val androidxActivity = "1.4.0"
+    val androidxFragment = "1.4.1"
+    val lifecycle = "2.4.1"
+
     val androidTestRunner = "1.2.0"
     val appcompat = "1.4.1"
     val constraintlayout = "2.1.3"
     val coreSplashScreen = "1.0.0-beta02"
-    val dagger = "2.41"
+    val dagger = "2.42"
     val espressoCore = "3.4.0"
-    val gradle = "7.1.3"
-    val hiltAndroid = "2.41"
-    val hiltAndroidGradlePlugin = "2.41"
+    val gradle = "7.2.0"
+    val hiltAndroid = "2.42"
+    val hiltAndroidGradlePlugin = "2.42"
+    val hiltCore = "2.42"
     val javaxInject = "1"
-    val kotlinVersion = "1.5.21"
+    val kotlinVersion = "1.5.31"
     val recyclerview = "1.2.1"
     val room = "2.4.2"
     val rxJava = "2.2.21"
     val rxAndroid = "2.1.1"
     val testExtJunit = "1.1.3"
+
 }
 
 
 object Libs {
 
+    val androidxSavedState = "androidx.savedstate:savedstate:${Ver.androidxSavedState}"
+    val androidxActivity = "androidx.activity:activity:${Ver.androidxActivity}"
+    val androidxFragment = "androidx.fragment:fragment:${Ver.androidxFragment}"
+    val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel:${Ver.lifecycle}"
+    val lifecycleSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Ver.lifecycle}"
+
     val javaxInject = "javax.inject:javax.inject:${Ver.javaxInject}"
     val dagger = "com.google.dagger:dagger:${Ver.dagger}"
     val daggerCompiler = "com.google.dagger:dagger-compiler:${Ver.dagger}"
     val hilt = "com.google.dagger:hilt-android:${Ver.hiltAndroid}"
+    val hiltCore = "com.google.dagger:hilt-core:${Ver.hiltCore}"
     val hiltCompiler = "com.google.dagger:hilt-compiler:${Ver.hiltAndroid}"
     val hiltAndroidTest = "com.google.dagger:hilt-android-testing:${Ver.hiltAndroid}"
     val hiltAndroidUnitTest = "com.google.dagger:hilt-android-testing:${Ver.hiltAndroid}"

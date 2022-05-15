@@ -1,11 +1,15 @@
 apply plugin: 'com.android.application'
 apply from: '../commons.gradle'
 
+android {
+    namespace 'ims_mobile_client.ui'
+}
+
 dependencies {
     implementation project(Modules.data)
     implementation project(Modules.domain)
     implementation project(Modules.presentation)
-    implementation project(Modules.dataSourceLocal)
+    implementation project(Modules.localStorage)
     implementation project(Modules.pjsua)
 
 

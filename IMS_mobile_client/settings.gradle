@@ -1,7 +1,7 @@
 include ':app-ui'
 include ':buildsrc'
 include ':data'
-include ':localDataSource'
+include ':localStorage'
 include ':domain'
 include ':pjsua2IMS'
 include ':presentation'

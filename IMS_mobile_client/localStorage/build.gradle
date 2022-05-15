@@ -1,7 +1,9 @@
+apply plugin: 'com.android.library'
 apply plugin: 'dagger.hilt.android.plugin'
 
-
 android {
+    namespace 'ims_mobile_client.localStorage'
+
     compileSdkVersion Ver.compileSdkVersion
     buildToolsVersion Ver.buildToolsVersion
 
@@ -9,8 +11,6 @@ android {
         minSdkVersion Ver.minSdkVersion
         targetSdkVersion Ver.targetSdkVersion
 
-        versionCode Releases.versionCode
-        versionName Releases.versionName
     }
 
     buildTypes {
@@ -25,32 +25,19 @@ android {
     }
 
 
-
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
-
 dependencies {
-    //Loads packaged libraries in the libs folder
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(Modules.data)
 
-    implementation Libs.rxJava
+    api Libs.room
+    annotationProcessor Libs.roomCompiler
     implementation Libs.hilt
     annotationProcessor Libs.hiltCompiler
-
-    // For instrumentation tests
-    androidTestImplementation Libs.hiltAndroidTest
-    androidTestAnnotationProcessor Libs.hiltCompiler
-
-    // For local unit tests
-    testImplementation Libs.hiltAndroidUnitTest
-    testAnnotationProcessor Libs.hiltCompiler
-
-    implementation TestLibs.androidTestRunner
-    implementation TestLibs.junit
-    implementation TestLibs.espresso
-    implementation TestLibs.espressoContrib
+    implementation Libs.rxJava
 }
+
