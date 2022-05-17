@@ -1,96 +1,118 @@
-package ims_mobile_client.pjsua2IMS;
+package ims_mobile_client;
+
+import android.util.Log;
+
+import javax.inject.Inject;
 
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.service.IMCSipService;
+import ims_mobile_client.pjsua2IMS.SipManager;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class IMCSipServiceImpl implements IMCSipService {
+    public static final String TAG = IMCSipServiceImpl.class.getSimpleName();
+
+    private final SipManager manager;
+
+    @Inject
+    public IMCSipServiceImpl(SipManager manager) {
+        Log.d(TAG, "creating implementation of IMCSipService");
+        this.manager = manager;
+    }
+
     @Override
     public Completable logIn(User user) {
-        return null;
+        Log.d(TAG, "called method logIn()");
+        manager.logIn(user);
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable logOut(User user) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable setUserPresence(User user) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable addBuddy(Buddy buddy) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable removeBuddy(Buddy buddy) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Flowable<Buddy> getBuddyPresence(Buddy buddy) {
-        return null;
+        return Flowable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable sendMessage(Message message) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable makeCall(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable endCall(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable acceptIncomingCall(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable rejectIncomingCall(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable transferCall(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable toggleOnHold(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable toggleMute(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable toggleVideoMute(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable switchCamera(Call call) {
-        return null;
+        return Completable.error(new Exception("Method Not Implemented"));
     }
 
     @Override
     public Completable sendDTMF(Call call, String sequence) {
+        return Completable.error(new Exception("Method Not Implemented"));
+    }
+
+    @Override
+    public Flowable<User.Info> getUserInfo(String usrSipUri) {
         return null;
     }
 

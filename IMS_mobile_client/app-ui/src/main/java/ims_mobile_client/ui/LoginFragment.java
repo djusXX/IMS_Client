@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.presentation.models.UserView;
+import ims_mobile_client.presentation.viewModels.CurrentUserViewModel;
 import ims_mobile_client.ui.databinding.LoginFragmentBinding;
 
 @AndroidEntryPoint
@@ -30,7 +32,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setAlice();
-        binding.loginButton.setOnClickListener(v -> { checkRegistrationStatus(); });
+        binding.loginButton.setOnClickListener(v -> { logInCurrentUser(); });
     }
 
     @Override
@@ -39,35 +41,23 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void checkRegistrationStatus() {
-//        if (localUser != null) {
-//            SipServiceCommand.getRegistrationStatus(requireActivity(), localUser.getSipUri());
-//            return;
-//        }
-        logInCurrentUser(-1);
+    public void logInCurrentUser() {
+        CurrentUserViewModel currentUserViewModel = new ViewModelProvider(requireActivity())
+                .get(CurrentUserViewModel.class);
+
+
+        UserView userView = createFromBinding();
+        currentUserViewModel.logInUser(userView);
     }
 
-    public void logInCurrentUser(int registrationStateCode) {
-//        LocalUser localUser = createFromBinding();
-
-//        SipAccountData accData = new SipAccountData();
-//        accData.setUsername(localUser.userName);
-//        accData.setPassword(binding.password.getText().toString());
-//        accData.setRealm(localUser.realm);
-//        accData.setHost(localUser.pcscfGetHost());
-//        accData.setPort(localUser.pcscfGetPort());
-
-        boolean isAKAAuth = registrationStateCode == 401;
-//        SipServiceCommand.setAccount(requireActivity(), accData, isAKAAuth);
+    private UserView createFromBinding() {
+        return new UserView(0,
+                binding.username.getText().toString(),
+                binding.displayName.getText().toString(),
+                binding.realm.getText().toString(),
+                binding.pcscf.getText().toString(),
+                0);
     }
-
-//    private LocalUser createFromBinding() {
-//        return new LocalUser(
-//                binding.displayName.getText().toString(),
-//                binding.username.getText().toString(),
-//                binding.realm.getText().toString(),
-//                binding.pcscf.getText().toString());
-//    }
 
     private void setAlice() {
         binding.displayName.setText("ALICE");

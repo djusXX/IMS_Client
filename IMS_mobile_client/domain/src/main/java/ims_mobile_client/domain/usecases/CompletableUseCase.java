@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class CompletableUseCase<Params> {
     private final ThreadExecutor threadExecutor;
     private final PostExecutionThread postExecutionThread;
-    private final Disposable subscription;
+    private Disposable subscription;
 
     protected CompletableUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         this.threadExecutor = threadExecutor;
@@ -28,5 +28,9 @@ public abstract class CompletableUseCase<Params> {
 
     public void unsubscribe() {
         if(!subscription.isDisposed()) { subscription.dispose(); }
+    }
+
+    public void setSubscribe(Disposable d) {
+        subscription = d;
     }
 }

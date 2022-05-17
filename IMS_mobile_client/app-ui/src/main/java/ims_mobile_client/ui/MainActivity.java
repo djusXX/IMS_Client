@@ -12,11 +12,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.time.Instant;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import ims_mobile_client.presentation.utils.ResultState;
-import ims_mobile_client.presentation.viewModels.LoggedUserViewModel;
+import ims_mobile_client.presentation.viewModels.CurrentUserViewModel;
 import ims_mobile_client.ui.conversations.BuddyListFragment;
 
 @AndroidEntryPoint
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     private static final String TAG = MainActivity.class.getName();
 
-    private LoggedUserViewModel loggedUserViewModel;
+    private CurrentUserViewModel currentUserViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,14 +31,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         requestPermissions();
-        loggedUserViewModel = new ViewModelProvider(this)
-                .get(LoggedUserViewModel.class);
+        currentUserViewModel = new ViewModelProvider(this)
+                .get(CurrentUserViewModel.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        loggedUserViewModel.getLastUser().observe(this, result -> {
+        currentUserViewModel.getLastUser().observe(this, result -> {
             if (result == null || result.getState() == null) {
                 return;
             }
