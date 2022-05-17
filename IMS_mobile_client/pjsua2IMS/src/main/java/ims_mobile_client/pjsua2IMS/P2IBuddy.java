@@ -11,17 +11,11 @@ import org.pjsip.pjsua2.SendInstantMessageParam;
 public class P2IBuddy extends Buddy {
     private static final String TAG = P2IBuddy.class.getSimpleName();
 
-    private Account account;
     private BuddyConfig buddyConfig;
 
-    public P2IBuddy(Account account, BuddyConfig buddyConfig) {
+    public P2IBuddy(BuddyConfig buddyConfig) {
         super();
-        this.account = account;
         this.buddyConfig = buddyConfig;
-    }
-
-    public void createBuddy() throws Exception {
-        create(account, buddyConfig);
     }
 
     public BuddyInfo getUpdatedBuddyInfo() {
@@ -36,11 +30,11 @@ public class P2IBuddy extends Buddy {
 
     @Override
     public void sendInstantMessage(SendInstantMessageParam prm) throws Exception {
-        super.sendInstantMessage(prm);
+        // TODO: implement!!!
     }
 
     @Override
     public void onBuddyState() {
-
+        // TODO: implement!!!
     }
 }
