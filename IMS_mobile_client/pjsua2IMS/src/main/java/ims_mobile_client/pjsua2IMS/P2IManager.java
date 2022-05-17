@@ -15,22 +15,22 @@ import javax.inject.Inject;
 
 import ims_mobile_client.domain.models.User;
 
-public class SipManager {
-    private static final String TAG = SipManager.class.getSimpleName();
+public class P2IManager {
+    private static final String TAG = P2IManager.class.getSimpleName();
 
     private Endpoint endpoint = null;
     private Account account;
 
     @Inject
-    public SipManager() {}
+    public P2IManager() {}
 
-    public void createService() {
+    public void intitManager() {
         Log.d(TAG, "Called method createService()");
         loadNativeLibraries();
         configureEndpoint();
     }
 
-    public void destroyService() {
+    public void deinitManager() {
         Log.d(TAG, "Called method destroyService()");
         destroyAllAccounts();
         destroyEndpoint();

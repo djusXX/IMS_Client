@@ -9,17 +9,17 @@ import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.service.IMCSipService;
-import ims_mobile_client.pjsua2IMS.SipManager;
+import ims_mobile_client.pjsua2IMS.P2IManager;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class IMCSipServiceImpl implements IMCSipService {
     public static final String TAG = IMCSipServiceImpl.class.getSimpleName();
 
-    private final SipManager manager;
+    private final P2IManager manager;
 
     @Inject
-    public IMCSipServiceImpl(SipManager manager) {
+    public IMCSipServiceImpl(P2IManager manager) {
         Log.d(TAG, "creating implementation of IMCSipService");
         this.manager = manager;
     }
