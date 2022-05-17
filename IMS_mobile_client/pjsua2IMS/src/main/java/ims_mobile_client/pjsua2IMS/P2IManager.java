@@ -24,6 +24,10 @@ public class P2IManager {
     @Inject
     public P2IManager() {}
 
+    public Endpoint getEndpoint() {
+        return endpoint;
+    }
+
     public void intitManager() {
         Log.d(TAG, "Called method createService()");
         loadNativeLibraries();
