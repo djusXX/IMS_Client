@@ -15,12 +15,8 @@ import ims_mobile_client.presentation.mappers.MapperProvider;
 import ims_mobile_client.presentation.models.UserView;
 import ims_mobile_client.presentation.utils.Result;
 import ims_mobile_client.presentation.utils.ResultState;
-import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 @HiltViewModel
@@ -28,14 +24,14 @@ public class CurrentUserViewModel extends ViewModel {
     private final GetLastUserUseCase getLastUserUseCase;
     private final LogInUserUseCase logInUserUseCase;
     private final MapperProvider mappers;
-    private final MutableLiveData<Result<UserView>> loggedUserLiveData;
+    private final MutableLiveData<Result<UserView>> currentUserLiveData;
 
     @Inject
     public CurrentUserViewModel(GetLastUserUseCase getLastUserUseCase, LogInUserUseCase logInUserUseCase, MapperProvider mappers) {
         this.getLastUserUseCase = getLastUserUseCase;
         this.logInUserUseCase = logInUserUseCase;
         this.mappers = mappers;
-        loggedUserLiveData = new MutableLiveData<>();
+        currentUserLiveData = new MutableLiveData<>();
         getLastLoggedUser();
     }
 
@@ -47,14 +43,14 @@ public class CurrentUserViewModel extends ViewModel {
     }
 
     public LiveData<Result<UserView>> getLastUser() {
-        return loggedUserLiveData;
+        return currentUserLiveData;
     }
 
     private void getLastLoggedUser() {
         getLastUserUseCase.execute(new DisposableSubscriber<User>() {
             @Override
             protected void onStart() {
-                loggedUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
+                currentUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
             }
 
             @Override
@@ -65,7 +61,7 @@ public class CurrentUserViewModel extends ViewModel {
 
             @Override
             public void onError(Throwable t) {
-                loggedUserLiveData.postValue(new Result<>(ResultState.ERROR, null, t.getLocalizedMessage()));
+                currentUserLiveData.postValue(new Result<>(ResultState.ERROR, null, t.getLocalizedMessage()));
                 getLastUserUseCase.dispose();
             }
 
@@ -78,7 +74,7 @@ public class CurrentUserViewModel extends ViewModel {
 
 
 
-    public void logInUser(UserView userView) {
+    public void logInUserView(UserView userView) {
         User user = new User(0, userView.getName(), userView.getDisplayName(), userView.getRealm(), userView.getPcscf(), 0);
         logInUser(user);
     }
@@ -89,12 +85,12 @@ public class CurrentUserViewModel extends ViewModel {
             public void onSubscribe(Disposable d) {
                 Log.d("logInUserUseCase.execute", "onStart()");
                 logInUserUseCase.setSubscribe(d);
-                loggedUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
+                currentUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
             }
 
             @Override
             public void onComplete() {
-                loggedUserLiveData.postValue(new Result<>(ResultState.SUCCESS,
+                currentUserLiveData.postValue(new Result<>(ResultState.SUCCESS,
                         mappers.getUserMapper().mapToView(user), null));
                 Log.d("logInUserUseCase.execute", "onSuccess()");
                 logInUserUseCase.unsubscribe();
@@ -102,7 +98,7 @@ public class CurrentUserViewModel extends ViewModel {
 
             @Override
             public void onError(Throwable e) {
-                loggedUserLiveData.postValue(new Result<>(ResultState.ERROR, null, e.getLocalizedMessage()));
+                currentUserLiveData.postValue(new Result<>(ResultState.ERROR, null, e.getLocalizedMessage()));
                 Log.d("logInUserUseCase.execute", "onError()");
                 logInUserUseCase.unsubscribe();
             }

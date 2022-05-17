@@ -45,9 +45,8 @@ public class LoginFragment extends Fragment {
         CurrentUserViewModel currentUserViewModel = new ViewModelProvider(requireActivity())
                 .get(CurrentUserViewModel.class);
 
-
         UserView userView = createFromBinding();
-        currentUserViewModel.logInUser(userView);
+        currentUserViewModel.logInUserView(userView);
     }
 
     private UserView createFromBinding() {
