@@ -11,11 +11,16 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/imsmobileclient" />
-            <option value="$PROJECT_DIR$/sipservice" />
+            <option value="$PROJECT_DIR$/app-ui" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/buildsrc" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/localStorage" />
+            <option value="$PROJECT_DIR$/pjsua2IMS" />
+            <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    namespace 'ims_mobile_client.localStorage'
+
+    compileSdkVersion Ver.compileSdkVersion
+    buildToolsVersion Ver.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Ver.minSdkVersion
+        targetSdkVersion Ver.targetSdkVersion
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(Modules.data)
+
+    api Libs.room
+    annotationProcessor Libs.roomCompiler
+    implementation Libs.hilt
+    annotationProcessor Libs.hiltCompiler
+    implementation Libs.rxJava
+}
+

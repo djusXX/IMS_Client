@@ -1,0 +1,56 @@
+apply plugin: 'dagger.hilt.android.plugin'
+
+
+android {
+    compileSdkVersion Ver.compileSdkVersion
+    buildToolsVersion Ver.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Ver.minSdkVersion
+        targetSdkVersion Ver.targetSdkVersion
+
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+dependencies {
+    //Loads packaged libraries in the libs folder
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation Libs.rxJava
+    implementation Libs.hilt
+    annotationProcessor Libs.hiltCompiler
+
+    // For instrumentation tests
+    androidTestImplementation Libs.hiltAndroidTest
+    androidTestAnnotationProcessor Libs.hiltCompiler
+
+    // For local unit tests
+    testImplementation Libs.hiltAndroidUnitTest
+    testAnnotationProcessor Libs.hiltCompiler
+
+    implementation TestLibs.androidTestRunner
+    implementation TestLibs.junit
+    implementation TestLibs.espresso
+    implementation TestLibs.espressoContrib
+}

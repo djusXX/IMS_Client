@@ -1,0 +1,25 @@
+apply plugin: 'java-library'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation project(Modules.domain)
+
+//    implementation Libs.androidxSavedState
+//    implementation Libs.androidxActivity
+//    implementation Libs.androidxFragment
+//    implementation Libs.lifecycleViewModel
+//    implementation Libs.lifecycleSavedState
+
+    implementation Libs.rxJava
+    implementation Libs.javaxInject
+    implementation Libs.dagger
+    implementation Libs.hiltCore
+    annotationProcessor Libs.daggerCompiler
+
+}
+
+
