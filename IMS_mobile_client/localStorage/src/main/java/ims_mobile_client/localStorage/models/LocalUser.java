@@ -10,15 +10,17 @@ public class LocalUser {
     private int id;
     private String displayName;
     private String userName;
+    private String password;
     private String realm;
     private String pcscf;
     private long lastLogged;
     private String usrSipUri;
 
-    public LocalUser(int id, String displayName, String userName, String realm, String pcscf, long lastLogged) {
+    public LocalUser(int id, String displayName, String userName, String password, String realm, String pcscf, long lastLogged) {
         this.id = id;
         this.displayName = displayName;
         this.userName = userName;
+        this.password = password;
         this.realm = realm;
         this.pcscf = pcscf;
         this.lastLogged = lastLogged;
@@ -79,5 +81,13 @@ public class LocalUser {
 
     public void setUsrSipUri(String usrSipUri) {
         this.usrSipUri = usrSipUri;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

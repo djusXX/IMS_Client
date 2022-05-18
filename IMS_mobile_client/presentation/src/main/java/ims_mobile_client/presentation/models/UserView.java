@@ -4,6 +4,7 @@ public class UserView {
 
     private int id;
     private String name;
+    private String password;
     private String displayName;
     private String realm;
     private String pcscf;
@@ -17,9 +18,10 @@ public class UserView {
     private String note;
     private String rpidId;
 
-    public UserView(int id, String name, String displayName, String realm, String pcscf, long lastLogged, String regStatus, String userStatusType, String userStatusActivity, String userStatusText, String note, String rpidId) {
+    public UserView(int id, String name, String password, String displayName, String realm, String pcscf, long lastLogged, String regStatus, String userStatusType, String userStatusActivity, String userStatusText, String note, String rpidId) {
         this.id = id;
         this.name = name;
+        this.password = password;
         this.displayName = displayName;
         this.realm = realm;
         this.pcscf = pcscf;
@@ -32,9 +34,10 @@ public class UserView {
         this.rpidId = rpidId;
     }
 
-    public UserView(int id, String name, String displayName, String realm, String pcscf, long lastLogged) {
+    public UserView(int id, String name, String password, String displayName, String realm, String pcscf, long lastLogged) {
         this.id = id;
         this.name = name;
+        this.password = password;
         this.displayName = displayName;
         this.realm = realm;
         this.pcscf = pcscf;
@@ -145,5 +148,13 @@ public class UserView {
 
     public void setPcscf(String pcscf) {
         this.pcscf = pcscf;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

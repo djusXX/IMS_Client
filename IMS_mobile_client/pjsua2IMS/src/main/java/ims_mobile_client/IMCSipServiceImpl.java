@@ -28,7 +28,7 @@ public class IMCSipServiceImpl implements IMCSipService {
     public Completable logIn(User user) {
         Log.d(TAG, "called method logIn()");
         manager.logIn(user);
-        return Completable.error(new Exception("Method Not Implemented"));
+        return Completable.complete();
     }
 
     @Override

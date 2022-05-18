@@ -9,23 +9,17 @@ import org.pjsip.pjsua2.BuddyConfig;
 import org.pjsip.pjsua2.OnIncomingCallParam;
 import org.pjsip.pjsua2.OnInstantMessageParam;
 import org.pjsip.pjsua2.OnRegStateParam;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-
-import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_components_SingletonComponent;
 
 public class P2IAccount extends Account {
     private static final String TAG = P2IAccount.class.getSimpleName();
-    private AccountConfig accountConfig;
+
+    private AccountData accountData;
     private final ConcurrentHashMap<String, P2IBuddy> buddies = new ConcurrentHashMap<>();
 
-    public P2IAccount(AccountConfig accountConfig) {
+    public P2IAccount(AccountData accountData) {
         super();
-        this.accountConfig = accountConfig;
+        this.accountData = accountData;
     }
 
     public P2IBuddy addBuddy(BuddyConfig buddyConfig) {

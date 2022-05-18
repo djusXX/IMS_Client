@@ -18,26 +18,35 @@ import ims_mobile_client.domain.models.User;
 public class P2IManager {
     private static final String TAG = P2IManager.class.getSimpleName();
 
-    private Endpoint endpoint = null;
-    private Account account;
+    private Endpoint mgrEndpoint = null;
+    private Account mgrAccount = null;
+    private boolean isMgrInitialized = false;
 
     @Inject
     public P2IManager() {}
 
-    public Endpoint getEndpoint() {
-        return endpoint;
+    public Endpoint getMgrEndpoint() {
+        return mgrEndpoint;
     }
 
-    public void intitManager() {
+    private void checkEndpoint() {
+        if (!isMgrInitialized) {
+            initManager();
+        }
+    }
+
+    public void initManager() {
         Log.d(TAG, "Called method createService()");
         loadNativeLibraries();
         configureEndpoint();
+        isMgrInitialized = true;
     }
 
     public void deinitManager() {
         Log.d(TAG, "Called method destroyService()");
         destroyAllAccounts();
         destroyEndpoint();
+        isMgrInitialized = false;
     }
 
     private void destroyAllAccounts() {
@@ -71,9 +80,9 @@ public class P2IManager {
     }
 
     private void configureEndpoint() {
-        endpoint = new Endpoint();
+        mgrEndpoint = new Endpoint();
         try {
-            endpoint.libCreate();
+            mgrEndpoint.libCreate();
             EpConfig epConfig = new EpConfig();
 
             UaConfig uaConfig = new UaConfig();
@@ -89,13 +98,13 @@ public class P2IManager {
             mediaConfig.setThreadCnt(4);
             epConfig.setMedConfig(mediaConfig);
 
-            endpoint.libInit(epConfig);
+            mgrEndpoint.libInit(epConfig);
 
             TransportConfig transportConfig = new TransportConfig();
             transportConfig.setQosType(pj_qos_type.PJ_QOS_TYPE_VOICE);
 
-            endpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP, transportConfig);
-            endpoint.libStart();
+            mgrEndpoint.transportCreate(pjsip_transport_type_e.PJSIP_TRANSPORT_UDP, transportConfig);
+            mgrEndpoint.libStart();
 
         } catch (Exception e) {
             Log.e(TAG, "Method startService() FAILED: ", e);
@@ -103,18 +112,40 @@ public class P2IManager {
     }
 
     private void destroyEndpoint() {
-
         Runtime.getRuntime().gc();
         try {
-            endpoint.libDestroy();
-            endpoint.delete();
-            endpoint = null;
+            mgrEndpoint.libDestroy();
+            mgrEndpoint.delete();
+            mgrEndpoint = null;
         } catch (Exception e) {
             Log.e(TAG, "Method stopService() FAILED: ", e);
         }
     }
 
     public void logIn(User user) {
+        checkEndpoint();
+        if (mgrAccount != null) {
+            mgrAccount.delete();
+            mgrAccount = null;
+        }
 
+        AccountData accountData = new AccountData();
+        accountData.setName(user.getName());
+        accountData.setPassword(user.getPassword());
+        accountData.setRealm(user.getRealm());
+        String pcscf = user.getPcscf();
+        String host = pcscf.substring(0,pcscf.indexOf(":"));
+        String portStr = pcscf.substring(pcscf.indexOf(":") + 1);
+        int port = Integer.parseInt(portStr);
+        accountData.setHost(host);
+        accountData.setPort(port);
+
+        P2IAccount userAccount = new P2IAccount(accountData);
+        try {
+            userAccount.create(accountData.getAccountConfig(),true);
+            mgrAccount = userAccount;
+        } catch (Exception e) {
+            Log.e(TAG, "FAILED to create User SIP Account: ", e);
+        }
     }
 }

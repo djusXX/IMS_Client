@@ -75,7 +75,8 @@ public class CurrentUserViewModel extends ViewModel {
 
 
     public void logInUserView(UserView userView) {
-        User user = new User(0, userView.getName(), userView.getDisplayName(), userView.getRealm(), userView.getPcscf(), 0);
+        User user = new User(0, userView.getName(), userView.getPassword(),
+                userView.getDisplayName(), userView.getRealm(), userView.getPcscf(), 0);
         logInUser(user);
     }
 
@@ -83,7 +84,7 @@ public class CurrentUserViewModel extends ViewModel {
         logInUserUseCase.execute(user).subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(Disposable d) {
-                Log.d("logInUserUseCase.execute", "onStart()");
+                Log.d("logInUserUseCase.execute", "onSubscribe()");
                 logInUserUseCase.setSubscribe(d);
                 currentUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
             }
@@ -92,14 +93,14 @@ public class CurrentUserViewModel extends ViewModel {
             public void onComplete() {
                 currentUserLiveData.postValue(new Result<>(ResultState.SUCCESS,
                         mappers.getUserMapper().mapToView(user), null));
-                Log.d("logInUserUseCase.execute", "onSuccess()");
+                Log.d("logInUserUseCase.execute", "onComplete()");
                 logInUserUseCase.unsubscribe();
             }
 
             @Override
             public void onError(Throwable e) {
                 currentUserLiveData.postValue(new Result<>(ResultState.ERROR, null, e.getLocalizedMessage()));
-                Log.d("logInUserUseCase.execute", "onError()");
+                Log.d("logInUserUseCase.execute", "onError():" + e);
                 logInUserUseCase.unsubscribe();
             }
         });

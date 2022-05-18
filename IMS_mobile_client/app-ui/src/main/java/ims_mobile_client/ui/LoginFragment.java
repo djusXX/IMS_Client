@@ -52,6 +52,7 @@ public class LoginFragment extends Fragment {
     private UserView createFromBinding() {
         return new UserView(0,
                 binding.username.getText().toString(),
+                binding.password.getText().toString(),
                 binding.displayName.getText().toString(),
                 binding.realm.getText().toString(),
                 binding.pcscf.getText().toString(),

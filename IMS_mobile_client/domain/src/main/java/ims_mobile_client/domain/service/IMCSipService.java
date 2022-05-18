@@ -6,7 +6,6 @@ import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.ObservableEmitter;
 
 public interface IMCSipService {
 

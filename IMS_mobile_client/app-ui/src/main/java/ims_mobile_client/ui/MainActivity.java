@@ -45,16 +45,16 @@ public class MainActivity extends AppCompatActivity {
             ResultState resultState = result.getState();
             if (resultState == ResultState.LOADING) {
                 // setLoadingScreen()
-                Toast.makeText(this, "ResultState.LOADING", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "ResultState.LOADING", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (resultState == ResultState.ERROR) {
                 // setErrorScreen()
-                Toast.makeText(this, "ResultState.ERROR", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "ResultState.ERROR", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (resultState == ResultState.SUCCESS) {
-                Toast.makeText(this, "ResultState.SUCCESS", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "ResultState.SUCCESS", Toast.LENGTH_SHORT).show();
                 onUserLogged(result.getData().getSipUri());
             }
         });

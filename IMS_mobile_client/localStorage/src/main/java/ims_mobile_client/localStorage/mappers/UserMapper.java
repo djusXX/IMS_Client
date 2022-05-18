@@ -14,13 +14,13 @@ public class UserMapper implements Mapper<LocalUser, UserEntity> {
 
     @Override
     public UserEntity mapToEntity(LocalUser lu) {
-        return new UserEntity(lu.getId(), lu.getDisplayName(), lu.getUserName(),
+        return new UserEntity(lu.getId(), lu.getPassword(), lu.getDisplayName(), lu.getUserName(),
                 lu.getRealm(), lu.getPcscf(), lu.getLastLogged());
     }
 
     @Override
     public LocalUser mapFromEntity(UserEntity ue) {
         return new LocalUser(ue.getId(), ue.getDisplayName(), ue.getName(),
-                ue.getRealm(), ue.getPcscf(), ue.getLastLogged());
+                ue.getPassword(), ue.getRealm(), ue.getPcscf(), ue.getLastLogged());
     }
 }

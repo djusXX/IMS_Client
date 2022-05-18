@@ -4,13 +4,15 @@ public class UserEntity {
 
     private int id;
     private String name;
+    private String password;
     private String displayName;
     private String realm;
     private String pcscf;
     private long lastLogged;
 
-    public UserEntity(int id, String displayName, String name, String realm, String pcscf, long lastLogged) {
+    public UserEntity(int id, String password, String displayName, String name, String realm, String pcscf, long lastLogged) {
         this.id = id;
+        this.password = password;
         this.displayName = displayName;
         this.name = name;
         this.realm = realm;
@@ -65,5 +67,13 @@ public class UserEntity {
 
     public void setLastLogged(long lastLogged) {
         this.lastLogged = lastLogged;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
