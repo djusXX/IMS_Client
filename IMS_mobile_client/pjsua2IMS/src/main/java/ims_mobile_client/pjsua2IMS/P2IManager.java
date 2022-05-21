@@ -44,13 +44,10 @@ public class P2IManager {
 
     public void deinitManager() {
         Log.d(TAG, "Called method destroyService()");
-        destroyAllAccounts();
+        mgrAccount.delete();
+        mgrAccount = null;
         destroyEndpoint();
         isMgrInitialized = false;
-    }
-
-    private void destroyAllAccounts() {
-
     }
 
     private void loadNativeLibraries() {
@@ -142,7 +139,7 @@ public class P2IManager {
 
         P2IAccount userAccount = new P2IAccount(accountData);
         try {
-            userAccount.create(accountData.getAccountConfig(),true);
+            userAccount.create();
             mgrAccount = userAccount;
         } catch (Exception e) {
             Log.e(TAG, "FAILED to create User SIP Account: ", e);

@@ -14,16 +14,10 @@
     - logging current user with pin
 
 ## TODO:
-    - update sipservice to be a background service
     - add subscribing and receiving presence status
     - add views for presence status
-    - update view on subscription state change
-    - add keep logged logic
-    - add keep logged user interface 
     - create swiped tabs for messages and calls history using ViewPager2
     - add navigation graphs instead of fragmentManager transactions
-    - use buildSrc dependencies in build.gradle files
-    - add paging library for loading messages/buddies
     
 
 ## APP Architecture:
@@ -31,8 +25,6 @@
 
 
 
-## TMP_TODO:
-    - modify commons.gradle or build.gradle for :dataSource-local to avoid unnecessary dependencies 
 
 
 

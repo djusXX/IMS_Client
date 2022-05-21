@@ -14,12 +14,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class P2IAccount extends Account {
     private static final String TAG = P2IAccount.class.getSimpleName();
 
-    private AccountData accountData;
+    private final AccountData accountData;
     private final ConcurrentHashMap<String, P2IBuddy> buddies = new ConcurrentHashMap<>();
 
     public P2IAccount(AccountData accountData) {
         super();
         this.accountData = accountData;
+    }
+
+    public void create() throws Exception {
+        create(accountData.getAccountConfig(),true);
     }
 
     public P2IBuddy addBuddy(BuddyConfig buddyConfig) {
@@ -60,12 +64,18 @@ public class P2IAccount extends Account {
     
     @Override
     public void onRegState(OnRegStateParam prm) {
-        // TODO: implement!!!
+        Log.d(TAG, "Called method onRegState()");
+        Log.d(TAG, "code: " + prm.getCode());
+        Log.d(TAG, "reason: " + prm.getReason());
+        Log.d(TAG, "expiration: " + prm.getExpiration());
+        // TODO: notify
     }
 
     @Override
     public void onIncomingCall(OnIncomingCallParam prm) {
-        // TODO: implement!!!
+        Log.d(TAG, "Called method onIncomingCall()");
+//        P2ICall call = new P2ICall(this, prm.getCallId(), );
+        // TODO: implement and notify!!!
     }
 
     @Override
@@ -76,6 +86,6 @@ public class P2IAccount extends Account {
         Log.d(TAG, "Contact  : " + prm.getContactUri());
         Log.d(TAG, "Mimetype : " + prm.getContentType());
         Log.d(TAG, "Body     : " + prm.getMsgBody());
-        // TODO: implement!!!
+        // TODO: handle new Msg!!!
     }
 }
