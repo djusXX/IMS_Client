@@ -13,7 +13,7 @@ public class UserMapper implements Mapper<UserView, User> {
     @Override
     public UserView mapToView(User u) {
         return new UserView(u.getId(), u.getName(), u.getPassword(), u.getDisplayName(), u.getRealm(),
-                u.getPcscf(), u.getLastLogged(), u.getRegState(), u.getUserStatusType(),
-                u.getUserStatusActivity(), u.getUserStatusText(), u.getNote(), u.getRpidId());
+                u.getPcscf(), u.getRegExpiresSec(), u.getRegStatusText(), u.getPresenceStatusType(),
+                u.getPresenceStatusActivity(), u.getPresenceStatusText(), u.getPresenceNote(), u.getPresenceRpidId());
     }
 }

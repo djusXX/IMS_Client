@@ -2,52 +2,58 @@ package ims_mobile_client.domain.models;
 
 public class User {
 
+    // Basic info
     private int id;
     private String name;
     private String password;
     private String displayName;
     private String realm;
     private String pcscf;
-    private long lastLogged;    // expiration time of user's registration (in UTC)
-    private String regState;
 
-    // User Presence
-    private String userStatusType;
-    private String userStatusActivity;
-    private String userStatusText;
-    private String note;
-    private String rpidId;
+    // registrar info
+    private long regExpiresSec;
+    private int regStatusCode;
+    private String regStatusText;
 
-    public User(int id, String name, String password, String displayName, String realm, String pcscf, long lastLogged, String regState, String userStatusType, String userStatusActivity, String userStatusText, String note, String rpidId) {
+    // Presence info
+    private String presenceStatusType;
+    private String presenceStatusActivity;
+    private String presenceStatusText;
+    private String presenceNote;
+    private String presenceRpidId;
+
+    public User(int id, String name, String password, String displayName, String realm, String pcscf, long regExpiresSec, int regStatusCode, String regStatusText, String presenceStatusType, String presenceStatusActivity, String presenceStatusText, String note, String presenceRpidId) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.displayName = displayName;
         this.realm = realm;
         this.pcscf = pcscf;
-        this.lastLogged = lastLogged;
-        this.regState = regState;
-        this.userStatusType = userStatusType;
-        this.userStatusActivity = userStatusActivity;
-        this.userStatusText = userStatusText;
-        this.note = note;
-        this.rpidId = rpidId;
+        this.regExpiresSec = regExpiresSec;
+        this.regStatusCode = regStatusCode;
+        this.regStatusText = regStatusText;
+        this.presenceStatusType = presenceStatusType;
+        this.presenceStatusActivity = presenceStatusActivity;
+        this.presenceStatusText = presenceStatusText;
+        this.presenceNote = note;
+        this.presenceRpidId = presenceRpidId;
     }
 
-    public User(int id, String name, String password, String displayName, String realm, String pcscf, long lastLogged) {
+    public User(int id, String name, String password, String displayName, String realm, String pcscf, long regExpiresSec, int regStatusCode) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.displayName = displayName;
         this.realm = realm;
         this.pcscf = pcscf;
-        this.lastLogged = lastLogged;
-        this.regState = null;
-        this.userStatusType = null;
-        this.userStatusActivity = null;
-        this.userStatusText = null;
-        this.note = null;
-        this.rpidId = null;
+        this.regExpiresSec = regExpiresSec;
+        this.regStatusCode = regStatusCode;
+        this.regStatusText = null;
+        this.presenceStatusType = null;
+        this.presenceStatusActivity = null;
+        this.presenceStatusText = null;
+        this.presenceNote = null;
+        this.presenceRpidId = null;
     }
 
     public int getId() {
@@ -82,64 +88,72 @@ public class User {
         this.realm = realm;
     }
 
-    public long getLastLogged() {
-        return lastLogged;
+    public long getRegExpiresSec() {
+        return regExpiresSec;
     }
 
-    public void setLastLogged(long lastLogged) {
-        this.lastLogged = lastLogged;
+    public void setRegExpiresSec(long regExpiresSec) {
+        this.regExpiresSec = regExpiresSec;
+    }
+
+    public int getRegStatusCode() {
+        return regStatusCode;
+    }
+
+    public void setRegStatusCode(int regStatusCode) {
+        this.regStatusCode = regStatusCode;
     }
 
     public String getSipUri() {
         return "sip:" + name + "@" + realm;
     }
 
-    public String getRegState() {
-        return regState;
+    public String getRegStatusText() {
+        return regStatusText;
     }
 
-    public void setRegState(String regState) {
-        this.regState = regState;
+    public void setRegStatusText(String regStatusText) {
+        this.regStatusText = regStatusText;
     }
 
-    public String getUserStatusType() {
-        return userStatusType;
+    public String getPresenceStatusType() {
+        return presenceStatusType;
     }
 
-    public void setUserStatusType(String userStatusType) {
-        this.userStatusType = userStatusType;
+    public void setPresenceStatusType(String presenceStatusType) {
+        this.presenceStatusType = presenceStatusType;
     }
 
-    public String getUserStatusActivity() {
-        return userStatusActivity;
+    public String getPresenceStatusActivity() {
+        return presenceStatusActivity;
     }
 
-    public void setUserStatusActivity(String userStatusActivity) {
-        this.userStatusActivity = userStatusActivity;
+    public void setPresenceStatusActivity(String presenceStatusActivity) {
+        this.presenceStatusActivity = presenceStatusActivity;
     }
 
-    public String getUserStatusText() {
-        return userStatusText;
+    public String getPresenceStatusText() {
+        return presenceStatusText;
     }
 
-    public void setUserStatusText(String userStatusText) {
-        this.userStatusText = userStatusText;
+    public void setPresenceStatusText(String presenceStatusText) {
+        this.presenceStatusText = presenceStatusText;
     }
 
-    public String getNote() {
-        return note;
+    public String getPresenceNote() {
+        return presenceNote;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setPresenceNote(String presenceNote) {
+        this.presenceNote = presenceNote;
     }
 
-    public String getRpidId() {
-        return rpidId;
+    public String getPresenceRpidId() {
+        return presenceRpidId;
     }
 
-    public void setRpidId(String rpidId) {
-        this.rpidId = rpidId;
+    public void setPresenceRpidId(String presenceRpidId) {
+        this.presenceRpidId = presenceRpidId;
     }
 
     public String getPcscf() {
@@ -158,75 +172,5 @@ public class User {
         this.password = password;
     }
 
-    public static class Info {
-        private final int id;
-        private final boolean isDefault;
-        private final String sipUri;
-        private final boolean isRegUriConfigured;
-        private final boolean registrationIsActive;
-        private final int expirationInterval;
-        private final int lastRegCode;
-        private final String lastRegText;
-        private final int failedRegCause;
-        private final boolean presenceStatusIsOnline;
-        private final String presenceStatusText;
 
-        public Info(int id, boolean isDefault, String sipUri, boolean isRegUriConfigured, boolean registrationIsActive, int expirationInterval, int lastRegCode, String lastRegText, int failedRegCause, boolean presenceStatusIsOnline, String presenceStatusText) {
-            this.id = id;
-            this.isDefault = isDefault;
-            this.sipUri = sipUri;
-            this.isRegUriConfigured = isRegUriConfigured;
-            this.registrationIsActive = registrationIsActive;
-            this.expirationInterval = expirationInterval;
-            this.lastRegCode = lastRegCode;
-            this.lastRegText = lastRegText;
-            this.failedRegCause = failedRegCause;
-            this.presenceStatusIsOnline = presenceStatusIsOnline;
-            this.presenceStatusText = presenceStatusText;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public boolean isDefault() {
-            return isDefault;
-        }
-
-        public String getSipUri() {
-            return sipUri;
-        }
-
-        public boolean isRegUriConfigured() {
-            return isRegUriConfigured;
-        }
-
-        public boolean isRegistrationIsActive() {
-            return registrationIsActive;
-        }
-
-        public int getExpirationInterval() {
-            return expirationInterval;
-        }
-
-        public int getLastRegCode() {
-            return lastRegCode;
-        }
-
-        public String getLastRegText() {
-            return lastRegText;
-        }
-
-        public int getFailedRegCause() {
-            return failedRegCause;
-        }
-
-        public boolean isPresenceStatusIsOnline() {
-            return presenceStatusIsOnline;
-        }
-
-        public String getPresenceStatusText() {
-            return presenceStatusText;
-        }
-    }
 }

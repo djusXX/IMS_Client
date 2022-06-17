@@ -13,16 +13,22 @@
     - keep logged current user
     - logging current user with pin
 
+
 ## TODO:
     - add subscribing and receiving presence status
     - add views for presence status
-    - create swiped tabs for messages and calls history using ViewPager2
     - add navigation graphs instead of fragmentManager transactions
-    
+
 
 ## APP Architecture:
-    Clean Architecture
+    MVVM Clean Architecture
 
+    SIP related classes/interfaces:
+        - configuration helper??
+        - registration service: provide and keeps registration of configured Account
+        - calling service: handle in/out voice/video calls => implement self-managed ConnectionService
+        - messagging service: send/receive messages [required: added Buddy OR active Call]
+        - presence service??
 
 
 

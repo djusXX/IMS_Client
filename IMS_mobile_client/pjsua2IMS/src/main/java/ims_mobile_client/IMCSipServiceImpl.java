@@ -2,6 +2,8 @@ package ims_mobile_client;
 
 import android.util.Log;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import ims_mobile_client.domain.models.Buddy;
@@ -112,12 +114,21 @@ public class IMCSipServiceImpl implements IMCSipService {
     }
 
     @Override
-    public Flowable<User.Info> getUserInfo(String usrSipUri) {
+    public Flowable<List<User>> getConfiguredUsers() {
         return null;
     }
 
+    @Override
+    public Flowable<List<Call>> getActiveCalls() {
+        return null;
+    }
 
-    //    boolean startLib();
+    @Override
+    public Flowable<List<Message>> getMessages() {
+        return null;
+    }
+
+//    boolean startLib();
 //    boolean stopLib();
 //     loadNativeLibs()
 

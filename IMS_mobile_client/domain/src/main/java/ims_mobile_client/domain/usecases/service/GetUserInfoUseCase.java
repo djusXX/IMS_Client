@@ -7,7 +7,7 @@ import ims_mobile_client.domain.service.IMCSipService;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
-public class GetUserInfoUseCase extends FlowableUseCase<User.Info, String> {
+public class GetUserInfoUseCase extends FlowableUseCase<User, String> {
     private final IMCSipService service;
 
     public GetUserInfoUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, IMCSipService service) {
@@ -16,7 +16,7 @@ public class GetUserInfoUseCase extends FlowableUseCase<User.Info, String> {
     }
 
     @Override
-    protected Flowable<User.Info> buildUseCaseObservable(String usrSipUri) {
+    protected Flowable<User> buildUseCaseObservable(String usrSipUri) {
         return service.getUserInfo(usrSipUri);
     }
 

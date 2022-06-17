@@ -76,7 +76,7 @@ public class CurrentUserViewModel extends ViewModel {
 
     public void logInUserView(UserView userView) {
         User user = new User(0, userView.getName(), userView.getPassword(),
-                userView.getDisplayName(), userView.getRealm(), userView.getPcscf(), 0);
+                userView.getDisplayName(), userView.getRealm(), userView.getPcscf(), 0, 0);
         logInUser(user);
     }
 

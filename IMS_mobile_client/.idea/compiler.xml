@@ -38,6 +38,7 @@
       <module name="IMS_mobile_client.localStorage" target="11" />
       <module name="IMS_mobile_client.pjsua2IMS" target="11" />
       <module name="IMS_mobile_client.presentation" target="11" />
+      <module name="IMS_mobile_client.rcsMessagingApp" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
