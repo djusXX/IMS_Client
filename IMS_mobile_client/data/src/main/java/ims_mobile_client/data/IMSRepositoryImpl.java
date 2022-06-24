@@ -10,19 +10,19 @@ import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.repository.IMCRepository;
+import ims_mobile_client.domain.repository.IMSRepository;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 
-public class IMCRepositoryImpl implements IMCRepository {
+public class IMSRepositoryImpl implements IMSRepository {
 
     private final DataStoreFactory dataStore;
     private final MapperProvider mapper;
 
     @Inject
-    public IMCRepositoryImpl(DataStoreFactory dataStore, MapperProvider mapper) {
+    public IMSRepositoryImpl(DataStoreFactory dataStore, MapperProvider mapper) {
         this.dataStore = dataStore;
         this.mapper = mapper;
     }

@@ -9,7 +9,7 @@ import ims_mobile_client.domain.models.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
-public interface IMCRepository {
+public interface IMSRepository {
 
     // User
     Flowable<User> getLastUser();

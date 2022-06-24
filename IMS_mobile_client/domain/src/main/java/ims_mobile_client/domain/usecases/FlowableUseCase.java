@@ -20,14 +20,14 @@ public abstract class FlowableUseCase<T, Params> {
         disposables = new CompositeDisposable();
     }
 
-    protected abstract Flowable<T> buildUseCaseObservable(@Nullable Params params);
+    protected abstract Flowable<T> buildUseCaseFlowable(@Nullable Params params);
 
-    public void execute(DisposableSubscriber<T> observer, @Nullable Params params) {
-        Flowable<T> observable = this.buildUseCaseObservable(params)
+    public void execute(DisposableSubscriber<T> subscriber, @Nullable Params params) {
+        Flowable<T> flowable = this.buildUseCaseFlowable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler());
 
-        disposables.add(observable.subscribeWith(observer));
+        disposables.add(flowable.subscribeWith(subscriber));
     }
 
     public void dispose() {

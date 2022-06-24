@@ -5,13 +5,13 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import ims_mobile_client.data.IMCRepositoryImpl;
+import ims_mobile_client.data.IMSRepositoryImpl;
 import ims_mobile_client.data.dataStores.DataStoreFactory;
 import ims_mobile_client.data.dataStores.DataStoreLocal;
 import ims_mobile_client.data.executor.JobExecutor;
 import ims_mobile_client.data.mappers.MapperProvider;
 import ims_mobile_client.domain.executors.ThreadExecutor;
-import ims_mobile_client.domain.repository.IMCRepository;
+import ims_mobile_client.domain.repository.IMSRepository;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -31,8 +31,8 @@ public abstract class DataModule {
 
     @Provides
     @Singleton
-    public static IMCRepository provideIMCRepository(DataStoreFactory dataStoreFactory,
+    public static IMSRepository provideIMCRepository(DataStoreFactory dataStoreFactory,
                                                      MapperProvider mapper) {
-        return new IMCRepositoryImpl(dataStoreFactory, mapper);
+        return new IMSRepositoryImpl(dataStoreFactory, mapper);
     }
 }
