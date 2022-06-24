@@ -22,7 +22,7 @@ public class CallMapper implements Mapper<CallEntity, Call> {
     @Override
     public CallEntity mapFromDomain(Call c) {
         return new CallEntity(c.getId(), c.getSipUriFrom(),
-                c.getSipUriTo(), c.isVideo(),
+                c.getSipUriTo(), c.isVideoCall(),
                 c.getBeginTime(), c.getEndTime());
     }
 }

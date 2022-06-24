@@ -27,6 +27,7 @@
         - configuration helper??
         - registration service: provide and keeps registration of configured Account
         - calling service: handle in/out voice/video calls => implement self-managed ConnectionService
+                           This ConnectionService should be implemented in pjsua2IMS project (OR maybe in app-ui???)
         - messagging service: send/receive messages [required: added Buddy OR active Call]
         - presence service??
 

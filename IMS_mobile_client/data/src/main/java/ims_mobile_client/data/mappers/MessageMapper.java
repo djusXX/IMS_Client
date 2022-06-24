@@ -13,7 +13,7 @@ public class MessageMapper implements Mapper<MessageEntity, Message> {
     }
     @Override
     public Message mapToDomain(MessageEntity me) {
-        return new Message(me.getId(), me.getSipUriFrom(), me.getSipUriTo(), me.getTime(), me.getContent());
+        return new Message(me.getId(), me.getSipUriFrom(), me.getSipUriTo(), type, me.getTime(), me.getContent());
     }
 
     @Override

@@ -12,7 +12,7 @@ public class CallMapper implements Mapper<CallView, Call> {
 
     @Override
     public CallView mapToView(Call c) {
-        return new CallView(c.getId(), c.getSipUriFrom(), c.getSipUriTo(), c.isVideo(),
+        return new CallView(c.getId(), c.getSipUriFrom(), c.getSipUriTo(), c.isVideoCall(),
                 c.getBeginTime(), c.getEndTime(), c.isActive(), c.getStateType(),
                 c.getStateText(), c.getStatusCode(), c.getStatusText());
     }

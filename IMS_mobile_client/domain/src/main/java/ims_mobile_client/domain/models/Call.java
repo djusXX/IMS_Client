@@ -5,9 +5,15 @@ public class Call {
     private int id;
     private String sipUriFrom;
     private String sipUriTo;
-    private boolean isVideo;
+    private boolean isVideoCall;
+    private boolean isConference = false;
+    private boolean isOnHold = false;
+    private boolean voiceMuted = false;
+    private boolean videoMuted = false;
     private long beginTime;
     private long endTime;
+
+    // Call state
     private boolean isActive;
     private String stateType;
     private String stateText;
@@ -15,11 +21,11 @@ public class Call {
     private String statusText;
 
 
-    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideo, long beginTime, long endTime, boolean isActive, String stateType, String stateText, int statusCode, String statusText) {
+    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall, long beginTime, long endTime, boolean isActive, String stateType, String stateText, int statusCode, String statusText) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;
-        this.isVideo = isVideo;
+        this.isVideoCall = isVideoCall;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.isActive = isActive;
@@ -29,11 +35,11 @@ public class Call {
         this.statusText = statusText;
     }
 
-    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideo, long beginTime, long endTime) {
+    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall, long beginTime, long endTime) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;
-        this.isVideo = isVideo;
+        this.isVideoCall = isVideoCall;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.isActive = false;
@@ -68,12 +74,12 @@ public class Call {
         this.sipUriTo = sipUriTo;
     }
 
-    public boolean isVideo() {
-        return isVideo;
+    public boolean isVideoCall() {
+        return isVideoCall;
     }
 
-    public void setVideo(boolean video) {
-        isVideo = video;
+    public void setVideoCall(boolean videoCall) {
+        isVideoCall = videoCall;
     }
 
     public long getBeginTime() {
@@ -130,5 +136,37 @@ public class Call {
 
     public void setStatusText(String statusText) {
         this.statusText = statusText;
+    }
+
+    public boolean isConference() {
+        return isConference;
+    }
+
+    public void setConference(boolean conference) {
+        isConference = conference;
+    }
+
+    public boolean isOnHold() {
+        return isOnHold;
+    }
+
+    public void setOnHold(boolean onHold) {
+        isOnHold = onHold;
+    }
+
+    public boolean isVoiceMuted() {
+        return voiceMuted;
+    }
+
+    public void setVoiceMuted(boolean voiceMuted) {
+        this.voiceMuted = voiceMuted;
+    }
+
+    public boolean isVideoMuted() {
+        return videoMuted;
+    }
+
+    public void setVideoMuted(boolean videoMuted) {
+        this.videoMuted = videoMuted;
     }
 }
