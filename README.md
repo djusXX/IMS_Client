@@ -11,13 +11,6 @@
     - setting presence status
     - subscribing buddy's presence status
     - keep logged current user
-    - logging current user with pin
-
-
-## TODO:
-    - add subscribing and receiving presence status
-    - add views for presence status
-    - add navigation graphs instead of fragmentManager transactions
 
 
 ## APP Architecture:
@@ -30,6 +23,34 @@
                            This ConnectionService should be implemented in pjsua2IMS project (OR maybe in app-ui???)
         - messagging service: send/receive messages [required: added Buddy OR active Call]
         - presence service??
+
+
+## TODO:
+
+    :app-ui
+        - add UI/views for presence status
+        ???
+    
+    :data
+        ???
+
+    :domain
+        - update usecases to handle managing active calls, incoming messages etc.
+
+    :localStorage
+        ???
+
+    :pjsua2IMS
+        - add implementations of serviceManagers
+        ???
+
+    :presentation
+        - implement viewModels
+
+    :OTHER
+        - add navigation graphs instead of fragmentManager transactions
+
+
 
 
 

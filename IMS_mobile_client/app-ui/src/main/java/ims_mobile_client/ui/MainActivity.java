@@ -13,8 +13,8 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.ViewModelProvider;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.presentation.utils.ResultState;
-import ims_mobile_client.presentation.viewModels.CurrentUserViewModel;
+import ims_mobile_client.presentation.utils.RequestState;
+import ims_mobile_client.presentation.viewModels.LocalUserViewModel;
 import ims_mobile_client.ui.conversations.BuddyListFragment;
 
 @AndroidEntryPoint
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     private static final String TAG = MainActivity.class.getName();
 
-    private CurrentUserViewModel currentUserViewModel;
+    private LocalUserViewModel localUserViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,30 +31,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         requestPermissions();
-        currentUserViewModel = new ViewModelProvider(this)
-                .get(CurrentUserViewModel.class);
+        localUserViewModel = new ViewModelProvider(this)
+                .get(LocalUserViewModel.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        currentUserViewModel.getLastUser().observe(this, result -> {
+        localUserViewModel.getLastUser().observe(this, result -> {
             if (result == null || result.getState() == null) {
                 return;
             }
-            ResultState resultState = result.getState();
-            if (resultState == ResultState.LOADING) {
+            RequestState requestState = result.getState();
+            if (requestState == RequestState.LOADING) {
                 // setLoadingScreen()
-//                Toast.makeText(this, "ResultState.LOADING", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "RequestState.LOADING", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (resultState == ResultState.ERROR) {
+            if (requestState == RequestState.ERROR) {
                 // setErrorScreen()
-//                Toast.makeText(this, "ResultState.ERROR", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "RequestState.ERROR", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (resultState == ResultState.SUCCESS) {
-//                Toast.makeText(this, "ResultState.SUCCESS", Toast.LENGTH_SHORT).show();
+            if (requestState == RequestState.SUCCESS) {
+//                Toast.makeText(this, "RequestState.SUCCESS", Toast.LENGTH_SHORT).show();
                 onUserLogged(result.getData().getSipUri());
             }
         });

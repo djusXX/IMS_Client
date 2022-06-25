@@ -7,6 +7,10 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import ims_mobile_client.domain.service.IMSService;
+import ims_mobile_client.serviceManagers.ImsBuddyManager;
+import ims_mobile_client.serviceManagers.ImsCallingManager;
+import ims_mobile_client.serviceManagers.ImsMessagingManager;
+import ims_mobile_client.serviceManagers.ImsUserManager;
 
 @Module
 @InstallIn(SingletonComponent.class)

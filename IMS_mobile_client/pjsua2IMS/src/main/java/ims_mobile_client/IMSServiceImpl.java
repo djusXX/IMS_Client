@@ -11,6 +11,10 @@ import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.service.IMSService;
+import ims_mobile_client.serviceManagers.ImsBuddyManager;
+import ims_mobile_client.serviceManagers.ImsCallingManager;
+import ims_mobile_client.serviceManagers.ImsMessagingManager;
+import ims_mobile_client.serviceManagers.ImsUserManager;
 import io.reactivex.Flowable;
 
 public class IMSServiceImpl implements IMSService {

@@ -13,21 +13,21 @@ import ims_mobile_client.domain.usecases.repository.GetLastUserUseCase;
 import ims_mobile_client.domain.usecases.service.LogInUserUseCase;
 import ims_mobile_client.presentation.mappers.MapperProvider;
 import ims_mobile_client.presentation.models.UserView;
+import ims_mobile_client.presentation.utils.RequestState;
 import ims_mobile_client.presentation.utils.Result;
-import ims_mobile_client.presentation.utils.ResultState;
 import io.reactivex.CompletableObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 @HiltViewModel
-public class CurrentUserViewModel extends ViewModel {
+public class LocalUserViewModel extends ViewModel {
     private final GetLastUserUseCase getLastUserUseCase;
     private final LogInUserUseCase logInUserUseCase;
     private final MapperProvider mappers;
     private final MutableLiveData<Result<UserView>> currentUserLiveData;
 
     @Inject
-    public CurrentUserViewModel(GetLastUserUseCase getLastUserUseCase, LogInUserUseCase logInUserUseCase, MapperProvider mappers) {
+    public LocalUserViewModel(GetLastUserUseCase getLastUserUseCase, LogInUserUseCase logInUserUseCase, MapperProvider mappers) {
         this.getLastUserUseCase = getLastUserUseCase;
         this.logInUserUseCase = logInUserUseCase;
         this.mappers = mappers;
@@ -50,7 +50,7 @@ public class CurrentUserViewModel extends ViewModel {
         getLastUserUseCase.execute(new DisposableSubscriber<User>() {
             @Override
             protected void onStart() {
-                currentUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
+                currentUserLiveData.postValue(new Result<>(RequestState.LOADING, null, null));
             }
 
             @Override
@@ -61,7 +61,7 @@ public class CurrentUserViewModel extends ViewModel {
 
             @Override
             public void onError(Throwable t) {
-                currentUserLiveData.postValue(new Result<>(ResultState.ERROR, null, t.getLocalizedMessage()));
+                currentUserLiveData.postValue(new Result<>(RequestState.ERROR, null, t.getLocalizedMessage()));
                 getLastUserUseCase.dispose();
             }
 
@@ -86,12 +86,12 @@ public class CurrentUserViewModel extends ViewModel {
             public void onSubscribe(Disposable d) {
                 Log.d("logInUserUseCase.execute", "onSubscribe()");
                 logInUserUseCase.setSubscribe(d);
-                currentUserLiveData.postValue(new Result<>(ResultState.LOADING, null, null));
+                currentUserLiveData.postValue(new Result<>(RequestState.LOADING, null, null));
             }
 
             @Override
             public void onComplete() {
-                currentUserLiveData.postValue(new Result<>(ResultState.SUCCESS,
+                currentUserLiveData.postValue(new Result<>(RequestState.SUCCESS,
                         mappers.getUserMapper().mapToView(user), null));
                 Log.d("logInUserUseCase.execute", "onComplete()");
                 logInUserUseCase.unsubscribe();
@@ -99,7 +99,7 @@ public class CurrentUserViewModel extends ViewModel {
 
             @Override
             public void onError(Throwable e) {
-                currentUserLiveData.postValue(new Result<>(ResultState.ERROR, null, e.getLocalizedMessage()));
+                currentUserLiveData.postValue(new Result<>(RequestState.ERROR, null, e.getLocalizedMessage()));
                 Log.d("logInUserUseCase.execute", "onError():" + e);
                 logInUserUseCase.unsubscribe();
             }
