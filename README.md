@@ -29,16 +29,11 @@
 
     :app-ui
         - add UI/views for presence status
-        ???
-    
-    :data
+        - add navigation graphs instead of fragmentManager transactions
         ???
 
     :domain
         - update usecases to handle managing active calls, incoming messages etc.
-
-    :localStorage
-        ???
 
     :pjsua2IMS
         - add implementations of serviceManagers
@@ -47,8 +42,6 @@
     :presentation
         - implement viewModels
 
-    :OTHER
-        - add navigation graphs instead of fragmentManager transactions
 
 
 
