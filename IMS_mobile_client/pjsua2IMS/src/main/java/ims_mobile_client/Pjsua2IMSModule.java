@@ -14,8 +14,11 @@ public class Pjsua2IMSModule {
 
     @Provides
     @Singleton
-    public IMSService provideIMSService() {
-        return new IMSServiceImpl();
+    public IMSService provideIMSService(ImsCallingManager imsCallingManager,
+                                        ImsMessagingManager imsMessagingManager,
+                                        ImsUserManager userManager,
+                                        ImsBuddyManager imsBuddyManager) {
+        return new IMSServiceImpl(imsCallingManager, imsMessagingManager, userManager, imsBuddyManager);
     }
 
 }

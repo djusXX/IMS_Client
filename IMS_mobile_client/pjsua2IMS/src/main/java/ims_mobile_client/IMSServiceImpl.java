@@ -11,15 +11,22 @@ import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.service.IMSService;
-import ims_mobile_client.pjsua2IMS.P2IManager;
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class IMSServiceImpl implements IMSService {
     public static final String TAG = IMSServiceImpl.class.getSimpleName();
 
+    private final ImsCallingManager imsCallingManager;
+    private final ImsMessagingManager imsMessagingManager;
+    private final ImsUserManager imsUserManager;
+    private final ImsBuddyManager imsBuddyManager;
+
     @Inject
-    public IMSServiceImpl() {
+    public IMSServiceImpl(ImsCallingManager imsCallingManager, ImsMessagingManager imsMessagingManager, ImsUserManager imsUserManager, ImsBuddyManager imsBuddyManager) {
+        this.imsCallingManager = imsCallingManager;
+        this.imsMessagingManager = imsMessagingManager;
+        this.imsUserManager = imsUserManager;
+        this.imsBuddyManager = imsBuddyManager;
         Log.d(TAG, "creating implementation of IMCSipService");
     }
 
