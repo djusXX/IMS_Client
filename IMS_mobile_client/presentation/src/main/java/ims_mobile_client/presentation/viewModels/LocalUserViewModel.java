@@ -51,6 +51,7 @@ public class LocalUserViewModel extends ViewModel {
             @Override
             protected void onStart() {
                 currentUserLiveData.postValue(new Result<>(RequestState.LOADING, null, null));
+                request(1);
             }
 
             @Override

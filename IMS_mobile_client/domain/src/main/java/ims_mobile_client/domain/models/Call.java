@@ -7,46 +7,29 @@ public class Call {
     private String sipUriTo;
     private boolean isVideoCall;
     private boolean isConference = false;
+    private long beginTime = -1;
+    private long endTime = -1;
+
+    // Active call properties
+    private int callId = -1;
     private boolean isOnHold = false;
     private boolean voiceMuted = false;
     private boolean videoMuted = false;
-    private long beginTime;
-    private long endTime;
+
 
     // Call state
-    private boolean isActive;
-    private String stateType;
-    private String stateText;
-    private int statusCode;
-    private String statusText;
+    private boolean isActive = false;
+    private int stateType = -1;
+    private String stateText = "";
+    private int statusCode = -1;
+    private String statusText = "";
 
 
-    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall, long beginTime, long endTime, boolean isActive, String stateType, String stateText, int statusCode, String statusText) {
+    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;
         this.isVideoCall = isVideoCall;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.isActive = isActive;
-        this.stateType = stateType;
-        this.stateText = stateText;
-        this.statusCode = statusCode;
-        this.statusText = statusText;
-    }
-
-    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall, long beginTime, long endTime) {
-        this.id = id;
-        this.sipUriFrom = sipUriFrom;
-        this.sipUriTo = sipUriTo;
-        this.isVideoCall = isVideoCall;
-        this.beginTime = beginTime;
-        this.endTime = endTime;
-        this.isActive = false;
-        this.stateType = null;
-        this.stateText = null;
-        this.statusCode = -1;
-        this.statusText = null;
     }
 
 
@@ -106,11 +89,11 @@ public class Call {
         isActive = active;
     }
 
-    public String getStateType() {
+    public int getStateType() {
         return stateType;
     }
 
-    public void setStateType(String stateType) {
+    public void setStateType(int stateType) {
         this.stateType = stateType;
     }
 
@@ -168,5 +151,13 @@ public class Call {
 
     public void setVideoMuted(boolean videoMuted) {
         this.videoMuted = videoMuted;
+    }
+
+    public int getCallId() {
+        return callId;
+    }
+
+    public void setCallId(int callId) {
+        this.callId = callId;
     }
 }

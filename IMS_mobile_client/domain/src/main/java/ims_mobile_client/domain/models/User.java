@@ -10,50 +10,16 @@ public class User {
     private String realm;
     private String pcscf;
 
-    // registrar info
-    private long regExpiresSec;
-    private int regStatusCode;
-    private String regStatusText;
+    private RegistrationState registrationState = null;
+    private PresenceState presenceState = null;
 
-    // Presence info
-    private String presenceStatusType;
-    private String presenceStatusActivity;
-    private String presenceStatusText;
-    private String presenceNote;
-    private String presenceRpidId;
-
-    public User(int id, String name, String password, String displayName, String realm, String pcscf, long regExpiresSec, int regStatusCode, String regStatusText, String presenceStatusType, String presenceStatusActivity, String presenceStatusText, String note, String presenceRpidId) {
+    public User(int id, String name, String password, String displayName, String realm, String pcscf) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.displayName = displayName;
         this.realm = realm;
         this.pcscf = pcscf;
-        this.regExpiresSec = regExpiresSec;
-        this.regStatusCode = regStatusCode;
-        this.regStatusText = regStatusText;
-        this.presenceStatusType = presenceStatusType;
-        this.presenceStatusActivity = presenceStatusActivity;
-        this.presenceStatusText = presenceStatusText;
-        this.presenceNote = note;
-        this.presenceRpidId = presenceRpidId;
-    }
-
-    public User(int id, String name, String password, String displayName, String realm, String pcscf, long regExpiresSec, int regStatusCode) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.displayName = displayName;
-        this.realm = realm;
-        this.pcscf = pcscf;
-        this.regExpiresSec = regExpiresSec;
-        this.regStatusCode = regStatusCode;
-        this.regStatusText = null;
-        this.presenceStatusType = null;
-        this.presenceStatusActivity = null;
-        this.presenceStatusText = null;
-        this.presenceNote = null;
-        this.presenceRpidId = null;
     }
 
     public int getId() {
@@ -88,74 +54,6 @@ public class User {
         this.realm = realm;
     }
 
-    public long getRegExpiresSec() {
-        return regExpiresSec;
-    }
-
-    public void setRegExpiresSec(long regExpiresSec) {
-        this.regExpiresSec = regExpiresSec;
-    }
-
-    public int getRegStatusCode() {
-        return regStatusCode;
-    }
-
-    public void setRegStatusCode(int regStatusCode) {
-        this.regStatusCode = regStatusCode;
-    }
-
-    public String getSipUri() {
-        return "sip:" + name + "@" + realm;
-    }
-
-    public String getRegStatusText() {
-        return regStatusText;
-    }
-
-    public void setRegStatusText(String regStatusText) {
-        this.regStatusText = regStatusText;
-    }
-
-    public String getPresenceStatusType() {
-        return presenceStatusType;
-    }
-
-    public void setPresenceStatusType(String presenceStatusType) {
-        this.presenceStatusType = presenceStatusType;
-    }
-
-    public String getPresenceStatusActivity() {
-        return presenceStatusActivity;
-    }
-
-    public void setPresenceStatusActivity(String presenceStatusActivity) {
-        this.presenceStatusActivity = presenceStatusActivity;
-    }
-
-    public String getPresenceStatusText() {
-        return presenceStatusText;
-    }
-
-    public void setPresenceStatusText(String presenceStatusText) {
-        this.presenceStatusText = presenceStatusText;
-    }
-
-    public String getPresenceNote() {
-        return presenceNote;
-    }
-
-    public void setPresenceNote(String presenceNote) {
-        this.presenceNote = presenceNote;
-    }
-
-    public String getPresenceRpidId() {
-        return presenceRpidId;
-    }
-
-    public void setPresenceRpidId(String presenceRpidId) {
-        this.presenceRpidId = presenceRpidId;
-    }
-
     public String getPcscf() {
         return pcscf;
     }
@@ -172,5 +70,22 @@ public class User {
         this.password = password;
     }
 
+    public String getSipUri() {
+        return "sip:" + name + "@" + realm;
+    }
 
+    public RegistrationState getRegistrationState() { return registrationState; }
+
+    public void updateRegistrationState(long expiration, int code, String text) {
+        this.registrationState = new RegistrationState(expiration, code, text);
+    }
+
+    public PresenceState getPresenceState() {
+        return presenceState;
+    }
+
+    public void updatePresenceState(String type, String activity, String text, String note) {
+        this.presenceState = new PresenceState(type, activity, text, note);
+    }
 }
+
