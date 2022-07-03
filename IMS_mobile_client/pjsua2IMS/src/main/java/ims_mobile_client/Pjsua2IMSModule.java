@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
-import ims_mobile_client.domain.service.IMSService;
+import ims_mobile_client.domain.sip.IMSManager;
 import ims_mobile_client.serviceManagers.ImsBuddyManager;
 import ims_mobile_client.serviceManagers.ImsCallingManager;
 import ims_mobile_client.serviceManagers.ImsMessagingManager;
@@ -18,11 +18,11 @@ public class Pjsua2IMSModule {
 
     @Provides
     @Singleton
-    public IMSService provideIMSService(ImsCallingManager imsCallingManager,
+    public IMSManager provideIMSService(ImsCallingManager imsCallingManager,
                                         ImsMessagingManager imsMessagingManager,
                                         ImsUserManager userManager,
                                         ImsBuddyManager imsBuddyManager) {
-        return new IMSServiceImpl(imsCallingManager, imsMessagingManager, userManager, imsBuddyManager);
+        return new IMSManagerImpl(imsCallingManager, imsMessagingManager, userManager, imsBuddyManager);
     }
 
 }

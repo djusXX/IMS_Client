@@ -10,15 +10,15 @@ import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.service.IMSService;
+import ims_mobile_client.domain.sip.IMSManager;
 import ims_mobile_client.serviceManagers.ImsBuddyManager;
 import ims_mobile_client.serviceManagers.ImsCallingManager;
 import ims_mobile_client.serviceManagers.ImsMessagingManager;
 import ims_mobile_client.serviceManagers.ImsUserManager;
 import io.reactivex.Flowable;
 
-public class IMSServiceImpl implements IMSService {
-    public static final String TAG = IMSServiceImpl.class.getSimpleName();
+public class IMSManagerImpl implements IMSManager {
+    public static final String TAG = IMSManagerImpl.class.getSimpleName();
 
     private final ImsCallingManager imsCallingManager;
     private final ImsMessagingManager imsMessagingManager;
@@ -26,7 +26,7 @@ public class IMSServiceImpl implements IMSService {
     private final ImsBuddyManager imsBuddyManager;
 
     @Inject
-    public IMSServiceImpl(ImsCallingManager imsCallingManager, ImsMessagingManager imsMessagingManager, ImsUserManager imsUserManager, ImsBuddyManager imsBuddyManager) {
+    public IMSManagerImpl(ImsCallingManager imsCallingManager, ImsMessagingManager imsMessagingManager, ImsUserManager imsUserManager, ImsBuddyManager imsBuddyManager) {
         this.imsCallingManager = imsCallingManager;
         this.imsMessagingManager = imsMessagingManager;
         this.imsUserManager = imsUserManager;

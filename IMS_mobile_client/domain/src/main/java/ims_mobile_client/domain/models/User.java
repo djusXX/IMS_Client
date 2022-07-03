@@ -13,8 +13,7 @@ public class User {
     private RegistrationState registrationState = null;
     private PresenceState presenceState = null;
 
-    public User(int id, String name, String password, String displayName, String realm, String pcscf) {
-        this.id = id;
+    public User(String name, String password, String displayName, String realm, String pcscf) {
         this.name = name;
         this.password = password;
         this.displayName = displayName;

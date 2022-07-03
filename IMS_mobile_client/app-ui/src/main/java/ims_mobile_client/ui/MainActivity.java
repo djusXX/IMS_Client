@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (requestState == RequestState.SUCCESS) {
 //                Toast.makeText(this, "RequestState.SUCCESS", Toast.LENGTH_SHORT).show();
-                onUserLogged(result.getData().getSipUri());
+//                onUserLogged(result.getData().getSipUri());
             }
         });
     }

@@ -48,7 +48,7 @@ public class Buddy {
     public void setBuddyDisplayName(String buddyDisplayName) {
         this.buddyDisplayName = buddyDisplayName;
     }
-    
+
     public PresenceState getPresenceState() {
         return presenceState;
     }

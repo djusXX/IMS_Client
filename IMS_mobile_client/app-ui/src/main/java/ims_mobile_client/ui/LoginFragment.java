@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.presentation.models.UserView;
 import ims_mobile_client.presentation.viewModels.LocalUserViewModel;
 import ims_mobile_client.ui.databinding.LoginFragmentBinding;
 

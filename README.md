@@ -43,9 +43,8 @@
         - implement viewModels
 
 
-
-
-
+    :ALL
+        - simplify data models 
 
 
 

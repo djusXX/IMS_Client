@@ -3,14 +3,14 @@ package ims_mobile_client.domain.usecases.service;
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.service.IMSService;
+import ims_mobile_client.domain.sip.IMSManager;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
 public class GetUserInfoUseCase extends FlowableUseCase<User, String> {
-    private final IMSService service;
+    private final IMSManager service;
 
-    public GetUserInfoUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, IMSService service) {
+    public GetUserInfoUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, IMSManager service) {
         super(threadExecutor, postExecutionThread);
         this.service = service;
     }
