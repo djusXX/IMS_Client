@@ -11,7 +11,7 @@ public class User {
     private String pcscf;
 
     private UserLoggedStatus userLoggedStatus = UserLoggedStatus.UNKNOWN;
-    private PresenceState presenceState = null;
+    private PresenceStatus presenceStatus = null;
 
     public User(String name, String password, String displayName, String realm, String pcscf) {
         this.name = name;
@@ -79,12 +79,12 @@ public class User {
         this.userLoggedStatus = userLoggedStatus;
     }
 
-    public PresenceState getPresenceState() {
-        return presenceState;
+    public PresenceStatus getPresenceState() {
+        return presenceStatus;
     }
 
-    public void updatePresenceState(String type, String activity, String text, String note) {
-        this.presenceState = new PresenceState(type, activity, text, note);
+    public void updatePresenceState(PresenceStatus presenceStatus) {
+        this.presenceStatus = presenceStatus;
     }
 }
 

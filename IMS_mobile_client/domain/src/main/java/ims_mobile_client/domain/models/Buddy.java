@@ -7,7 +7,7 @@ public class Buddy {
     private String buddySipUri;
     private String buddyDisplayName;
 
-    private PresenceState presenceState = null;
+    private PresenceStatus presenceStatus = null;
 
     public Buddy(int id, String usrSipUri, String buddySipUri, String buddyDisplayName) {
         this.id = id;
@@ -49,11 +49,11 @@ public class Buddy {
         this.buddyDisplayName = buddyDisplayName;
     }
 
-    public PresenceState getPresenceState() {
-        return presenceState;
+    public PresenceStatus getPresenceState() {
+        return presenceStatus;
     }
 
-    public void updatePresenceState(String type, String activity, String text, String note) {
-        this.presenceState = new PresenceState(type, activity, text, note);
+    public void updatePresenceState(PresenceStatus presenceStatus) {
+        this.presenceStatus = presenceStatus;
     }
 }

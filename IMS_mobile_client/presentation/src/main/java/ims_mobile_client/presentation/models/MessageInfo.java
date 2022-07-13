@@ -1,6 +1,6 @@
 package ims_mobile_client.presentation.models;
 
-public class MessageView {
+public class MessageInfo {
 
     private int id;
     private String sipUriFrom;
@@ -8,7 +8,7 @@ public class MessageView {
     private long time;
     private String content;
 
-    public MessageView(int id, String sipUriFrom, String sipUriTo, long time, String content) {
+    public MessageInfo(int id, String sipUriFrom, String sipUriTo, long time, String content) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;

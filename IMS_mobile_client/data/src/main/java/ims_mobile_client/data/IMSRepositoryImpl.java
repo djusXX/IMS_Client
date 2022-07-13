@@ -10,7 +10,7 @@ import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
-import ims_mobile_client.domain.models.PresenceState;
+import ims_mobile_client.domain.models.PresenceStatus;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.models.UserLoggedStatus;
 import ims_mobile_client.domain.repository.IMSRepository;
@@ -100,7 +100,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<PresenceState> getUserPresenceState(String usrSipUri) {
+    public Flowable<PresenceStatus> getUserPresenceState(String usrSipUri) {
         return sipManager.getUserPresenceState(usrSipUri);
     }
 
@@ -120,7 +120,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Completable updateUserPresence(PresenceState presenceState) {
+    public Completable updateUserPresence(PresenceStatus presenceStatus) {
         return null;
     }
 }

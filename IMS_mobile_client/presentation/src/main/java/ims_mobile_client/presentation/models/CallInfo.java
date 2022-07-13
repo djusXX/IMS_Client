@@ -1,6 +1,8 @@
-package ims_mobile_client.domain.models;
+package ims_mobile_client.presentation.models;
 
-public class Call {
+import ims_mobile_client.domain.models.CallState;
+
+public class CallInfo {
 
     private int id;
     private String sipUriFrom;
@@ -22,12 +24,13 @@ public class Call {
     private CallState callState = CallState.UNKNOWN;
 
 
-    public Call(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall) {
+    public CallInfo(int id, String sipUriFrom, String sipUriTo, boolean isVideoCall) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;
         this.isVideoCall = isVideoCall;
     }
+
 
 
     public int getId() {

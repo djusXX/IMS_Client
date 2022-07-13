@@ -1,5 +1,7 @@
 package ims_mobile_client.presentation.models;
 
+import ims_mobile_client.domain.models.PresenceStatus;
+
 public class BuddyInfo {
 
     private String buddySipUri;

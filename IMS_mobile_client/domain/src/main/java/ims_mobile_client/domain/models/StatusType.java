@@ -1,4 +1,4 @@
-package ims_mobile_client.presentation.utils;
+package ims_mobile_client.domain.models;
 
 public enum StatusType {
     ONLINE,

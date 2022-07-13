@@ -15,8 +15,7 @@ public class CallMapper implements Mapper<CallEntity, Call> {
     @Override
     public Call mapToDomain(CallEntity ce) {
         return new Call(ce.getId(), ce.getSipUriFROM(),
-                ce.getSipUriTO(), ce.isVideo(),
-                ce.getBeginTime(), ce.getEndTime());
+                ce.getSipUriTO(), ce.isVideo());
     }
 
     @Override

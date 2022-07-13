@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import ims_mobile_client.domain.models.PresenceState;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.usecases.dataStorage.AddUserUseCase;
 import ims_mobile_client.domain.usecases.dataStorage.GetLastUserUseCase;
@@ -14,9 +13,8 @@ import ims_mobile_client.domain.usecases.sip.UserGetRegistrationStateUseCase;
 import ims_mobile_client.domain.usecases.sip.UserRegisterUseCase;
 import ims_mobile_client.domain.usecases.sip.UserSetPresenceUseCase;
 import ims_mobile_client.presentation.models.UserCredentials;
-import ims_mobile_client.presentation.models.PresenceStatus;
+import ims_mobile_client.domain.models.PresenceStatus;
 import ims_mobile_client.domain.models.UserLoggedStatus;
-import ims_mobile_client.presentation.utils.StatusType;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 @HiltViewModel
@@ -71,7 +69,6 @@ public class UserViewModel extends ViewModel {
                         user.getPassword(), user.getDisplayName(),
                         user.getRealm(), user.getPcscf());
                 getLastUserUseCase.dispose();
-//                registerUser();
             }
 
             @Override
@@ -135,7 +132,7 @@ public class UserViewModel extends ViewModel {
     public void addNewUser(String name, String password, String displayName, String realm, String pcscf) {
         userCredentials = new UserCredentials(name, password, displayName, realm, pcscf);
         saveUserCredentials();
-//        registerUser();
+        registerUser();
     }
 
     private void subscribePresence() {
@@ -143,11 +140,10 @@ public class UserViewModel extends ViewModel {
             return;
         }
 
-        userGetPresenceStateUseCase.execute(new DisposableSubscriber<PresenceState>() {
+        userGetPresenceStateUseCase.execute(new DisposableSubscriber<PresenceStatus>() {
             @Override
-            public void onNext(PresenceState ps) {
-                // TODO: FIX!!!!!!!
-                userPresence.postValue(new PresenceStatus(StatusType.UNKNOWN, ps.presenceStatusText));
+            public void onNext(PresenceStatus ps) {
+                userPresence.postValue(ps);
             }
 
             @Override
@@ -163,9 +159,7 @@ public class UserViewModel extends ViewModel {
     }
 
     public void updatePresence(PresenceStatus up) {
-        // TODO: FIX!!!!!!!
-        userSetPresenceUseCase.execute(new PresenceState("StatusType.UNKNOWN",
-                "", up.getPresenceStatusText(), ""));
+        userSetPresenceUseCase.execute(up);
     }
 
 }

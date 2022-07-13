@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import ims_mobile_client.presentation.models.MessageView;
+import ims_mobile_client.presentation.models.MessageInfo;
 
 public class MessagesViewModel {
 
-    private final MutableLiveData<List<MessageView>> messages = new MutableLiveData<>();
+    private final MutableLiveData<List<MessageInfo>> messages = new MutableLiveData<>();
 }

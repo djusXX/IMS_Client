@@ -1,6 +1,4 @@
-package ims_mobile_client.presentation.models;
-
-import ims_mobile_client.presentation.utils.StatusType;
+package ims_mobile_client.domain.models;
 
 public class PresenceStatus {
     private StatusType presenceStatusType;
