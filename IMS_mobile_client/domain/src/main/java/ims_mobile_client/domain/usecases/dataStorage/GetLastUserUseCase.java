@@ -1,4 +1,4 @@
-package ims_mobile_client.domain.usecases.repository;
+package ims_mobile_client.domain.usecases.dataStorage;
 
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;

@@ -10,7 +10,7 @@ public class User {
     private String realm;
     private String pcscf;
 
-    private RegistrationState registrationState = null;
+    private UserLoggedStatus userLoggedStatus = UserLoggedStatus.UNKNOWN;
     private PresenceState presenceState = null;
 
     public User(String name, String password, String displayName, String realm, String pcscf) {
@@ -73,10 +73,10 @@ public class User {
         return "sip:" + name + "@" + realm;
     }
 
-    public RegistrationState getRegistrationState() { return registrationState; }
+    public UserLoggedStatus getRegistrationState() { return userLoggedStatus; }
 
-    public void updateRegistrationState(long expiration, int code, String text) {
-        this.registrationState = new RegistrationState(expiration, code, text);
+    public void updateRegistrationState(UserLoggedStatus userLoggedStatus) {
+        this.userLoggedStatus = userLoggedStatus;
     }
 
     public PresenceState getPresenceState() {

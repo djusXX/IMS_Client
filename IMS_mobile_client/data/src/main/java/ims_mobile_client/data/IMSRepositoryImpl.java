@@ -11,8 +11,8 @@ import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.PresenceState;
-import ims_mobile_client.domain.models.RegistrationState;
 import ims_mobile_client.domain.models.User;
+import ims_mobile_client.domain.models.UserLoggedStatus;
 import ims_mobile_client.domain.repository.IMSRepository;
 
 import io.reactivex.Completable;
@@ -95,7 +95,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<RegistrationState> getRegistrationState(String usrSipUri) {
+    public Flowable<UserLoggedStatus> getRegistrationState(String usrSipUri) {
         return sipManager.getRegistrationState(usrSipUri);
     }
 

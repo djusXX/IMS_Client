@@ -2,12 +2,12 @@ package ims_mobile_client.domain.usecases.sip;
 
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
-import ims_mobile_client.domain.models.RegistrationState;
+import ims_mobile_client.domain.models.UserLoggedStatus;
 import ims_mobile_client.domain.repository.IMSRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
-public class UserGetRegistrationStateUseCase extends FlowableUseCase<RegistrationState, String> {
+public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserLoggedStatus, String> {
     private final IMSRepository repository;
 
     public UserGetRegistrationStateUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, IMSRepository repository) {
@@ -16,7 +16,7 @@ public class UserGetRegistrationStateUseCase extends FlowableUseCase<Registratio
     }
 
     @Override
-    protected Flowable<RegistrationState> buildUseCaseFlowable(String usrSipUri) {
+    protected Flowable<UserLoggedStatus> buildUseCaseFlowable(String usrSipUri) {
         return repository.getRegistrationState(usrSipUri);
     }
 

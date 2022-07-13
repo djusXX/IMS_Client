@@ -1,39 +1,27 @@
 package ims_mobile_client.presentation.models;
 
+import ims_mobile_client.presentation.utils.StatusType;
+
 public class PresenceStatus {
-    private String presenceStatusType;
-    private String presenceStatusActivity;
+    private StatusType presenceStatusType;
     private String presenceStatusText;
-    private String presenceNote;
 
     public PresenceStatus() {
-        presenceStatusType = "NOT_SET";
-        presenceStatusActivity = "NOT_SET";
-        presenceStatusText = "NOT_SET";
-        presenceNote = "NOT_SET";
+        presenceStatusType = StatusType.UNKNOWN;
+        presenceStatusText = "";
     }
 
-    public PresenceStatus(String presenceStatusType, String presenceStatusActivity, String presenceStatusText, String presenceNote) {
+    public PresenceStatus(StatusType presenceStatusType, String presenceStatusText) {
         this.setPresenceStatusType(presenceStatusType);
-        this.setPresenceStatusActivity(presenceStatusActivity);
         this.setPresenceStatusText(presenceStatusText);
-        this.setPresenceNote(presenceNote);
     }
 
-    public String getPresenceStatusType() {
+    public StatusType getPresenceStatusType() {
         return presenceStatusType;
     }
 
-    public void setPresenceStatusType(String presenceStatusType) {
+    public void setPresenceStatusType(StatusType presenceStatusType) {
         this.presenceStatusType = presenceStatusType;
-    }
-
-    public String getPresenceStatusActivity() {
-        return presenceStatusActivity;
-    }
-
-    public void setPresenceStatusActivity(String presenceStatusActivity) {
-        this.presenceStatusActivity = presenceStatusActivity;
     }
 
     public String getPresenceStatusText() {
@@ -44,11 +32,4 @@ public class PresenceStatus {
         this.presenceStatusText = presenceStatusText;
     }
 
-    public String getPresenceNote() {
-        return presenceNote;
-    }
-
-    public void setPresenceNote(String presenceNote) {
-        this.presenceNote = presenceNote;
-    }
 }
