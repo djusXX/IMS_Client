@@ -1,34 +1,17 @@
 package ims_mobile_client.presentation.models;
 
-public class BuddyView {
+public class BuddyInfo {
 
-    private int id;
-    private String usrSipUri;
     private String buddySipUri;
     private String buddyDisplayName;
+    private PresenceStatus presenceStatus;
 
-    public BuddyView(String usrSipUri, String buddySipUri, String buddyDisplayName) {
-        this.usrSipUri = usrSipUri;
+    public BuddyInfo(String buddySipUri, String buddyDisplayName) {
         this.buddySipUri = buddySipUri;
         this.buddyDisplayName = buddyDisplayName;
+        this.presenceStatus = new PresenceStatus();
     }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsrSipUri() {
-        return usrSipUri;
-    }
-
-    public void setUsrSipUri(String usrSipUri) {
-        this.usrSipUri = usrSipUri;
-    }
 
     public String getBuddySipUri() {
         return buddySipUri;
@@ -46,5 +29,11 @@ public class BuddyView {
         this.buddyDisplayName = buddyDisplayName;
     }
 
+    public PresenceStatus getPresenceStatus() {
+        return presenceStatus;
+    }
 
+    public void setPresenceStatus(PresenceStatus presenceStatus) {
+        this.presenceStatus = presenceStatus;
+    }
 }

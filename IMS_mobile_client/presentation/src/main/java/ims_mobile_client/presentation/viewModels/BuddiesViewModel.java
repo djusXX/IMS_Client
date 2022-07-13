@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ims_mobile_client.presentation.models.BuddyView;
+import ims_mobile_client.presentation.models.BuddyInfo;
 
 public class BuddiesViewModel extends ViewModel {
 
-    private final MutableLiveData<List<BuddyView>> buddies = new MutableLiveData<>();
+    private final MutableLiveData<List<BuddyInfo>> buddies = new MutableLiveData<>();
 
 }

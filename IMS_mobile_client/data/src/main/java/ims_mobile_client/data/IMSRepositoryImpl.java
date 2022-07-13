@@ -6,9 +6,12 @@ import javax.inject.Inject;
 
 import ims_mobile_client.data.dataStores.DataStoreFactory;
 import ims_mobile_client.data.mappers.MapperProvider;
+import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
+import ims_mobile_client.domain.models.PresenceState;
+import ims_mobile_client.domain.models.RegistrationState;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.repository.IMSRepository;
 
@@ -20,11 +23,13 @@ public class IMSRepositoryImpl implements IMSRepository {
 
     private final DataStoreFactory dataStore;
     private final MapperProvider mapper;
+    private final SIPManager sipManager;
 
     @Inject
-    public IMSRepositoryImpl(DataStoreFactory dataStore, MapperProvider mapper) {
+    public IMSRepositoryImpl(DataStoreFactory dataStore, MapperProvider mapper, SIPManager sipManager) {
         this.dataStore = dataStore;
         this.mapper = mapper;
+        this.sipManager = sipManager;
     }
 
     @Override
@@ -87,5 +92,35 @@ public class IMSRepositoryImpl implements IMSRepository {
     @Override
     public Completable addCall(Call call) {
         return dataStore.getDefault().addCall(mapper.forCall().mapFromDomain(call));
+    }
+
+    @Override
+    public Flowable<RegistrationState> getRegistrationState(String usrSipUri) {
+        return sipManager.getRegistrationState(usrSipUri);
+    }
+
+    @Override
+    public Flowable<PresenceState> getUserPresenceState(String usrSipUri) {
+        return sipManager.getUserPresenceState(usrSipUri);
+    }
+
+    @Override
+    public Flowable<Message> getIncomingMessageForUser(String usrSipUri) {
+        return sipManager.getIncomingMessageForUser(usrSipUri);
+    }
+
+    @Override
+    public Flowable<Call> getIncomingCallForUser(String usrSipUri) {
+        return sipManager.getIncomingCallForUser(usrSipUri);
+    }
+
+    @Override
+    public Completable registerUser(User u) {
+        return null;
+    }
+
+    @Override
+    public Completable updateUserPresence(PresenceState presenceState) {
+        return null;
     }
 }

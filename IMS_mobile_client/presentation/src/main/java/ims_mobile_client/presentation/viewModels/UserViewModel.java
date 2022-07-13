@@ -4,16 +4,24 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.PresenceState;
 import ims_mobile_client.domain.models.RegistrationState;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.usecases.repository.AddUserUseCase;
 import ims_mobile_client.domain.usecases.repository.GetLastUserUseCase;
+import ims_mobile_client.domain.usecases.sip.UserGetActiveCall;
+import ims_mobile_client.domain.usecases.sip.UserGetIncomingMessage;
 import ims_mobile_client.domain.usecases.sip.UserGetPresenceStateUseCase;
 import ims_mobile_client.domain.usecases.sip.UserGetRegistrationStateUseCase;
 import ims_mobile_client.domain.usecases.sip.UserRegisterUseCase;
 import ims_mobile_client.domain.usecases.sip.UserSetPresenceUseCase;
+import ims_mobile_client.presentation.models.BuddyInfo;
+import ims_mobile_client.presentation.models.CallView;
+import ims_mobile_client.presentation.models.MessageView;
 import ims_mobile_client.presentation.models.UserCredentials;
 import ims_mobile_client.presentation.models.PresenceStatus;
 import ims_mobile_client.presentation.models.UserRegistration;
@@ -30,27 +38,35 @@ public class UserViewModel extends ViewModel {
     private final UserRegisterUseCase userRegisterUseCase;
     private final UserGetPresenceStateUseCase userGetPresenceStateUseCase;
     private final UserSetPresenceUseCase userSetPresenceUseCase;
+    private final UserGetActiveCall userGetActiveCall;
+    private final UserGetIncomingMessage userGetIncomingMessage;
 
     private UserCredentials userCredentials = null;
     private final MutableLiveData<UserRegistration> userRegistration = new MutableLiveData<>();
     private final MutableLiveData<PresenceStatus> userPresence = new MutableLiveData<>();
+
+    private final MutableLiveData<List<BuddyInfo>> userBuddyList = new MutableLiveData<>();
+    private final MutableLiveData<List<CallView>> userCallList = new MutableLiveData<>();
+    private final MutableLiveData<List<MessageView>> userMessageList = new MutableLiveData<>();
 
 
     public UserViewModel(GetLastUserUseCase getLastUserUseCase, AddUserUseCase addUserUseCase,
                          UserGetRegistrationStateUseCase userGetRegistrationStateUseCase,
                          UserRegisterUseCase userRegisterUseCase,
                          UserGetPresenceStateUseCase userGetPresenceStateUseCase,
-                         UserSetPresenceUseCase userSetPresenceUseCase) {
+                         UserSetPresenceUseCase userSetPresenceUseCase, UserGetActiveCall userGetActiveCall, UserGetIncomingMessage userGetIncomingMessage) {
         this.getLastUserUseCase = getLastUserUseCase;
         this.addUserUseCase = addUserUseCase;
         this.userGetRegistrationStateUseCase = userGetRegistrationStateUseCase;
         this.userRegisterUseCase = userRegisterUseCase;
         this.userGetPresenceStateUseCase = userGetPresenceStateUseCase;
         this.userSetPresenceUseCase = userSetPresenceUseCase;
+        this.userGetActiveCall = userGetActiveCall;
+        this.userGetIncomingMessage = userGetIncomingMessage;
 
         userRegistration.setValue(new UserRegistration());
         userPresence.setValue(new PresenceStatus());
-        getSavedUser();
+        getUserFromRepo();
     }
 
     @Override
@@ -68,7 +84,7 @@ public class UserViewModel extends ViewModel {
     public LiveData<PresenceStatus> getUserPresence() { return userPresence; }
 
 
-    private void getSavedUser() {
+    private void getUserFromRepo() {
         getLastUserUseCase.execute(new DisposableSubscriber<User>() {
             @Override
             public void onNext(User user) {
@@ -172,4 +188,25 @@ public class UserViewModel extends ViewModel {
                 up.getPresenceStatusActivity(), up.getPresenceStatusText(), up.getPresenceNote()));
     }
 
+
+    private void subscribeActiveCall() {
+        userGetActiveCall.execute(new DisposableSubscriber<Call>() {
+            @Override
+            public void onNext(Call call) {
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }, userCredentials.getSipUri());
+    }
+
+    private void subscribeIncomingMessages() {}
 }

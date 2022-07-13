@@ -5,12 +5,15 @@ import java.util.List;
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
+import ims_mobile_client.domain.models.PresenceState;
+import ims_mobile_client.domain.models.RegistrationState;
 import ims_mobile_client.domain.models.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public interface IMSRepository {
 
+    /*********** DataStore ***********/
     // User
     Flowable<User> getLastUser();
     Flowable<User> getUser(String userSipUri);
@@ -29,4 +32,17 @@ public interface IMSRepository {
     Flowable<List<Call>> getCallsFor(String usrSipUri, String buddySipUri);
     Completable addCall(Call call);
 
+
+    /*********** IMS/SIP ***********/
+    Flowable<RegistrationState> getRegistrationState(String usrSipUri);
+
+    Flowable<PresenceState> getUserPresenceState(String usrSipUri);
+
+    Flowable<Message> getIncomingMessageForUser(String usrSipUri);
+
+    Flowable<Call> getIncomingCallForUser(String usrSipUri);
+
+    Completable registerUser(User u);
+
+    Completable updateUserPresence(PresenceState presenceState);
 }

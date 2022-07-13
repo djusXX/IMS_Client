@@ -10,6 +10,7 @@ import ims_mobile_client.data.dataStores.DataStoreFactory;
 import ims_mobile_client.data.dataStores.DataStoreLocal;
 import ims_mobile_client.data.executor.JobExecutor;
 import ims_mobile_client.data.mappers.MapperProvider;
+import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMSRepository;
 
@@ -32,7 +33,8 @@ public abstract class DataModule {
     @Provides
     @Singleton
     public static IMSRepository provideIMCRepository(DataStoreFactory dataStoreFactory,
-                                                     MapperProvider mapper) {
-        return new IMSRepositoryImpl(dataStoreFactory, mapper);
+                                                     MapperProvider mapper,
+                                                     SIPManager sipManager) {
+        return new IMSRepositoryImpl(dataStoreFactory, mapper, sipManager);
     }
 }

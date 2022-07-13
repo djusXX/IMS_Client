@@ -10,7 +10,6 @@ import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.sip.IMSManager;
 import ims_mobile_client.serviceManagers.ImsBuddyManager;
 import ims_mobile_client.serviceManagers.ImsCallingManager;
 import ims_mobile_client.serviceManagers.ImsMessagingManager;

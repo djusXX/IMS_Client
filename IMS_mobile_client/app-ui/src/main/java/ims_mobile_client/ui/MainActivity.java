@@ -13,8 +13,9 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.ViewModelProvider;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.presentation.utils.RequestState;
-import ims_mobile_client.presentation.viewModels.LocalUserViewModel;
+import ims_mobile_client.presentation.viewModels.CallsViewModel;
+import ims_mobile_client.presentation.viewModels.MessagesViewModel;
+import ims_mobile_client.presentation.viewModels.UserViewModel;
 import ims_mobile_client.ui.conversations.BuddyListFragment;
 
 @AndroidEntryPoint
@@ -23,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     private static final String TAG = MainActivity.class.getName();
 
-    private LocalUserViewModel localUserViewModel;
+    private UserViewModel userViewModel;
+    private CallsViewModel userCalls;
+    private MessagesViewModel userMessages;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,33 +34,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         requestPermissions();
-        localUserViewModel = new ViewModelProvider(this)
-                .get(LocalUserViewModel.class);
+        userViewModel = new ViewModelProvider(this)
+                .get(UserViewModel.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        localUserViewModel.getLastUser().observe(this, result -> {
-            if (result == null || result.getState() == null) {
+        userViewModel.getUserRegistration().observe(this, userRegistration -> {
+            if(!"LOGGED".equals(userRegistration.getRegStatusText())) {
+                LoginFragment loginFragment = new LoginFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
+                        .commit();
                 return;
             }
-            RequestState requestState = result.getState();
-            if (requestState == RequestState.LOADING) {
-                // setLoadingScreen()
-//                Toast.makeText(this, "RequestState.LOADING", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (requestState == RequestState.ERROR) {
-                // setErrorScreen()
-//                Toast.makeText(this, "RequestState.ERROR", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (requestState == RequestState.SUCCESS) {
-//                Toast.makeText(this, "RequestState.SUCCESS", Toast.LENGTH_SHORT).show();
-//                onUserLogged(result.getData().getSipUri());
-            }
+
+            onUserLogged(userViewModel.getUserCredentials().getSipUri());
         });
+
+
     }
 
 //    public void logInUser(int registrationStateCode) {
