@@ -22,6 +22,6 @@ public class AddUserUseCase extends CompletableUseCase<User> {
 
     @Override
     protected Completable buildUseCaseObservable(User user) {
-        return repository.addUser(user);
+        return repository.saveUser(user);
     }
 }

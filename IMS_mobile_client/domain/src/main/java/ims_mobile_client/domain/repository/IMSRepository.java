@@ -17,20 +17,20 @@ public interface IMSRepository {
     // User
     Flowable<User> getLastUser();
     Flowable<User> getUser(String userSipUri);
-    Completable addUser(User user);
+    Completable saveUser(User user);
 
     // Buddies
     Flowable<List<Buddy>> getBuddiesFor(String userSipUri);
     Flowable<Buddy> getBuddy(String userSipUri, String buddySipUri);
-    Completable addBuddy(Buddy buddy);
+    Completable saveBuddy(Buddy buddy);
 
     // Messages
     Flowable<List<Message>> getMessagesFor(String usrSipUri, String buddySipUri);
-    Completable addMessage(Message message);
+    Completable saveMessage(Message message);
 
     // Calls
     Flowable<List<Call>> getCallsFor(String usrSipUri, String buddySipUri);
-    Completable addCall(Call call);
+    Completable saveCall(Call call);
 
 
     /*********** IMS/SIP ***********/

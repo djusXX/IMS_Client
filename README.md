@@ -47,9 +47,54 @@
         - simplify data models 
 
 
+## NOTES:
+
+    Features per view/Fragment in app:
+== LoginFragment (UserViewModel)
+- get user(name, passwd) and server name
+- log in user
+- add user to db
+- get user (previously) saved in db
+
+
+== BuddyListFragment (List of Conversations w/ Buddies)
+- get list of user buddies saved in db
+- for each buddy on the list: 
+    - get buddyData (uri, name)
+    - observe presence state
+
+
+== NewBuddyFragment
+- get buddy name and sipUri
+- add buddy to user's buddyList
+- save Buddy in DB   
+        
+
+== SingleChatFragment (Conversation w/Buddy)
+- get messages from/to buddy saved in DB 
+- send message to buddy
+- call to Buddy
+- listen to MainActivity on incoming messages from that Buddy
+
+
+== (Pre)CallFragment (in/out); [Called by MainActivity, react properly on each button listed below]
+- answer/decline/hangup incoming call
+- cancel outgoing call
+- switch camera, mute or end active call
+- getCallMediaUseCase
+- save ended(not active) call to DB
+
+
+== SettingsFragment (User data, presence status)
+- set user presence status
+- change user displayName
 
 
 
+=== Main Activity
+- observe on incoming messages
+- observe on incoming calls
+- manage loading/navigate fragments || add navigationGraph
 
 
 

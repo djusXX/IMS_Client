@@ -24,36 +24,29 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 9999;
     private static final String TAG = MainActivity.class.getName();
 
-    private UserViewModel userViewModel;
-    private CallsViewModel userCalls;
-    private MessagesViewModel userMessages;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         requestPermissions();
-        userViewModel = new ViewModelProvider(this)
-                .get(UserViewModel.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        userViewModel.getUserRegistration().observe(this, userRegistration -> {
-            if(!"LOGGED".equals(userRegistration.getRegStatusText())) {
-                LoginFragment loginFragment = new LoginFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
-                        .commit();
-                return;
-            }
-
-            onUserLogged(userViewModel.getUserCredentials().getSipUri());
-        });
-
+//        userViewModel.getUserRegistration().observe(this, userRegistration -> {
+//            if(!"LOGGED".equals(userRegistration.getRegStatusText())) {
+//                LoginFragment loginFragment = new LoginFragment();
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .add(R.id.main_fragment_container, loginFragment, LoginFragment.TAG)
+//                        .commit();
+//                return;
+//            }
+//
+//            onUserLogged(userViewModel.getUserCredentials().getSipUri());
+//        });
 
     }
 

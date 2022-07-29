@@ -37,6 +37,11 @@ public class BuddyListFragment extends Fragment {
         BuddyListFragment.mainContainer = mainContainer;
     }
 
+    public BuddyListFragment() {
+    }
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -45,6 +45,7 @@ object Ver {
     val hiltCore = "2.42"
     val javaxInject = "1"
     val kotlinVersion = "1.5.31"
+    val navigation = "2.5.0"
     val recyclerview = "1.2.1"
     val room = "2.4.2"
     val rxJava = "2.2.21"
@@ -78,6 +79,9 @@ object Libs {
     val rxJava = "io.reactivex.rxjava2:rxjava:${Ver.rxJava}"
     val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Ver.rxAndroid}"
     val coreSplashScreen = "androidx.core:core-splashscreen:${Ver.coreSplashScreen}"
+    val navigationFragment = "androidx.navigation:navigation-fragment:${Ver.navigation}"
+    val navigationUi = "androidx.navigation:navigation-ui:${Ver.navigation}"
+    val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Ver.navigation}"
 
 }
 

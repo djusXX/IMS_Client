@@ -45,7 +45,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Completable addUser(User user) {
+    public Completable saveUser(User user) {
         return dataStore.getDefault().addUser(mapper.forUser().mapFromDomain(user));
     }
 
@@ -64,7 +64,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Completable addBuddy(Buddy buddy) {
+    public Completable saveBuddy(Buddy buddy) {
         return dataStore.getDefault().addBuddy(mapper.forBuddy().mapFromDomain(buddy));
     }
 
@@ -77,7 +77,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Completable addMessage(Message message) {
+    public Completable saveMessage(Message message) {
         return dataStore.getDefault().addMessage(mapper.forMessage().mapFromDomain(message));
     }
 
@@ -90,7 +90,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Completable addCall(Call call) {
+    public Completable saveCall(Call call) {
         return dataStore.getDefault().addCall(mapper.forCall().mapFromDomain(call));
     }
 
@@ -116,11 +116,11 @@ public class IMSRepositoryImpl implements IMSRepository {
 
     @Override
     public Completable registerUser(User u) {
-        return null;
+        return sipManager.registerUser(u);
     }
 
     @Override
     public Completable updateUserPresence(PresenceStatus presenceStatus) {
-        return null;
+        return sipManager.updateUserPresence(presenceStatus);
     }
 }

@@ -1,25 +1,26 @@
 package ims_mobile_client.domain.usecases.dataStorage;
 
+import java.util.List;
 import javax.inject.Inject;
 
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMSRepository;
-import ims_mobile_client.domain.usecases.CompletableUseCase;
-import io.reactivex.Completable;
+import ims_mobile_client.domain.usecases.FlowableUseCase;
+import io.reactivex.Flowable;
 
-public class AddBuddyUseCase extends CompletableUseCase<Buddy> {
+public class GetBuddyDataListUseCase extends FlowableUseCase<List<Buddy>, String> {
     private final IMSRepository repository;
 
     @Inject
-    protected AddBuddyUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, IMSRepository repository) {
+    public GetBuddyDataListUseCase(IMSRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.repository = repository;
     }
 
     @Override
-    protected Completable buildUseCaseObservable(Buddy buddy) {
-        return repository.addBuddy(buddy);
+    protected Flowable<List<Buddy>> buildUseCaseFlowable(String usrSipUri) {
+        return repository.getBuddiesFor(usrSipUri);
     }
 }

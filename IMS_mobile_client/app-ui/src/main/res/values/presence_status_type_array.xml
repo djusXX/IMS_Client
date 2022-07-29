@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="presence_status_types_array">
+        <item>UNKNOWN</item>
+        <item>ONLINE</item>
+        <item>OFFLINE</item>
+    </string-array>
+</resources>

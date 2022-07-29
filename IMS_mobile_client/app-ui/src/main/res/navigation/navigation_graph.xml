@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ims_mobile_client.ui.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/newBuddyFragment"
+        android:name="ims_mobile_client.ui.conversations.NewBuddyFragment"
+        android:label="NewBuddyFragment" >
+        <action
+            android:id="@+id/action_newBuddyFragment_to_preCallFragment"
+            app:destination="@id/preCallFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="ims_mobile_client.ui.conversations.ConversationFragment"
+        android:label="ConversationFragment" >
+        <action
+            android:id="@+id/action_conversationFragment_to_preCallFragment"
+            app:destination="@id/preCallFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/preCallFragment"
+        android:name="ims_mobile_client.ui.calls.PreCallFragment"
+        android:label="PreCallFragment" >
+        <action
+            android:id="@+id/action_preCallFragment_to_activeCallFragment"
+            app:destination="@id/activeCallFragment"
+            app:popUpTo="@id/preCallFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/activeCallFragment"
+        android:name="ims_mobile_client.ui.calls.ActiveCallFragment"
+        android:label="ActiveCallFragment" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="ims_mobile_client.ui.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_preCallFragment"
+            app:destination="@id/preCallFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_newBuddyFragment"
+            app:destination="@id/newBuddyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_conversationFragment"
+            app:destination="@id/conversationFragment" />
+    </fragment>
+</navigation>

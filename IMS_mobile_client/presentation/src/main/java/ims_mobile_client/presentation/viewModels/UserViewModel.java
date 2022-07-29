@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import ims_mobile_client.domain.models.StatusType;
 import ims_mobile_client.domain.models.User;
 import ims_mobile_client.domain.usecases.dataStorage.AddUserUseCase;
 import ims_mobile_client.domain.usecases.dataStorage.GetLastUserUseCase;
@@ -45,7 +46,7 @@ public class UserViewModel extends ViewModel {
         this.userGetPresenceStateUseCase = userGetPresenceStateUseCase;
         this.userSetPresenceUseCase = userSetPresenceUseCase;
 
-        getSavedUser();
+//        getSavedUser();
     }
 
     @Override
@@ -59,7 +60,6 @@ public class UserViewModel extends ViewModel {
     public UserCredentials getUserCredentials() { return userCredentials; }
     public LiveData<UserLoggedStatus> getUserLoggedStatus() { return userLoggedStatus; }
     public LiveData<PresenceStatus> getUserPresence() { return userPresence; }
-
 
     private void getSavedUser() {
         getLastUserUseCase.execute(new DisposableSubscriber<User>() {
@@ -158,8 +158,9 @@ public class UserViewModel extends ViewModel {
         }, userCredentials.getSipUri());
     }
 
-    public void updatePresence(PresenceStatus up) {
-        userSetPresenceUseCase.execute(up);
+    public void updatePresence(String type, String text) {
+        PresenceStatus presenceStatus = new PresenceStatus(StatusType.valueOf(type), text);
+        userSetPresenceUseCase.execute(presenceStatus);
     }
 
 }

@@ -20,6 +20,6 @@ public class AddMessageUseCase extends CompletableUseCase<Message> {
 
     @Override
     protected Completable buildUseCaseObservable(Message message) {
-        return repository.addMessage(message);
+        return repository.saveMessage(message);
     }
 }

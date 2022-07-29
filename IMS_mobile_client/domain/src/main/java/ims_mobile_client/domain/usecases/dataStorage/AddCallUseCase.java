@@ -20,6 +20,6 @@ public class AddCallUseCase extends CompletableUseCase<Call> {
 
     @Override
     protected Completable buildUseCaseObservable(Call call) {
-        return repository.addCall(call);
+        return repository.saveCall(call);
     }
 }
