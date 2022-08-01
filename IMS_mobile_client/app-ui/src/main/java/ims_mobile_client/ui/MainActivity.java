@@ -9,14 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.splashscreen.SplashScreen;
-import androidx.lifecycle.ViewModelProvider;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.presentation.viewModels.CallsViewModel;
-import ims_mobile_client.presentation.viewModels.MessagesViewModel;
-import ims_mobile_client.presentation.viewModels.UserViewModel;
-import ims_mobile_client.ui.conversations.BuddyListFragment;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
