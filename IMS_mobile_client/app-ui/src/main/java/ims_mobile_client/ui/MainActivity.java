@@ -55,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
 //        if (loginFragment != null) { loginFragment.logInCurrentUser(registrationStateCode); }
 //    }
 //
-    public void onUserLogged(String accountID) {
-        BuddyListFragment buddyListFragment = new BuddyListFragment(accountID, R.id.main_fragment_container);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
-                .commit();
-    }
+//    public void onUserLogged(String accountID) {
+//        BuddyListFragment buddyListFragment = new BuddyListFragment(accountID, R.id.main_fragment_container);
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.main_fragment_container, buddyListFragment, BuddyListFragment.TAG)
+//                .commit();
+//    }
 //
 //    public void updateBuddyState(String ownerSipUri, String contactUri, String presStatus, String presText) {
 //        BuddyListFragment buddyListFragment = (BuddyListFragment) getSupportFragmentManager().findFragmentByTag(BuddyListFragment.TAG);

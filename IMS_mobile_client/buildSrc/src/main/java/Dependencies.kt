@@ -21,6 +21,7 @@ object Releases {
 
 // Versions
 object Ver {
+
     // Sdk and tools
     val minSdkVersion = 29
     val targetSdkVersion = 31
@@ -46,10 +47,12 @@ object Ver {
     val javaxInject = "1"
     val kotlinVersion = "1.5.31"
     val navigation = "2.5.0"
+    val material = "1.6.1"
     val recyclerview = "1.2.1"
     val room = "2.4.2"
     val rxJava = "2.2.21"
     val rxAndroid = "2.1.1"
+    val safeArgs = "2.5.1"
     val testExtJunit = "1.1.3"
 
 }
@@ -82,6 +85,7 @@ object Libs {
     val navigationFragment = "androidx.navigation:navigation-fragment:${Ver.navigation}"
     val navigationUi = "androidx.navigation:navigation-ui:${Ver.navigation}"
     val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Ver.navigation}"
+    val material = "androidx.compose.material:material:${Ver.material}"
 
 }
 
