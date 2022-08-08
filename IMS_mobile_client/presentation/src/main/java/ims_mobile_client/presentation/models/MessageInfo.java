@@ -1,5 +1,7 @@
 package ims_mobile_client.presentation.models;
 
+import java.util.Date;
+
 public class MessageInfo {
 
     private int id;
@@ -42,6 +44,10 @@ public class MessageInfo {
 
     public long getTime() {
         return time;
+    }
+
+    public String getTimeString() {
+        return new Date(time).toString();
     }
 
     public void setTime(long time) {

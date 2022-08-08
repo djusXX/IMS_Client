@@ -7,18 +7,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import java.util.Date;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.presentation.viewModels.ChatViewModel;
 import ims_mobile_client.ui.R;
-import ims_mobile_client.ui.conversations.MessageAdapter;
 import ims_mobile_client.ui.databinding.ConversationFragmentBinding;
 
 @AndroidEntryPoint
@@ -27,76 +31,63 @@ public class ConversationFragment extends Fragment {
     public static final String TAG = ConversationFragment.class.getName();
 
     private ConversationFragmentBinding binding;
-    private static MessageAdapter messageAdapter = null;
-    private static String usrSipUri;
     private static String buddySipUri;
-
-    public ConversationFragment(String usrSipUri, String buddySipUri) {
-        ConversationFragment.usrSipUri = usrSipUri;
-        ConversationFragment.buddySipUri = buddySipUri;
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        handleArguments(getArguments());
         binding = DataBindingUtil.inflate(inflater, R.layout.conversation_fragment, container, false);
-        messageAdapter = new MessageAdapter(usrSipUri);
-        binding.conversationRecyclerViewer.setAdapter(messageAdapter);
-        setHasOptionsMenu(true);
+        ChatViewModel viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+
+        MessageListAdapter messageListAdapter = new MessageListAdapter();
+        binding.conversationRecyclerViewer.setAdapter(messageListAdapter);
+        viewModel.getMessages(buddySipUri).observe(requireActivity(), messageListAdapter::submitList);
+
+        binding.sendButton.setOnClickListener(v -> {
+            String content = binding.messageInput.getText().toString();
+            Date currentDate = new Date();
+            viewModel.sendMessage(buddySipUri, content, currentDate.getTime());
+            binding.messageInput.setText("");
+        });
+
+        MenuHost menuHost = requireActivity();
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.conversation_menu, menu);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                if (R.id.option_call_audio == id) {
+                    navigateToPreCall(false);
+                    return true;
+                }
+                if (R.id.option_call_video == id) {
+                    navigateToPreCall(true);
+                    return true;
+                }
+                return false;
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        final MessageViewModel messageViewModel = new ViewModelProvider(requireActivity()).get(MessageViewModel.class);
-//
-//        messageViewModel.getMessagesFor(usrSipUri, buddySipUri).observe(getViewLifecycleOwner(), messageEntities -> {
-//            if(messageEntities != null) {
-//                messageAdapter.setMessages(messageEntities);
-//            }
-//            binding.executePendingBindings();
-//        });
-
-        binding.sendButton.setOnClickListener(v -> {
-//            Date date = new Date();
-//            LocalMessage messageEntity = new LocalMessage(usrSipUri, buddySipUri, date.toString(), binding.messageInput.getText().toString());
-//            messageViewModel.addMessage(messageEntity);
-//            SipServiceCommand.sendMessage(requireActivity().getApplicationContext(), usrSipUri, buddySipUri, messageEntity.content);
-//            binding.messageInput.setText("");
-        });
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.conversation_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (R.id.option_call_audio == id) {
-            try {
-//                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddySipUri);
-            } catch (Exception exc) {
-                Toast.makeText(getActivity(), "Error occurred while making Voice call:" + exc, Toast.LENGTH_LONG).show();
-            }
-            return true;
-        }
-        if (R.id.option_call_video == id) {
-            try {
-//                SipServiceCommand.makeCall(requireActivity().getApplicationContext(), usrSipUri, buddySipUri, true, false);
-            } catch (Exception exc) {
-                Toast.makeText(getActivity(), "Error occurred while making Video call:" + exc, Toast.LENGTH_LONG).show();
-            }
-            return true;
+    private void handleArguments(Bundle arguments) {
+        if (arguments == null) {
+            return;
         }
 
-
-        return super.onOptionsItemSelected(item);
+        buddySipUri = arguments.getString("buddySipUri");
     }
 
+    private void navigateToPreCall(boolean isVideo) {
+        Bundle data = new Bundle();
+        data.putBoolean("isVideo", isVideo);
+        NavHostFragment.findNavController(this).navigate(R.id.action_conversationFragment_to_preCallFragment, data);
+    }
 
     @Override
     public void onDestroyView() {
