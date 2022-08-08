@@ -6,14 +6,13 @@
     <variable name="buddy"
         type="ims_mobile_client.presentation.models.BuddyInfo"/>
     <variable name="callback"
-        type="ims_mobile_client.ui.conversations.BuddyClickCallback"/>
+        type="ims_mobile_client.ui.main.BuddyClickCallback"/>
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:padding="@dimen/contact_view_padding"
-      android:layout_height="wrap_content"
-      android:onClick="@{()->callback.onClick(buddy)}">
+      android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/contact_avatar"

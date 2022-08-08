@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="ims_mobile_client.ui.MainFragment"
+        android:name="ims_mobile_client.ui.main.MainFragment"
         android:label="MainFragment" >
         <argument
             android:name="usrSipUri"
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/newBuddyFragment"
-        android:name="ims_mobile_client.ui.conversations.NewBuddyFragment"
+        android:name="ims_mobile_client.ui.NewBuddyFragment"
         android:label="NewBuddyFragment" >
         <action
             android:id="@+id/action_newBuddyFragment_to_preCallFragment"

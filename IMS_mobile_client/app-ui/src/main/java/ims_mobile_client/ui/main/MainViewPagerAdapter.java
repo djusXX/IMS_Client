@@ -1,10 +1,8 @@
-package ims_mobile_client.ui;
+package ims_mobile_client.ui.main;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import ims_mobile_client.ui.conversations.BuddyListFragment;
 
 public class MainViewPagerAdapter extends FragmentStateAdapter {
 

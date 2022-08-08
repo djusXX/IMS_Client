@@ -1,4 +1,4 @@
-package ims_mobile_client.ui;
+package ims_mobile_client.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.ui.MainActivity;
 import ims_mobile_client.ui.databinding.MainFragmentBinding;
 
 

@@ -59,5 +59,8 @@ public class BuddyListViewModel extends ViewModel {
     private void fetchSavedBuddyDataList() {}
 
     private void subscribePresenceStateOfBuddyList() {}
-    
+
+    public void addBuddyToList(String displayName, String buddySipUri) {
+
+    }
 }

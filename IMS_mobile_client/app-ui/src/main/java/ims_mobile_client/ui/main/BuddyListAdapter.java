@@ -1,5 +1,6 @@
-package ims_mobile_client.ui.conversations;
+package ims_mobile_client.ui.main;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -35,7 +36,9 @@ public class BuddyListAdapter extends ListAdapter<BuddyInfo, RecyclerView.ViewHo
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
         binding.setCallback(buddy -> {
-            Navigation.findNavController(parent).navigate(R.id.action_mainFragment_to_conversationFragment); // pass buddy in safeargs
+            Bundle data = new Bundle();
+            data.putString("buddySipUri", buddy.getSipUri());
+            Navigation.findNavController(parent).navigate(R.id.action_mainFragment_to_conversationFragment, data);
         });
 
         return new BuddyViewHolder(binding);
