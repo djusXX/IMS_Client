@@ -38,15 +38,15 @@ public class ConversationFragment extends Fragment {
         handleArguments(getArguments());
         binding = DataBindingUtil.inflate(inflater, R.layout.conversation_fragment, container, false);
         ChatViewModel chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        chatViewModel.start(buddySipUri);
 
         MessageListAdapter messageListAdapter = new MessageListAdapter();
         binding.conversationRecyclerViewer.setAdapter(messageListAdapter);
-        chatViewModel.getMessages(buddySipUri).observe(getViewLifecycleOwner(), messageListAdapter::submitList);
+        chatViewModel.getMessages().observe(getViewLifecycleOwner(), messageListAdapter::submitList);
 
         binding.sendButton.setOnClickListener(v -> {
             String content = binding.messageInput.getText().toString();
-            Date currentDate = new Date();
-            chatViewModel.sendMessage(buddySipUri, content, currentDate.getTime());
+            chatViewModel.sendMessage(content);
             binding.messageInput.setText("");
         });
 
@@ -61,11 +61,11 @@ public class ConversationFragment extends Fragment {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
                 if (R.id.option_call_audio == id) {
-                    navigateToPreCall();
+                    navigateToPreCall(false);
                     return true;
                 }
                 if (R.id.option_call_video == id) {
-                    navigateToPreCall();
+                    navigateToPreCall(true);
                     return true;
                 }
                 return false;
@@ -82,7 +82,9 @@ public class ConversationFragment extends Fragment {
         buddySipUri = arguments.getString("buddySipUri");
     }
 
-    private void navigateToPreCall() {
+    private void navigateToPreCall(Boolean isVideo) {
+        Bundle data = new Bundle();
+        data.putBoolean("isVideo", isVideo);
         NavHostFragment.findNavController(this).navigate(R.id.action_conversationFragment_to_preCallFragment);
     }
 

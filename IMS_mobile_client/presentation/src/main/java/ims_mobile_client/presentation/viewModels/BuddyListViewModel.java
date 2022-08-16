@@ -31,32 +31,25 @@ import io.reactivex.subscribers.DisposableSubscriber;
  * */
 public class BuddyListViewModel extends ViewModel {
     // data storage usecases
-    private final SaveBuddyDataUseCase saveBuddyDataUseCase;
-    private final RemoveBuddyDataUseCase removeBuddyDataUseCase;
     private final GetBuddyDataListUseCase getBuddyDataListUseCase;
 
     // sip usecases
     private final AddNewBuddyUseCase addNewBuddyUseCase;
-    private final SubscribeBuddyPresenceUseCase subscribeBuddyPresenceUseCase;
-    private final UnsubscribeBuddyPresenceUseCase unsubscribeBuddyPresenceUseCase;
-
 
     private final MutableLiveData<List<BuddyInfo>> buddyList = new MutableLiveData<>();
 
-    public BuddyListViewModel(SaveBuddyDataUseCase saveBuddyDataUseCase,
-                              RemoveBuddyDataUseCase removeBuddyDataUseCase,
-                              GetBuddyDataListUseCase getBuddyDataListUseCase,
-                              AddNewBuddyUseCase addNewBuddyUseCase,
-                              SubscribeBuddyPresenceUseCase subscribeBuddyPresenceUseCase,
-                              UnsubscribeBuddyPresenceUseCase unsubscribeBuddyPresenceUseCase) {
-        this.saveBuddyDataUseCase = saveBuddyDataUseCase;
-        this.removeBuddyDataUseCase = removeBuddyDataUseCase;
+    public BuddyListViewModel(GetBuddyDataListUseCase getBuddyDataListUseCase,
+                              AddNewBuddyUseCase addNewBuddyUseCase) {
         this.getBuddyDataListUseCase = getBuddyDataListUseCase;
         this.addNewBuddyUseCase = addNewBuddyUseCase;
-        this.subscribeBuddyPresenceUseCase = subscribeBuddyPresenceUseCase;
-        this.unsubscribeBuddyPresenceUseCase = unsubscribeBuddyPresenceUseCase;
 
         fetchSavedBuddyList();
+    }
+
+    @Override
+    protected void onCleared() {
+        getBuddyDataListUseCase.dispose();
+        super.onCleared();
     }
 
     public LiveData<List<BuddyInfo>> getBuddyList() {

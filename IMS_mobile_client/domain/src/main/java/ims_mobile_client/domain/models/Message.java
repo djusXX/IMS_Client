@@ -1,5 +1,7 @@
 package ims_mobile_client.domain.models;
 
+import java.util.Date;
+
 public class Message {
 
     private int id;
@@ -44,6 +46,10 @@ public class Message {
 
     public long getTime() {
         return time;
+    }
+
+    public String getTimeString() {
+        return new Date(time).toString();
     }
 
     public void setTime(long time) {

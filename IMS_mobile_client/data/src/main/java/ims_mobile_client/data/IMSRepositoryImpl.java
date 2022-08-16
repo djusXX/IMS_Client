@@ -71,8 +71,8 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<List<Message>> getMessagesFor(String usrSipUri, String buddySipUri) {
-        return dataStore.getDefault().getMessagesFor(usrSipUri, buddySipUri)
+    public Flowable<List<Message>> getMessagesFor(String buddySipUri) {
+        return dataStore.getDefault().getMessagesFor(userSipUri, buddySipUri)
                 .concatMap(Flowable::fromIterable)
                 .map(mapper.forMessage()::mapToDomain)
                 .toList().toFlowable();

@@ -6,45 +6,49 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ims_mobile_client.presentation.models.MessageInfo;
+import ims_mobile_client.domain.models.Message;
+import ims_mobile_client.domain.usecases.dataStorage.GetMessagesForUseCase;
+import ims_mobile_client.domain.usecases.sip.SendMessageUseCase;
+import io.reactivex.subscribers.DisposableSubscriber;
 
-/***
- * usrSipUri
- * buddySipUri
- *
- * startVoiceCall   // with this buddy
- * startVideoCall   // with this buddy
- *
- * load(History)Messages
- * sendMessage
- *
- */
+
 public class ChatViewModel extends ViewModel {
+    private final GetMessagesForUseCase getMessagesForUseCase;
+    private final SendMessageUseCase sendMessageUseCase;
 
-    private final MutableLiveData<List<MessageInfo>> messages = new MutableLiveData<>();
 
-    /**
-     * returns all messages for logged user
-     * */
-    public LiveData<List<MessageInfo>> getMessages() {
-        return messages;
+    private String buddySipUri;
+    private final MutableLiveData<List<Message>> chatMessages = new MutableLiveData<>();
+
+    public ChatViewModel(GetMessagesForUseCase getMessagesForUseCase, SendMessageUseCase sendMessageUseCase) {
+        this.getMessagesForUseCase = getMessagesForUseCase;
+        this.sendMessageUseCase = sendMessageUseCase;
     }
 
-    /**
-     * returns all messages between logged user and buddy
-     * */
-    public LiveData<List<MessageInfo>> getMessages(String buddySipUri) {
-        return messages;
+    public void start(String buddySipUri) {
+        getMessagesForUseCase.execute(new DisposableSubscriber<List<Message>>() {
+            @Override
+            public void onNext(List<Message> messages) {
+                chatMessages.postValue(messages);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }, buddySipUri);
     }
 
-    /**
-     * returns last <number> of messages between logged user and buddy
-     * */
-    public LiveData<List<MessageInfo>> getMessages(String buddySipUri, int number) {
-        return messages;
+    public LiveData<List<Message>> getMessages() {
+        return chatMessages;
     }
 
-    public void sendMessage(String buddySipUri, String content, long time) {
-
+    public void sendMessage(String content) {
+        sendMessageUseCase.execute(new SendMessageUseCase.Params(buddySipUri, content));
     }
 }

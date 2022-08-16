@@ -39,6 +39,12 @@
         android:name="ims_mobile_client.ui.conversations.ConversationFragment"
         tools:layout="@layout/conversation_fragment"
         android:label="ConversationFragment" >
+        <argument
+            android:name="userSipUri"
+            app:argType="String"/>
+        <argument
+            android:name="buddySipUri"
+            app:argType="string"/>
         <action
             android:id="@+id/action_conversationFragment_to_preCallFragment"
             app:destination="@id/preCallFragment" />

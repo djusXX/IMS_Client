@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import ims_mobile_client.presentation.models.MessageInfo;
+import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.ui.databinding.MessageFragmentBinding;
 
 
-public class MessageListAdapter extends ListAdapter<MessageInfo, RecyclerView.ViewHolder> {
+public class MessageListAdapter extends ListAdapter<Message, MessageListAdapter.MessageViewHolder> {
 
     protected MessageListAdapter() {
         super(MessageListAdapter.diffCallback);
@@ -29,7 +29,7 @@ public class MessageListAdapter extends ListAdapter<MessageInfo, RecyclerView.Vi
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         MessageFragmentBinding binding = MessageFragmentBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
@@ -37,19 +37,19 @@ public class MessageListAdapter extends ListAdapter<MessageInfo, RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MessageInfo messageInfo = getItem(position);
-        ((MessageViewHolder) holder).binding.setMessageInfo(messageInfo);
+    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+        Message Message = getItem(position);
+        holder.binding.setMessage(Message);
     }
 
-    private static final DiffUtil.ItemCallback<MessageInfo> diffCallback = new DiffUtil.ItemCallback<MessageInfo>() {
+    private static final DiffUtil.ItemCallback<Message> diffCallback = new DiffUtil.ItemCallback<Message>() {
         @Override
-        public boolean areItemsTheSame(@NonNull MessageInfo oldItem, @NonNull MessageInfo newItem) {
+        public boolean areItemsTheSame(@NonNull Message oldItem, @NonNull Message newItem) {
             return oldItem.getId() == newItem.getId();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull MessageInfo oldItem, @NonNull MessageInfo newItem) {
+        public boolean areContentsTheSame(@NonNull Message oldItem, @NonNull Message newItem) {
             return oldItem.getId() == newItem.getId()
                     && oldItem.getSipUriFrom().equals(newItem.getSipUriFrom())
                     && oldItem.getSipUriTo().equals(newItem.getSipUriTo())

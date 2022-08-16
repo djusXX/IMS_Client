@@ -25,7 +25,7 @@ public interface IMSRepository {
     Completable saveBuddy(Buddy buddy);
 
     // Messages
-    Flowable<List<Message>> getMessagesFor(String usrSipUri, String buddySipUri);
+    Flowable<List<Message>> getMessagesFor(String buddySipUri);
     Completable saveMessage(Message message);
 
     // Calls
@@ -49,4 +49,6 @@ public interface IMSRepository {
     Flowable<String> getLoggedUserSipUri();
 
     Completable addNewBuddy(String buddySipUri, String buddyDisplayName);
+
+    Completable sendMessage(String buddySipUri, String content);
 }

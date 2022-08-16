@@ -11,7 +11,7 @@ import ims_mobile_client.domain.repository.IMSRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
-public class GetMessagesForUseCase extends FlowableUseCase<List<Message>, GetMessagesForUseCase.Params> {
+public class GetMessagesForUseCase extends FlowableUseCase<List<Message>, String> {
     private final IMSRepository repository;
 
     @Inject
@@ -21,16 +21,8 @@ public class GetMessagesForUseCase extends FlowableUseCase<List<Message>, GetMes
     }
 
     @Override
-    protected Flowable<List<Message>> buildUseCaseFlowable(Params params) {
-        return repository.getMessagesFor(params.usrSipUri, params.buddySipUri);
+    protected Flowable<List<Message>> buildUseCaseFlowable(String buddySipUri) {
+        return repository.getMessagesFor(buddySipUri);
     }
 
-    public static class Params {
-        String usrSipUri;
-        String buddySipUri;
-        public Params(String usrSipUri, String buddySipUri) {
-            this.usrSipUri = usrSipUri;
-            this.buddySipUri = buddySipUri;
-        }
-    }
 }
