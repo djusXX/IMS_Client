@@ -65,6 +65,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ims_mobile_client.ui.SettingsFragment"
+        tools:layout="@layout/settings_fragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_settingsFragment_to_preCallFragment"

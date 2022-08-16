@@ -74,7 +74,7 @@ public class BuddyListViewModel extends ViewModel {
             public void onNext(List<Buddy> buddies) {
                 List<BuddyInfo> buddyInfos = new ArrayList<>();
                 buddies.forEach(buddy -> {
-                    buddyInfos.add(new BuddyInfo(buddy.getBuddySipUri(), buddy.getBuddyDisplayName()));
+                    buddyInfos.add(new BuddyInfo(buddy.getBuddySipUri(), buddy.getBuddyDisplayName(), buddy.getPresenceState()));
                 });
                 buddyList.postValue(buddyInfos);
             }

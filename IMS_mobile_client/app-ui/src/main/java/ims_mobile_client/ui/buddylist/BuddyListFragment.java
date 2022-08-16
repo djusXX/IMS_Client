@@ -33,7 +33,7 @@ public class BuddyListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BuddyListFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.buddy_list_fragment, container, false);
-        BuddyListViewModel viewModel = new ViewModelProvider(requireActivity()).get(BuddyListViewModel.class);
+        BuddyListViewModel buddyListViewModel = new ViewModelProvider(requireActivity()).get(BuddyListViewModel.class);
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         userViewModel.getUserRegistrationStatus().observe(getViewLifecycleOwner(), userLoggedStatus -> {
@@ -46,7 +46,7 @@ public class BuddyListFragment extends Fragment {
 
         BuddyListAdapter buddyListAdapter = new BuddyListAdapter();
         binding.buddyListRecyclerView.setAdapter(buddyListAdapter);
-        viewModel.getBuddyList().observe(getViewLifecycleOwner(), buddyListAdapter::submitList);
+        buddyListViewModel.getBuddyList().observe(getViewLifecycleOwner(), buddyListAdapter::submitList);
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override

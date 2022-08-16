@@ -14,6 +14,12 @@ public class BuddyInfo {
         this.presenceStatus = new PresenceStatus();
     }
 
+    public BuddyInfo(String buddySipUri, String buddyDisplayName, PresenceStatus presenceStatus) {
+        this.buddySipUri = buddySipUri;
+        this.buddyDisplayName = buddyDisplayName;
+        this.presenceStatus = presenceStatus;
+    }
+
 
     public String getBuddySipUri() {
         return buddySipUri;
