@@ -22,6 +22,7 @@ object Releases {
 // Versions
 object Ver {
 
+
     // Sdk and tools
     val minSdkVersion = 29
     val targetSdkVersion = 31
@@ -54,6 +55,7 @@ object Ver {
     val rxAndroid = "2.1.1"
     val safeArgs = "2.5.1"
     val testExtJunit = "1.1.3"
+    val viewPager2 = "1.0.0"
 
 }
 
@@ -86,6 +88,7 @@ object Libs {
     val navigationUi = "androidx.navigation:navigation-ui:${Ver.navigation}"
     val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Ver.navigation}"
     val material = "androidx.compose.material:material:${Ver.material}"
+    val viewPager2 = "androidx.viewpager2:viewpager2:${Ver.viewPager2}";
 
 }
 

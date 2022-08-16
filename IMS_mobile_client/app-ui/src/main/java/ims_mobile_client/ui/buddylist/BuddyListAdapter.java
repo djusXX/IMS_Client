@@ -38,7 +38,7 @@ public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.Bu
         binding.setCallback(v -> {
             Bundle data = new Bundle();
             data.putString("buddySipUri", binding.getBuddy().getBuddySipUri());
-            Navigation.findNavController(v).navigate(R.id.action_buddyListFragment_to_conversationFragment, data);
+            Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_conversationFragment, data);
         });
         return new BuddyViewHolder(binding);
     }

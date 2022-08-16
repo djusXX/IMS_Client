@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav.xml"
-    app:startDestination="@id/buddyListFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -11,22 +11,19 @@
         tools:layout="@layout/login_fragment"
         android:label="LoginFragment" />
     <fragment
-        android:id="@+id/buddyListFragment"
-        android:name="ims_mobile_client.ui.buddylist.BuddyListFragment"
-        tools:layout="@layout/buddy_list_fragment"
-        android:label="BuddyListFragment" >
+        android:id="@+id/mainFragment"
+        android:name="ims_mobile_client.ui.MainFragment"
+        tools:layout="@layout/main_fragment"
+        android:label="MainFragment" >
         <action
-            android:id="@+id/action_buddyListFragment_to_preCallFragment"
+            android:id="@+id/action_mainFragment_to_preCallFragment"
             app:destination="@id/preCallFragment" />
         <action
-            android:id="@+id/action_buddyListFragment_to_newBuddyFragment"
+            android:id="@+id/action_mainFragment_to_newBuddyFragment"
             app:destination="@id/newBuddyFragment" />
         <action
-            android:id="@+id/action_buddyListFragment_to_conversationFragment"
+            android:id="@+id/action_mainFragment_to_conversationFragment"
             app:destination="@id/conversationFragment" />
-        <action
-            android:id="@+id/action_buddyListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newBuddyFragment"
@@ -62,14 +59,6 @@
         android:name="ims_mobile_client.ui.calls.ActiveCallFragment"
         tools:layout="@layout/active_call_fragment"
         android:label="ActiveCallFragment" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="ims_mobile_client.ui.SettingsFragment"
-        tools:layout="@layout/settings_fragment"
-        android:label="SettingsFragment" >
-        <action
-            android:id="@+id/action_settingsFragment_to_preCallFragment"
-            app:destination="@id/preCallFragment" />
-    </fragment>
+
 
 </navigation>
