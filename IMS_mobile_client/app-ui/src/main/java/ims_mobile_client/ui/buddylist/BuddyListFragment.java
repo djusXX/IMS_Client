@@ -1,4 +1,4 @@
-package ims_mobile_client.ui.main;
+package ims_mobile_client.ui.buddylist;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -20,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ims_mobile_client.presentation.viewModels.BuddyListViewModel;
+import ims_mobile_client.presentation.viewModels.UserViewModel;
 import ims_mobile_client.ui.R;
 import ims_mobile_client.ui.databinding.BuddyListFragmentBinding;
 
@@ -33,6 +33,9 @@ public class BuddyListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BuddyListFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.buddy_list_fragment, container, false);
         BuddyListViewModel viewModel = new ViewModelProvider(requireActivity()).get(BuddyListViewModel.class);
+        UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
+        
 
         BuddyListAdapter buddyListAdapter = new BuddyListAdapter();
         binding.buddyListRecyclerView.setAdapter(buddyListAdapter);

@@ -20,6 +20,7 @@ public class UserViewModel extends ViewModel {
 
     private final MutableLiveData<String> loggedUserUri = new MutableLiveData<>();
     private final MutableLiveData<PresenceStatus> userPresence = new MutableLiveData<>(new PresenceStatus());
+    private final MutableLiveData<Boolean> isInCall = new MutableLiveData<>(false);
 
 
     public UserViewModel(UserGetPresenceStateUseCase userGetPresenceStateUseCase,

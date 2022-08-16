@@ -1,4 +1,4 @@
-package ims_mobile_client.ui.main;
+package ims_mobile_client.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
