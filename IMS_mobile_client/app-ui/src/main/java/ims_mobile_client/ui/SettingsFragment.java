@@ -33,9 +33,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UserViewModel viewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        viewModel.getLoggedUserUri().observe(getViewLifecycleOwner(), usrSipUri -> {
-            binding.userSipUri.setText(usrSipUri);
-        });
+        binding.userSipUri.setText(viewModel.getUserCredentials().getValue().getSipUri());
 
         viewModel.getUserPresence().observe(getViewLifecycleOwner(), this::setCurrentPresence);
 

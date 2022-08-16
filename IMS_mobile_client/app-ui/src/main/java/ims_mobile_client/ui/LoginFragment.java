@@ -15,7 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import ims_mobile_client.domain.models.UserLoggedStatus;
-import ims_mobile_client.presentation.viewModels.LoginViewModel;
+import ims_mobile_client.presentation.viewModels.UserViewModel;
 import ims_mobile_client.ui.databinding.LoginFragmentBinding;
 
 @AndroidEntryPoint
@@ -23,13 +23,13 @@ public class LoginFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getName();
     private LoginFragmentBinding binding = null;
-    private LoginViewModel viewModel;
+    private UserViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         return binding.getRoot();
     }
 

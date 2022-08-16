@@ -6,47 +6,100 @@ import androidx.lifecycle.ViewModel;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.StatusType;
+import ims_mobile_client.domain.models.User;
+import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.usecases.dataStorage.AddUserUseCase;
+import ims_mobile_client.domain.usecases.dataStorage.GetLastUserUseCase;
 import ims_mobile_client.domain.usecases.sip.UserGetLoggedSipUri;
 import ims_mobile_client.domain.usecases.sip.UserGetPresenceStateUseCase;
+import ims_mobile_client.domain.usecases.sip.UserGetRegistrationStateUseCase;
+import ims_mobile_client.domain.usecases.sip.UserRegisterUseCase;
 import ims_mobile_client.domain.usecases.sip.UserSetPresenceUseCase;
 import ims_mobile_client.domain.models.PresenceStatus;
+import ims_mobile_client.presentation.models.UserCredentials;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 @HiltViewModel
 public class UserViewModel extends ViewModel {
+    private final GetLastUserUseCase getLastUserUseCase;
+    private final AddUserUseCase addUserUseCase;
+    private final UserGetRegistrationStateUseCase userGetRegistrationStateUseCase;
+    private final UserRegisterUseCase userRegisterUseCase;
     private final UserGetPresenceStateUseCase userGetPresenceStateUseCase;
     private final UserSetPresenceUseCase userSetPresenceUseCase;
-    private final UserGetLoggedSipUri userGetLoggedSipUri;
 
-    private final MutableLiveData<String> loggedUserUri = new MutableLiveData<>();
+    private final MutableLiveData<UserCredentials> userCredentials = new MutableLiveData<>();
+    private final MutableLiveData<UserLoggedStatus> userRegistrationStatus = new MutableLiveData<>(UserLoggedStatus.UNKNOWN);
     private final MutableLiveData<PresenceStatus> userPresence = new MutableLiveData<>(new PresenceStatus());
     private final MutableLiveData<Boolean> isInCall = new MutableLiveData<>(false);
 
 
-    public UserViewModel(UserGetPresenceStateUseCase userGetPresenceStateUseCase,
+    public UserViewModel(GetLastUserUseCase getLastUserUseCase,
+                         AddUserUseCase addUserUseCase,
+                         UserGetRegistrationStateUseCase userGetRegistrationStateUseCase,
+                         UserRegisterUseCase userRegisterUseCase,
+                         UserGetPresenceStateUseCase userGetPresenceStateUseCase,
                          UserSetPresenceUseCase userSetPresenceUseCase, UserGetLoggedSipUri userGetLoggedSipUri) {
+        this.getLastUserUseCase = getLastUserUseCase;
+        this.addUserUseCase = addUserUseCase;
+        this.userGetRegistrationStateUseCase = userGetRegistrationStateUseCase;
+        this.userRegisterUseCase = userRegisterUseCase;
         this.userGetPresenceStateUseCase = userGetPresenceStateUseCase;
         this.userSetPresenceUseCase = userSetPresenceUseCase;
-        this.userGetLoggedSipUri = userGetLoggedSipUri;
 
         subscribePresence();
-        fetchUserSipUri();
     }
 
     @Override
     protected void onCleared() {
+        getLastUserUseCase.dispose();
+        userGetRegistrationStateUseCase.dispose();
         userGetPresenceStateUseCase.dispose();
         super.onCleared();
     }
 
-    public LiveData<String> getLoggedUserUri() { return loggedUserUri; }
+    public LiveData<UserCredentials> getUserCredentials() { return userCredentials; }
+    public LiveData<UserLoggedStatus> getUserRegistrationStatus() { return userRegistrationStatus; }
     public LiveData<PresenceStatus> getUserPresence() { return userPresence; }
 
-    private void fetchUserSipUri() {
-        userGetLoggedSipUri.execute(new DisposableSubscriber<String>() {
+    public void registerUser(String name, String password, String displayName, String realm, String pcscf) {
+        User user = new User(name, password, displayName, realm, pcscf);
+        userRegisterUseCase.execute(user);
+        userCredentials.postValue(new UserCredentials(name, password, displayName, realm, pcscf));
+        saveUserInStorage(name, password, displayName, realm, pcscf);
+    }
+
+    private void saveUserInStorage(String name, String password, String displayName, String realm, String pcscf) {
+        addUserUseCase.execute(new User(name, password, displayName, realm, pcscf));
+    }
+
+    private void fetchUserCredentials() {
+        getLastUserUseCase.execute(new DisposableSubscriber<User>() {
             @Override
-            public void onNext(String s) {
-                loggedUserUri.postValue(s);
+            public void onNext(User user) {
+                userCredentials.postValue(new UserCredentials(user.getName(),
+                        user.getPassword(), user.getDisplayName(),
+                        user.getRealm(), user.getPcscf()));
+                getLastUserUseCase.dispose();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                getLastUserUseCase.dispose();
+            }
+
+            @Override
+            public void onComplete() {
+                getLastUserUseCase.dispose();
+            }
+        }, null);
+    }
+
+    private void fetchRegistrationStatus() {
+        userGetRegistrationStateUseCase.execute(new DisposableSubscriber<UserLoggedStatus>() {
+            @Override
+            public void onNext(UserLoggedStatus registrationState) {
+                userRegistrationStatus.postValue(registrationState);
             }
 
             @Override

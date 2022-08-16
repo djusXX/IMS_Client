@@ -16,13 +16,13 @@
         tools:layout="@layout/buddy_list_fragment"
         android:label="BuddyListFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_preCallFragment"
+            android:id="@+id/action_buddyListFragment_to_preCallFragment"
             app:destination="@id/preCallFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_newBuddyFragment"
+            android:id="@+id/action_buddyListFragment_to_newBuddyFragment"
             app:destination="@id/newBuddyFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_conversationFragment"
+            android:id="@+id/action_buddyListFragment_to_conversationFragment"
             app:destination="@id/conversationFragment" />
         <action
             android:id="@+id/action_buddyListFragment_to_settingsFragment"

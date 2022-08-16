@@ -8,4 +8,11 @@
         android:title="Add Contact"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/user_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="User settings"
+        app:showAsAction="always" />
+
+
 </menu>

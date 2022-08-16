@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.domain.models.UserLoggedStatus;
 import ims_mobile_client.presentation.viewModels.BuddyListViewModel;
 import ims_mobile_client.presentation.viewModels.UserViewModel;
 import ims_mobile_client.ui.R;
@@ -35,7 +36,13 @@ public class BuddyListFragment extends Fragment {
         BuddyListViewModel viewModel = new ViewModelProvider(requireActivity()).get(BuddyListViewModel.class);
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        
+        userViewModel.getUserRegistrationStatus().observe(getViewLifecycleOwner(), userLoggedStatus -> {
+            if (userLoggedStatus == UserLoggedStatus.LOGGED_IN) {
+                binding.buddyListRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                navigateToLoginFragment();
+            }
+        });
 
         BuddyListAdapter buddyListAdapter = new BuddyListAdapter();
         binding.buddyListRecyclerView.setAdapter(buddyListAdapter);
@@ -54,6 +61,10 @@ public class BuddyListFragment extends Fragment {
                     navigateToNewBuddyFragment();
                     return true;
                 }
+                if (R.id.user_settings == id) {
+                    navigateToSettings();
+                    return true;
+                }
 
                 return false;
             }
@@ -63,7 +74,14 @@ public class BuddyListFragment extends Fragment {
     }
 
     private void navigateToNewBuddyFragment() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_mainFragment_to_newBuddyFragment);
+        NavHostFragment.findNavController(this).navigate(R.id.action_buddyListFragment_to_newBuddyFragment);
     }
 
+    private void navigateToLoginFragment() {
+        NavHostFragment.findNavController(this).navigate(R.id.loginFragment);
+    }
+
+    private void navigateToSettings() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_buddyListFragment_to_settingsFragment);
+    }
 }
