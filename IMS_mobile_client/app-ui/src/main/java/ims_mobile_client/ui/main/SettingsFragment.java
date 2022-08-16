@@ -20,22 +20,25 @@ import ims_mobile_client.ui.databinding.SettingsFragmentBinding;
 public class SettingsFragment extends Fragment {
 
     private SettingsFragmentBinding binding = null;
-    private UserViewModel viewModel = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = SettingsFragmentBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        binding.userSipUri.setText(viewModel.getUserCredentials().getSipUri());
-
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getUserPresence().observe(requireActivity(), this::setCurrentPresence);
+        UserViewModel viewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
+        viewModel.getLoggedUserUri().observe(getViewLifecycleOwner(), usrSipUri -> {
+            binding.userSipUri.setText(usrSipUri);
+        });
+
+        viewModel.getUserPresence().observe(getViewLifecycleOwner(), this::setCurrentPresence);
+
         binding.updateButton.setOnClickListener(v -> {
             String type = binding.statusType.getSelectedItem().toString();
             String text = binding.statusText.getText().toString();
@@ -54,8 +57,4 @@ public class SettingsFragment extends Fragment {
         binding.currentPresenceState.setText(all);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 }

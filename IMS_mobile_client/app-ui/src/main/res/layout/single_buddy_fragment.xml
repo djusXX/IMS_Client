@@ -6,7 +6,7 @@
     <variable name="buddy"
         type="ims_mobile_client.presentation.models.BuddyInfo"/>
     <variable name="callback"
-        type="ims_mobile_client.ui.main.BuddyClickCallback"/>
+        type="android.view.View.OnClickListener"/>
   </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -38,21 +37,21 @@ public class ConversationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         handleArguments(getArguments());
         binding = DataBindingUtil.inflate(inflater, R.layout.conversation_fragment, container, false);
-        ChatViewModel viewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        ChatViewModel chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
 
         MessageListAdapter messageListAdapter = new MessageListAdapter();
         binding.conversationRecyclerViewer.setAdapter(messageListAdapter);
-        viewModel.getMessages(buddySipUri).observe(requireActivity(), messageListAdapter::submitList);
+        chatViewModel.getMessages(buddySipUri).observe(getViewLifecycleOwner(), messageListAdapter::submitList);
 
         binding.sendButton.setOnClickListener(v -> {
             String content = binding.messageInput.getText().toString();
             Date currentDate = new Date();
-            viewModel.sendMessage(buddySipUri, content, currentDate.getTime());
+            chatViewModel.sendMessage(buddySipUri, content, currentDate.getTime());
             binding.messageInput.setText("");
         });
 
-        MenuHost menuHost = requireActivity();
-        menuHost.addMenuProvider(new MenuProvider() {
+        requireActivity().addMenuProvider(new MenuProvider() {
+
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.conversation_menu, menu);
@@ -62,11 +61,11 @@ public class ConversationFragment extends Fragment {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
                 if (R.id.option_call_audio == id) {
-                    navigateToPreCall(false);
+                    navigateToPreCall();
                     return true;
                 }
                 if (R.id.option_call_video == id) {
-                    navigateToPreCall(true);
+                    navigateToPreCall();
                     return true;
                 }
                 return false;
@@ -83,15 +82,8 @@ public class ConversationFragment extends Fragment {
         buddySipUri = arguments.getString("buddySipUri");
     }
 
-    private void navigateToPreCall(boolean isVideo) {
-        Bundle data = new Bundle();
-        data.putBoolean("isVideo", isVideo);
-        NavHostFragment.findNavController(this).navigate(R.id.action_conversationFragment_to_preCallFragment, data);
+    private void navigateToPreCall() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_conversationFragment_to_preCallFragment);
     }
 
-    @Override
-    public void onDestroyView() {
-        binding = null;
-        super.onDestroyView();
-    }
 }

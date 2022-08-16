@@ -19,7 +19,6 @@
             <option value="$PROJECT_DIR$/localStorage" />
             <option value="$PROJECT_DIR$/pjsua2IMS" />
             <option value="$PROJECT_DIR$/presentation" />
-            <option value="$PROJECT_DIR$/rcsMessagingApp" />
           </set>
         </option>
       </GradleProjectSettings>

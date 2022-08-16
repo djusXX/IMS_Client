@@ -25,6 +25,8 @@ public class IMSRepositoryImpl implements IMSRepository {
     private final MapperProvider mapper;
     private final SIPManager sipManager;
 
+    private String userSipUri;
+
     @Inject
     public IMSRepositoryImpl(DataStoreFactory dataStore, MapperProvider mapper, SIPManager sipManager) {
         this.dataStore = dataStore;
@@ -50,7 +52,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<List<Buddy>> getBuddiesFor(String userSipUri) {
+    public Flowable<List<Buddy>> getBuddiesFor() {
         return dataStore.getDefault().getBuddiesFor(userSipUri)
                 .concatMap(Flowable::fromIterable)
                 .map(mapper.forBuddy()::mapToDomain)
@@ -95,13 +97,13 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<UserLoggedStatus> getRegistrationState(String usrSipUri) {
-        return sipManager.getRegistrationState(usrSipUri);
+    public Flowable<UserLoggedStatus> getRegistrationState() {
+        return sipManager.getRegistrationState();
     }
 
     @Override
-    public Flowable<PresenceStatus> getUserPresenceState(String usrSipUri) {
-        return sipManager.getUserPresenceState(usrSipUri);
+    public Flowable<PresenceStatus> getUserPresenceState() {
+        return sipManager.getUserPresenceState();
     }
 
     @Override
@@ -116,11 +118,22 @@ public class IMSRepositoryImpl implements IMSRepository {
 
     @Override
     public Completable registerUser(User u) {
+        userSipUri = u.getSipUri();
         return sipManager.registerUser(u);
     }
 
     @Override
     public Completable updateUserPresence(PresenceStatus presenceStatus) {
         return sipManager.updateUserPresence(presenceStatus);
+    }
+
+    @Override
+    public Flowable<String> getLoggedUserSipUri() {
+        return sipManager.getLoggedUserSipUri();
+    }
+
+    @Override
+    public Completable addNewBuddy(String buddySipUri, String buddyDisplayName) {
+        return sipManager.addNewBuddy(buddySipUri, buddyDisplayName);
     }
 }

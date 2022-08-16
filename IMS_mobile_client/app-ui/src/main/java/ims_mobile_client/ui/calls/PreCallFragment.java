@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import ims_mobile_client.presentation.viewModels.CallViewModel;
 import ims_mobile_client.ui.R;
 import ims_mobile_client.ui.databinding.PreCallFragmentBinding;
 
@@ -18,26 +20,13 @@ import ims_mobile_client.ui.databinding.PreCallFragmentBinding;
 public class PreCallFragment extends Fragment {
 
     private PreCallFragmentBinding binding;
-    private final String usrSipUri;
-    private final int callID;
-    private final String displayName;
-    private final String remoteUri;
-    private final boolean isVideo;
-    private final boolean isIncoming;
-
-    public PreCallFragment(boolean isIncoming, String accountID, int callID, String displayName, String remoteUri, boolean isVideo) {
-        this.isIncoming = isIncoming;
-        this.usrSipUri = accountID;
-        this.callID = callID;
-        this.displayName = displayName;
-        this.remoteUri = remoteUri;
-        this.isVideo = isVideo;
-    }
+    private CallViewModel callViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.pre_call_fragment, container, false);
+        callViewModel = new ViewModelProvider(requireActivity()).get(CallViewModel.class);
         return binding.getRoot();
     }
 
@@ -80,9 +69,4 @@ public class PreCallFragment extends Fragment {
         requireActivity().getSupportFragmentManager().popBackStack();
     }
 
-    @Override
-    public void onDestroyView() {
-        binding = null;
-        super.onDestroyView();
-    }
 }

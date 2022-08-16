@@ -20,7 +20,7 @@ public interface IMSRepository {
     Completable saveUser(User user);
 
     // Buddies
-    Flowable<List<Buddy>> getBuddiesFor(String userSipUri);
+    Flowable<List<Buddy>> getBuddiesFor();
     Flowable<Buddy> getBuddy(String userSipUri, String buddySipUri);
     Completable saveBuddy(Buddy buddy);
 
@@ -34,9 +34,9 @@ public interface IMSRepository {
 
 
     /*********** IMS/SIP ***********/
-    Flowable<UserLoggedStatus> getRegistrationState(String usrSipUri);
+    Flowable<UserLoggedStatus> getRegistrationState();
 
-    Flowable<PresenceStatus> getUserPresenceState(String usrSipUri);
+    Flowable<PresenceStatus> getUserPresenceState();
 
     Flowable<Message> getIncomingMessageForUser(String usrSipUri);
 
@@ -45,4 +45,8 @@ public interface IMSRepository {
     Completable registerUser(User u);
 
     Completable updateUserPresence(PresenceStatus presenceStatus);
+
+    Flowable<String> getLoggedUserSipUri();
+
+    Completable addNewBuddy(String buddySipUri, String buddyDisplayName);
 }

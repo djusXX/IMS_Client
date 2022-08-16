@@ -15,28 +15,15 @@
         android:padding="@dimen/appbar_padding">
 
         <TextView
-            android:id="@+id/sip_uri_label"
+            android:id="@+id/user_sip_uri"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="96dp"
             android:layout_marginEnd="24dp"
-            android:selectAllOnFocus="true"
-            android:text="User SIP uri"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/user_sip_uri"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sip_uri_label" />
 
 
         <TextView

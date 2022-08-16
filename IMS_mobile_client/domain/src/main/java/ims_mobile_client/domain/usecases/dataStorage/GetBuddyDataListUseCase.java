@@ -10,7 +10,7 @@ import ims_mobile_client.domain.repository.IMSRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
-public class GetBuddyDataListUseCase extends FlowableUseCase<List<Buddy>, String> {
+public class GetBuddyDataListUseCase extends FlowableUseCase<List<Buddy>, Void> {
     private final IMSRepository repository;
 
     @Inject
@@ -20,7 +20,7 @@ public class GetBuddyDataListUseCase extends FlowableUseCase<List<Buddy>, String
     }
 
     @Override
-    protected Flowable<List<Buddy>> buildUseCaseFlowable(String usrSipUri) {
-        return repository.getBuddiesFor(usrSipUri);
+    protected Flowable<List<Buddy>> buildUseCaseFlowable(Void unused) {
+        return repository.getBuddiesFor();
     }
 }

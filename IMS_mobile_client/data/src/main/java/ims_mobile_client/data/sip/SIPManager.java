@@ -1,5 +1,6 @@
 package ims_mobile_client.data.sip;
 
+import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.PresenceStatus;
@@ -11,8 +12,8 @@ import io.reactivex.Flowable;
 public interface SIPManager {
 
     Completable registerUser(User u);
-    Flowable<UserLoggedStatus> getRegistrationState(String usrSipUri);
-    Flowable<PresenceStatus> getUserPresenceState(String usrSipUri);
+    Flowable<UserLoggedStatus> getRegistrationState();
+    Flowable<PresenceStatus> getUserPresenceState();
     Completable updateUserPresence(PresenceStatus presenceStatus);
 
 
@@ -27,7 +28,8 @@ public interface SIPManager {
 
 
     Flowable<Call> getIncomingCallForUser(String usrSipUri);
-
-
     Flowable<Message> getIncomingMessageForUser(String usrSipUri);
+    Flowable<String> getLoggedUserSipUri();
+
+    Completable addNewBuddy(String buddySipUri, String buddyDisplayName);
 }

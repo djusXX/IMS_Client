@@ -3,7 +3,6 @@ package ims_mobile_client.ui.main;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.view.textclassifier.ConversationAction;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -15,7 +14,7 @@ import ims_mobile_client.presentation.models.BuddyInfo;
 import ims_mobile_client.ui.R;
 import ims_mobile_client.ui.databinding.SingleBuddyFragmentBinding;
 
-public class BuddyListAdapter extends ListAdapter<BuddyInfo, RecyclerView.ViewHolder> {
+public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.BuddyViewHolder> {
 
     public BuddyListAdapter() {
         super(BuddyListAdapter.diffCallback);
@@ -32,24 +31,22 @@ public class BuddyListAdapter extends ListAdapter<BuddyInfo, RecyclerView.ViewHo
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BuddyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         SingleBuddyFragmentBinding binding = SingleBuddyFragmentBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        binding.setCallback(buddy -> {
+        binding.setCallback(v -> {
             Bundle data = new Bundle();
-            data.putString("buddySipUri", buddy.getSipUri());
-            Navigation.findNavController(parent).navigate(R.id.action_mainFragment_to_conversationFragment, data);
+            data.putString("buddySipUri", binding.getBuddy().getBuddySipUri());
+            Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_conversationFragment, data);
         });
-
         return new BuddyViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        BuddyInfo buddyInfo = getItem(position);
-        ((BuddyViewHolder) holder).binding.setBuddy(buddyInfo);
-
+    public void onBindViewHolder(@NonNull BuddyViewHolder holder, int position) {
+        holder.binding.setBuddy(getItem(position));
+        holder.binding.executePendingBindings();
     }
 
     public static final DiffUtil.ItemCallback<BuddyInfo> diffCallback = new DiffUtil.ItemCallback<BuddyInfo>() {

@@ -36,10 +36,9 @@ public class BuddyListFragment extends Fragment {
 
         BuddyListAdapter buddyListAdapter = new BuddyListAdapter();
         binding.buddyListRecyclerView.setAdapter(buddyListAdapter);
-        viewModel.getBuddyList().observe(requireActivity(), buddyListAdapter::submitList);
+        viewModel.getBuddyList().observe(getViewLifecycleOwner(), buddyListAdapter::submitList);
 
-        MenuHost menuHost = requireActivity();
-        menuHost.addMenuProvider(new MenuProvider() {
+        requireActivity().addMenuProvider(new MenuProvider() {
             @Override
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.chats_menu, menu);

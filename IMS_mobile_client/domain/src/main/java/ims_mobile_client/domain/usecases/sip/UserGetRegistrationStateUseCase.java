@@ -7,7 +7,7 @@ import ims_mobile_client.domain.repository.IMSRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
-public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserLoggedStatus, String> {
+public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserLoggedStatus, Void> {
     private final IMSRepository repository;
 
     public UserGetRegistrationStateUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, IMSRepository repository) {
@@ -16,8 +16,8 @@ public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserLoggedS
     }
 
     @Override
-    protected Flowable<UserLoggedStatus> buildUseCaseFlowable(String usrSipUri) {
-        return repository.getRegistrationState(usrSipUri);
+    protected Flowable<UserLoggedStatus> buildUseCaseFlowable(Void unused) {
+        return repository.getRegistrationState();
     }
 
 }
