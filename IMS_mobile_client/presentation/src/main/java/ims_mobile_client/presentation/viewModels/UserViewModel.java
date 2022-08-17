@@ -49,7 +49,7 @@ public class UserViewModel extends ViewModel {
         this.userGetPresenceStateUseCase = userGetPresenceStateUseCase;
         this.userSetPresenceUseCase = userSetPresenceUseCase;
 
-        subscribePresence();
+//        subscribePresence();
     }
 
     @Override

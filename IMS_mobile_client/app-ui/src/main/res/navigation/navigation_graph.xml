@@ -34,7 +34,7 @@
         android:label="ConversationFragment" >
         <argument
             android:name="userSipUri"
-            app:argType="String"/>
+            app:argType="string"/>
         <argument
             android:name="buddySipUri"
             app:argType="string"/>
