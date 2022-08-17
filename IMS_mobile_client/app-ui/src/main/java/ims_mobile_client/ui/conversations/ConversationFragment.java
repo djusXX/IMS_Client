@@ -17,8 +17,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.Date;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import ims_mobile_client.presentation.viewModels.ChatViewModel;
 import ims_mobile_client.ui.R;
@@ -62,12 +60,12 @@ public class ConversationFragment extends Fragment {
                 int id = menuItem.getItemId();
                 if (R.id.option_call_audio == id) {
                     chatViewModel.makeCall(false);
-                    navigateToPreCall();
+                    navigateToCall();
                     return true;
                 }
                 if (R.id.option_call_video == id) {
                     chatViewModel.makeCall(true);
-                    navigateToPreCall();
+                    navigateToCall();
                     return true;
                 }
                 return false;
@@ -84,8 +82,8 @@ public class ConversationFragment extends Fragment {
         buddySipUri = arguments.getString("buddySipUri");
     }
 
-    private void navigateToPreCall() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_conversationFragment_to_preCallFragment);
+    private void navigateToCall() {
+        NavHostFragment.findNavController(this).navigate(R.id.callFragment);
     }
 
 }

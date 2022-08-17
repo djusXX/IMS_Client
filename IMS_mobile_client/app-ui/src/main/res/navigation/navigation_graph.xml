@@ -16,9 +16,6 @@
         tools:layout="@layout/main_fragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_preCallFragment"
-            app:destination="@id/preCallFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_newBuddyFragment"
             app:destination="@id/newBuddyFragment" />
         <action
@@ -29,11 +26,7 @@
         android:id="@+id/newBuddyFragment"
         android:name="ims_mobile_client.ui.NewBuddyFragment"
         tools:layout="@layout/new_buddy_fragment"
-        android:label="NewBuddyFragment" >
-        <action
-            android:id="@+id/action_newBuddyFragment_to_preCallFragment"
-            app:destination="@id/preCallFragment" />
-    </fragment>
+        android:label="NewBuddyFragment" />
     <fragment
         android:id="@+id/conversationFragment"
         android:name="ims_mobile_client.ui.conversations.ConversationFragment"
@@ -45,26 +38,12 @@
         <argument
             android:name="buddySipUri"
             app:argType="string"/>
-        <action
-            android:id="@+id/action_conversationFragment_to_preCallFragment"
-            app:destination="@id/preCallFragment" />
     </fragment>
     <fragment
-        android:id="@+id/preCallFragment"
-        android:name="ims_mobile_client.ui.calls.PreCallFragment"
-        tools:layout="@layout/pre_call_fragment"
-        android:label="PreCallFragment" >
-        <action
-            android:id="@+id/action_preCallFragment_to_activeCallFragment"
-            app:destination="@id/activeCallFragment"
-            app:popUpTo="@id/preCallFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/activeCallFragment"
-        android:name="ims_mobile_client.ui.calls.ActiveCallFragment"
-        tools:layout="@layout/active_call_fragment"
-        android:label="ActiveCallFragment" />
+        android:id="@+id/callFragment"
+        android:name="ims_mobile_client.ui.calls.CallFragment"
+        tools:layout="@layout/call_fragment"
+        android:label="CallFragment" />
 
 
 </navigation>
