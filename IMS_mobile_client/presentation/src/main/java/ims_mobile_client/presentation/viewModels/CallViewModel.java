@@ -1,44 +1,43 @@
 package ims_mobile_client.presentation.viewModels;
 
+import android.view.SurfaceHolder;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.CallSimpleState;
-import ims_mobile_client.domain.models.CallState;
-import ims_mobile_client.presentation.models.CallInfo;
+import ims_mobile_client.domain.usecases.sip.GetCurrentCallUseCase;
+import io.reactivex.subscribers.DisposableSubscriber;
 
-/**
- * getCallDetailsUseCase // for active call
- * setCallAttribute[manyUseCases] // for active call
- *      - end/decline/mute/answer/...
- *
- *
- * getHistoryCallListUseCase
- * saveCallDataInDb
- * */
+@HiltViewModel
 public class CallViewModel extends ViewModel {
+    private final GetCurrentCallUseCase getCurrentCallUseCase;
 
 
-    // subscribe states of below data on server
     private final MutableLiveData<String> remoteSipUri = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isVideo = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isVoiceMuted = new MutableLiveData<>();
     private final MutableLiveData<CallSimpleState> callSimpleState = new MutableLiveData<>();
+    private final MutableLiveData<Call> currentCall = new MutableLiveData<>();
 
+    @Inject
+    public CallViewModel(GetCurrentCallUseCase getCurrentCallUseCase) {
+        this.getCurrentCallUseCase = getCurrentCallUseCase;
+    }
 
     public MutableLiveData<String> getRemoteSipUri() {
         return remoteSipUri;
     }
-
     public MutableLiveData<Boolean> getIsVideo() {
         return isVideo;
     }
-
     public MutableLiveData<Boolean> getIsVoiceMuted() {
         return isVoiceMuted;
     }
-
     public MutableLiveData<CallSimpleState> getCallSimpleState() {
         return callSimpleState;
     }
@@ -50,9 +49,38 @@ public class CallViewModel extends ViewModel {
     public void rejectCall() {}
     public void endCall() {}
 
-    public void addOutgoingCall(String buddySipUri, boolean isVideo) {
-        // send request of out call to pjsip
+    public void updateVideoPreview(SurfaceHolder holder) {
+
     }
 
+    public void stopVideoPreview() {
+
+    }
+
+    public void updateVideoWindow(boolean show) {
+
+    }
+
+
+
+
+    private void getActiveCall() {
+        getCurrentCallUseCase.execute(new DisposableSubscriber<Call>() {
+            @Override
+            public void onNext(Call call) {
+                currentCall.postValue(call);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }, null);
+    }
 
 }

@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.usecases.dataStorage.RemoveBuddyDataUseCase;
 import ims_mobile_client.domain.usecases.dataStorage.SaveBuddyDataUseCase;
@@ -17,18 +20,7 @@ import ims_mobile_client.domain.usecases.sip.UnsubscribeBuddyPresenceUseCase;
 import ims_mobile_client.presentation.models.BuddyInfo;
 import io.reactivex.subscribers.DisposableSubscriber;
 
-/**
- * get list of Buddies from repo/dataStorage and add them to BuddyList
- *
- * for each Buddy subscribe:
- *  -   sipUri
- *  -   DisplayName
- *  -   BuddyPresence
- *
- * add Buddy to BuddyList
- * remove Buddy from BuddyList
- *
- * */
+@HiltViewModel
 public class BuddyListViewModel extends ViewModel {
     // data storage usecases
     private final GetBuddyDataListUseCase getBuddyDataListUseCase;
@@ -38,6 +30,7 @@ public class BuddyListViewModel extends ViewModel {
 
     private final MutableLiveData<List<BuddyInfo>> buddyList = new MutableLiveData<>();
 
+    @Inject
     public BuddyListViewModel(GetBuddyDataListUseCase getBuddyDataListUseCase,
                               AddNewBuddyUseCase addNewBuddyUseCase) {
         this.getBuddyDataListUseCase = getBuddyDataListUseCase;

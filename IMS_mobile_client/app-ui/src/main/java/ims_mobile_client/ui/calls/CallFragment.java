@@ -39,16 +39,16 @@ public class CallFragment extends Fragment {
         binding.localUserView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-//SipServiceCommand.startVideoPreview(requireActivity(), usrSipUri, callID, binding.localUserView.getHolder().getSurface());
             }
 
             @Override
             public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+                viewModel.updateVideoPreview(surfaceHolder);
             }
 
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-//SipServiceCommand.stopVideoPreview(requireActivity(), usrSipUri, callID);
+                viewModel.stopVideoPreview();
             }});
 
         binding.remoteUserView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -58,12 +58,12 @@ public class CallFragment extends Fragment {
 
             @Override
             public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-//SipServiceCommand.setupIncomingVideoFeed(requireActivity(), usrSipUri, callID, surfaceHolder.getSurface());
+                viewModel.updateVideoWindow(true);
             }
 
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-//SipServiceCommand.setupIncomingVideoFeed(requireActivity(), usrSipUri, callID, null);
+                viewModel.updateVideoWindow(false);
             }
         });
     }

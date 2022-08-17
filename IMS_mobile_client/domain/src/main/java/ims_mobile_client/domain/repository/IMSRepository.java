@@ -40,7 +40,7 @@ public interface IMSRepository {
 
     Flowable<Message> getIncomingMessageForUser(String usrSipUri);
 
-    Flowable<Call> getIncomingCallForUser(String usrSipUri);
+    Flowable<Call> getCurrentCall();
 
     Completable registerUser(User u);
 

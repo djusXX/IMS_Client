@@ -1,6 +1,7 @@
 package ims_mobile_client.ui.conversations;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,9 +14,11 @@ import ims_mobile_client.ui.databinding.MessageFragmentBinding;
 
 
 public class MessageListAdapter extends ListAdapter<Message, MessageListAdapter.MessageViewHolder> {
+    private String buddySipUri;
 
-    protected MessageListAdapter() {
+    protected MessageListAdapter(String buddySipUri) {
         super(MessageListAdapter.diffCallback);
+        this.buddySipUri = buddySipUri;
     }
 
     static class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -38,8 +41,15 @@ public class MessageListAdapter extends ListAdapter<Message, MessageListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        Message Message = getItem(position);
-        holder.binding.setMessage(Message);
+        Message message = getItem(position);
+        if (buddySipUri.equals(message.getSipUriFrom())) {
+            holder.binding.messageInContentView.setVisibility(View.VISIBLE);
+            holder.binding.messageOutContentView.setVisibility(View.GONE);
+        } else {
+            holder.binding.messageInContentView.setVisibility(View.GONE);
+            holder.binding.messageOutContentView.setVisibility(View.VISIBLE);
+        }
+        holder.binding.setMessage(message);
     }
 
     private static final DiffUtil.ItemCallback<Message> diffCallback = new DiffUtil.ItemCallback<Message>() {

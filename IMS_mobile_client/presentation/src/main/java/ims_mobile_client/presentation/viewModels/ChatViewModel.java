@@ -6,13 +6,16 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.usecases.dataStorage.GetMessagesForUseCase;
 import ims_mobile_client.domain.usecases.sip.MakeCallUseCase;
 import ims_mobile_client.domain.usecases.sip.SendMessageUseCase;
 import io.reactivex.subscribers.DisposableSubscriber;
 
-
+@HiltViewModel
 public class ChatViewModel extends ViewModel {
     private final GetMessagesForUseCase getMessagesForUseCase;
     private final SendMessageUseCase sendMessageUseCase;
@@ -22,6 +25,7 @@ public class ChatViewModel extends ViewModel {
     private String buddySipUri;
     private final MutableLiveData<List<Message>> chatMessages = new MutableLiveData<>();
 
+    @Inject
     public ChatViewModel(GetMessagesForUseCase getMessagesForUseCase, SendMessageUseCase sendMessageUseCase, MakeCallUseCase makeCallUseCase) {
         this.getMessagesForUseCase = getMessagesForUseCase;
         this.sendMessageUseCase = sendMessageUseCase;

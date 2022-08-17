@@ -13,6 +13,7 @@ import ims_mobile_client.data.mappers.MapperProvider;
 import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMSRepository;
+import ims_mobile_client.pjsua2IMS.SIPManagerImpl;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -27,6 +28,11 @@ public abstract class DataModule {
     @Provides
     public static DataStoreFactory provideDataStoreFactory(DataStoreLocal local) {
         return new DataStoreFactory(local, null);
+    }
+
+    @Provides
+    public static SIPManager provideSIPManager() {
+        return new SIPManagerImpl();
     }
 
 

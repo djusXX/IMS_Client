@@ -112,8 +112,8 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<Call> getIncomingCallForUser(String usrSipUri) {
-        return sipManager.getIncomingCallForUser(usrSipUri);
+    public Flowable<Call> getCurrentCall() {
+        return sipManager.getCurrentCall(userSipUri);
     }
 
     @Override
@@ -135,5 +135,15 @@ public class IMSRepositoryImpl implements IMSRepository {
     @Override
     public Completable addNewBuddy(String buddySipUri, String buddyDisplayName) {
         return sipManager.addNewBuddy(buddySipUri, buddyDisplayName);
+    }
+
+    @Override
+    public Completable sendMessage(String buddySipUri, String content) {
+        return null;
+    }
+
+    @Override
+    public Completable makeCall(String buddySipUri, boolean isVideo) {
+        return null;
     }
 }

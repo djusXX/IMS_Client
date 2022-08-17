@@ -27,7 +27,7 @@ public interface SIPManager {
     // getCallMediaState
 
 
-    Flowable<Call> getIncomingCallForUser(String usrSipUri);
+    Flowable<Call> getCurrentCall(String usrSipUri);
     Flowable<Message> getIncomingMessageForUser(String usrSipUri);
     Flowable<String> getLoggedUserSipUri();
 

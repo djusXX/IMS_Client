@@ -38,7 +38,7 @@ public class ConversationFragment extends Fragment {
         ChatViewModel chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         chatViewModel.start(buddySipUri);
 
-        MessageListAdapter messageListAdapter = new MessageListAdapter();
+        MessageListAdapter messageListAdapter = new MessageListAdapter(buddySipUri);
         binding.conversationRecyclerViewer.setAdapter(messageListAdapter);
         chatViewModel.getMessages().observe(getViewLifecycleOwner(), messageListAdapter::submitList);
 

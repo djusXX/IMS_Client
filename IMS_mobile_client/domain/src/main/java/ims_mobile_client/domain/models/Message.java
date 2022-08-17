@@ -11,11 +11,10 @@ public class Message {
     private long time;
     private String content;
 
-    public Message(int id, String sipUriFrom, String sipUriTo, String type, long time, String content) {
+    public Message(int id, String sipUriFrom, String sipUriTo, long time, String content) {
         this.id = id;
         this.sipUriFrom = sipUriFrom;
         this.sipUriTo = sipUriTo;
-        this.type = type;
         this.time = time;
         this.content = content;
     }

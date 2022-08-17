@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.StatusType;
 import ims_mobile_client.domain.models.User;
@@ -31,15 +33,15 @@ public class UserViewModel extends ViewModel {
     private final MutableLiveData<UserCredentials> userCredentials = new MutableLiveData<>();
     private final MutableLiveData<UserLoggedStatus> userRegistrationStatus = new MutableLiveData<>(UserLoggedStatus.UNKNOWN);
     private final MutableLiveData<PresenceStatus> userPresence = new MutableLiveData<>(new PresenceStatus());
-    private final MutableLiveData<Boolean> isInCall = new MutableLiveData<>(false);
 
 
+    @Inject
     public UserViewModel(GetLastUserUseCase getLastUserUseCase,
                          AddUserUseCase addUserUseCase,
                          UserGetRegistrationStateUseCase userGetRegistrationStateUseCase,
                          UserRegisterUseCase userRegisterUseCase,
                          UserGetPresenceStateUseCase userGetPresenceStateUseCase,
-                         UserSetPresenceUseCase userSetPresenceUseCase, UserGetLoggedSipUri userGetLoggedSipUri) {
+                         UserSetPresenceUseCase userSetPresenceUseCase) {
         this.getLastUserUseCase = getLastUserUseCase;
         this.addUserUseCase = addUserUseCase;
         this.userGetRegistrationStateUseCase = userGetRegistrationStateUseCase;
