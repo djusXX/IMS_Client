@@ -51,4 +51,6 @@ public interface IMSRepository {
     Completable addNewBuddy(String buddySipUri, String buddyDisplayName);
 
     Completable sendMessage(String buddySipUri, String content);
+
+    Completable makeCall(String buddySipUri, boolean isVideo);
 }

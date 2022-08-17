@@ -61,11 +61,13 @@ public class ConversationFragment extends Fragment {
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
                 if (R.id.option_call_audio == id) {
-                    navigateToPreCall(false);
+                    chatViewModel.makeCall(false);
+                    navigateToPreCall();
                     return true;
                 }
                 if (R.id.option_call_video == id) {
-                    navigateToPreCall(true);
+                    chatViewModel.makeCall(true);
+                    navigateToPreCall();
                     return true;
                 }
                 return false;
@@ -82,9 +84,7 @@ public class ConversationFragment extends Fragment {
         buddySipUri = arguments.getString("buddySipUri");
     }
 
-    private void navigateToPreCall(Boolean isVideo) {
-        Bundle data = new Bundle();
-        data.putBoolean("isVideo", isVideo);
+    private void navigateToPreCall() {
         NavHostFragment.findNavController(this).navigate(R.id.action_conversationFragment_to_preCallFragment);
     }
 

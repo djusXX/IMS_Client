@@ -8,6 +8,7 @@ import java.util.List;
 
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.usecases.dataStorage.GetMessagesForUseCase;
+import ims_mobile_client.domain.usecases.sip.MakeCallUseCase;
 import ims_mobile_client.domain.usecases.sip.SendMessageUseCase;
 import io.reactivex.subscribers.DisposableSubscriber;
 
@@ -15,17 +16,20 @@ import io.reactivex.subscribers.DisposableSubscriber;
 public class ChatViewModel extends ViewModel {
     private final GetMessagesForUseCase getMessagesForUseCase;
     private final SendMessageUseCase sendMessageUseCase;
+    private final MakeCallUseCase makeCallUseCase;
 
 
     private String buddySipUri;
     private final MutableLiveData<List<Message>> chatMessages = new MutableLiveData<>();
 
-    public ChatViewModel(GetMessagesForUseCase getMessagesForUseCase, SendMessageUseCase sendMessageUseCase) {
+    public ChatViewModel(GetMessagesForUseCase getMessagesForUseCase, SendMessageUseCase sendMessageUseCase, MakeCallUseCase makeCallUseCase) {
         this.getMessagesForUseCase = getMessagesForUseCase;
         this.sendMessageUseCase = sendMessageUseCase;
+        this.makeCallUseCase = makeCallUseCase;
     }
 
     public void start(String buddySipUri) {
+        this.buddySipUri = buddySipUri;
         getMessagesForUseCase.execute(new DisposableSubscriber<List<Message>>() {
             @Override
             public void onNext(List<Message> messages) {
@@ -50,5 +54,9 @@ public class ChatViewModel extends ViewModel {
 
     public void sendMessage(String content) {
         sendMessageUseCase.execute(new SendMessageUseCase.Params(buddySipUri, content));
+    }
+
+    public void makeCall(boolean isVideo) {
+        makeCallUseCase.execute(new MakeCallUseCase.Params(buddySipUri, isVideo));
     }
 }
