@@ -1,5 +1,7 @@
 package ims_mobile_client.pjsua2IMS;
 
+import javax.inject.Inject;
+
 import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
@@ -10,6 +12,13 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class SIPManagerImpl implements SIPManager {
+    private final P2IHelper helper;
+
+    @Inject
+    public SIPManagerImpl(P2IHelper helper) {
+        this.helper = helper;
+    }
+
 
     @Override
     public Completable registerUser(User u) {

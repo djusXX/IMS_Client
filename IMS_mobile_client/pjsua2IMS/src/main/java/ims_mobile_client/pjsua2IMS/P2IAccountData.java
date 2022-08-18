@@ -7,8 +7,7 @@ import org.pjsip.pjsua2.pj_constants_;
 import org.pjsip.pjsua2.pj_qos_type;
 import org.pjsip.pjsua2.pjsip_cred_data_type;
 
-public class AccountData {
-
+public class P2IAccountData {
 
     private String name;
     private String password;
