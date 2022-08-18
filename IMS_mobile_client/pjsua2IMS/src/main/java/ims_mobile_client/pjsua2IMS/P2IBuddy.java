@@ -28,9 +28,14 @@ public class P2IBuddy extends Buddy {
         return buddyInfo;
     }
 
-    @Override
-    public void sendInstantMessage(SendInstantMessageParam prm) throws Exception {
-        // TODO: implement!!!
+    public void sendMessage(String content) {
+        SendInstantMessageParam param = new SendInstantMessageParam();
+        param.setContent(content);
+        try {
+            sendInstantMessage(param);
+        } catch (Exception e) {
+            Log.e(TAG, "Buddy.sendInstantMessage() FAILED: " + e);
+        }
     }
 
     @Override

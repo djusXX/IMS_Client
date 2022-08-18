@@ -251,6 +251,10 @@ public class P2ICall extends Call {
 
     public boolean isVideoCall() { return videoCall; }
 
+    public void setVideoCallParam(boolean isVideoCall) {
+        videoCall = isVideoCall;
+    }
+
     public boolean isLocalVideoMute() {
         return localVideoMute;
     }

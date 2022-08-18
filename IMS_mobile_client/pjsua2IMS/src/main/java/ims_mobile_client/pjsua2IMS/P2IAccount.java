@@ -5,9 +5,13 @@ import android.util.Log;
 import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.AccountInfo;
 import org.pjsip.pjsua2.BuddyConfig;
+import org.pjsip.pjsua2.CallInfo;
+import org.pjsip.pjsua2.CallOpParam;
 import org.pjsip.pjsua2.OnIncomingCallParam;
 import org.pjsip.pjsua2.OnInstantMessageParam;
 import org.pjsip.pjsua2.OnRegStateParam;
+import org.pjsip.pjsua2.pjsip_status_code;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 public class P2IAccount extends Account {
@@ -28,8 +32,16 @@ public class P2IAccount extends Account {
         create(accountData.getAccountConfig(),true);
     }
 
+    public void createGuest() throws Exception {
+        create(accountData.getGuestAccountConfig());
+    }
+
     public P2IHelper getHelper() {
         return helper;
+    }
+
+    public P2IAccountData getAccountData() {
+        return accountData;
     }
 
     public P2IBuddy addBuddy(BuddyConfig buddyConfig) {
@@ -42,13 +54,13 @@ public class P2IAccount extends Account {
             }
         } catch (Exception e) {
             Log.e(TAG, "FAILED to create/add buddy: " + e);
+            buddy.delete();
             return null;
         }
 
         buddies.put(buddyConfig.getUri(), buddy);
         return buddy;
     }
-
 
     public void removeBuddy(String buddyUri) {
         buddies.remove(buddyUri);
@@ -76,7 +88,14 @@ public class P2IAccount extends Account {
     }
 
     public void removeCall(int callId) {
-        activeCalls.remove(callId);
+        P2ICall call = activeCalls.remove(callId);
+        if (call == null) return;
+
+        call.delete();
+    }
+
+    public P2ICall getCall(int callId) {
+        return activeCalls.get(callId);
     }
 
     public P2ICall addOutgoingCall(String remoteSipUri, boolean isVideo) {
@@ -84,7 +103,18 @@ public class P2IAccount extends Account {
             return null;
         }
 
-//        P2ICall call = new P2ICall(this)
+        P2ICall call = new P2ICall(this);
+        call.setVideoCallParam(isVideo);
+
+        CallOpParam callOpParam = new CallOpParam();
+        try {
+            call.makeCall(remoteSipUri, callOpParam);
+            activeCalls.put(call.getId(), call);
+            return call;
+        } catch (Exception e) {
+            Log.e(TAG, "addOutgoingCall() FAILED: " + e);
+        }
+
         return null;
     }
     
@@ -100,8 +130,20 @@ public class P2IAccount extends Account {
     @Override
     public void onIncomingCall(OnIncomingCallParam prm) {
         Log.d(TAG, "Called method onIncomingCall()");
-//        P2ICall call = new P2ICall(this, prm.getCallId(), );
-        // TODO: implement and notify!!!
+        P2ICall call = addIncomingCall(prm.getCallId());
+
+        if (activeCalls.size() > 1) {
+            call.sendBusyHereToIncomingCall();
+            return;
+        }
+
+        try {
+            CallOpParam callOpParam = new CallOpParam();
+            callOpParam.setStatusCode(pjsip_status_code.PJSIP_SC_RINGING);
+            call.answer(callOpParam);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
