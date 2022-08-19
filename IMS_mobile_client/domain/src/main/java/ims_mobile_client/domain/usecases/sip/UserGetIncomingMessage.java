@@ -20,6 +20,6 @@ public class UserGetIncomingMessage extends FlowableUseCase<Message, String> {
 
     @Override
     protected Flowable<Message> buildUseCaseFlowable(String usrSipUri) {
-        return repository.getIncomingMessageForUser(usrSipUri);
+        return repository.getIncomingMessage(usrSipUri);
     }
 }

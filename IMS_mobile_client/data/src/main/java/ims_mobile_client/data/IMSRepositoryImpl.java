@@ -12,7 +12,7 @@ import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.PresenceStatus;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 import ims_mobile_client.domain.repository.IMSRepository;
 
 import io.reactivex.Completable;
@@ -97,7 +97,7 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<UserLoggedStatus> getRegistrationState() {
+    public Flowable<UserRegistrationStatus> getRegistrationState() {
         return sipManager.getRegistrationState();
     }
 
@@ -107,13 +107,18 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<Message> getIncomingMessageForUser(String usrSipUri) {
+    public Flowable<Message> getIncomingMessage(String usrSipUri) {
         return sipManager.getIncomingMessageForUser(usrSipUri);
     }
 
     @Override
     public Flowable<Call> getCurrentCall() {
         return sipManager.getCurrentCall(userSipUri);
+    }
+
+    @Override
+    public Flowable<String> getLoggedUserSipUri() {
+        return sipManager.getLoggedUserSipUri();
     }
 
     @Override
@@ -125,11 +130,6 @@ public class IMSRepositoryImpl implements IMSRepository {
     @Override
     public Completable updateUserPresence(PresenceStatus presenceStatus) {
         return sipManager.updateUserPresence(presenceStatus);
-    }
-
-    @Override
-    public Flowable<String> getLoggedUserSipUri() {
-        return sipManager.getLoggedUserSipUri();
     }
 
     @Override

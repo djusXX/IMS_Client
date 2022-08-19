@@ -9,10 +9,9 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import ims_mobile_client.domain.models.StatusType;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 import ims_mobile_client.domain.usecases.dataStorage.AddUserUseCase;
 import ims_mobile_client.domain.usecases.dataStorage.GetLastUserUseCase;
-import ims_mobile_client.domain.usecases.sip.UserGetLoggedSipUri;
 import ims_mobile_client.domain.usecases.sip.UserGetPresenceStateUseCase;
 import ims_mobile_client.domain.usecases.sip.UserGetRegistrationStateUseCase;
 import ims_mobile_client.domain.usecases.sip.UserRegisterUseCase;
@@ -31,7 +30,7 @@ public class UserViewModel extends ViewModel {
     private final UserSetPresenceUseCase userSetPresenceUseCase;
 
     private final MutableLiveData<UserCredentials> userCredentials = new MutableLiveData<>();
-    private final MutableLiveData<UserLoggedStatus> userRegistrationStatus = new MutableLiveData<>(UserLoggedStatus.UNKNOWN);
+    private final MutableLiveData<UserRegistrationStatus> userRegistrationStatus = new MutableLiveData<>(UserRegistrationStatus.UNKNOWN);
     private final MutableLiveData<PresenceStatus> userPresence = new MutableLiveData<>(new PresenceStatus());
 
 
@@ -61,7 +60,7 @@ public class UserViewModel extends ViewModel {
     }
 
     public LiveData<UserCredentials> getUserCredentials() { return userCredentials; }
-    public LiveData<UserLoggedStatus> getUserRegistrationStatus() { return userRegistrationStatus; }
+    public LiveData<UserRegistrationStatus> getUserRegistrationStatus() { return userRegistrationStatus; }
     public LiveData<PresenceStatus> getUserPresence() { return userPresence; }
 
     public void registerUser(String name, String password, String displayName, String realm, String pcscf) {
@@ -98,9 +97,9 @@ public class UserViewModel extends ViewModel {
     }
 
     private void fetchRegistrationStatus() {
-        userGetRegistrationStateUseCase.execute(new DisposableSubscriber<UserLoggedStatus>() {
+        userGetRegistrationStateUseCase.execute(new DisposableSubscriber<UserRegistrationStatus>() {
             @Override
-            public void onNext(UserLoggedStatus registrationState) {
+            public void onNext(UserRegistrationStatus registrationState) {
                 userRegistrationStatus.postValue(registrationState);
             }
 

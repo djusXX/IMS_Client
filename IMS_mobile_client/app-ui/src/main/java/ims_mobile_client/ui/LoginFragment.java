@@ -14,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 import ims_mobile_client.presentation.viewModels.UserViewModel;
 import ims_mobile_client.ui.databinding.LoginFragmentBinding;
 
@@ -37,16 +37,16 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getUserRegistrationStatus().observe(getViewLifecycleOwner(), status -> {
-            if (status == UserLoggedStatus.LOGGED_IN) {
+            if (status == UserRegistrationStatus.REGISTERED) {
                 NavHostFragment.findNavController(this).popBackStack();
             }
-            else if (status == UserLoggedStatus.TRYING) {
+            else if (status == UserRegistrationStatus.TRYING) {
                 Toast.makeText(requireActivity(), "Trying to log user", Toast.LENGTH_SHORT).show();
             }
-            else if (status == UserLoggedStatus.UNKNOWN) {
+            else if (status == UserRegistrationStatus.UNKNOWN) {
                 Toast.makeText(requireActivity(), "Unknown error occurred", Toast.LENGTH_SHORT).show();
             }
-            else if (status == UserLoggedStatus.LOGGED_OUT) {
+            else if (status == UserRegistrationStatus.UNREGISTERED) {
                 Toast.makeText(requireActivity(), "Logged out successfully", Toast.LENGTH_SHORT).show();
             }
         });

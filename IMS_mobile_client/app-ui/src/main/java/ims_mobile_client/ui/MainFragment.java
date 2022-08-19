@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 import ims_mobile_client.presentation.viewModels.UserViewModel;
 import ims_mobile_client.ui.databinding.MainFragmentBinding;
 
@@ -28,7 +28,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         UserViewModel userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getUserRegistrationStatus().observe(getViewLifecycleOwner(), userLoggedStatus -> {
-            if (userLoggedStatus != UserLoggedStatus.LOGGED_IN) {
+            if (userLoggedStatus != UserRegistrationStatus.REGISTERED) {
                 navigateToLoginFragment();
             }
         });

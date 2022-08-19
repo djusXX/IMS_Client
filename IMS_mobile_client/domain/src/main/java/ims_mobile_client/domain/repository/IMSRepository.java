@@ -7,7 +7,7 @@ import ims_mobile_client.domain.models.Call;
 import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.PresenceStatus;
 import ims_mobile_client.domain.models.User;
-import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
@@ -34,19 +34,19 @@ public interface IMSRepository {
 
 
     /*********** IMS/SIP ***********/
-    Flowable<UserLoggedStatus> getRegistrationState();
+    Flowable<UserRegistrationStatus> getRegistrationState();
 
     Flowable<PresenceStatus> getUserPresenceState();
 
-    Flowable<Message> getIncomingMessageForUser(String usrSipUri);
+    Flowable<Message> getIncomingMessage(String usrSipUri);
 
     Flowable<Call> getCurrentCall();
+
+    Flowable<String> getLoggedUserSipUri();
 
     Completable registerUser(User u);
 
     Completable updateUserPresence(PresenceStatus presenceStatus);
-
-    Flowable<String> getLoggedUserSipUri();
 
     Completable addNewBuddy(String buddySipUri, String buddyDisplayName);
 

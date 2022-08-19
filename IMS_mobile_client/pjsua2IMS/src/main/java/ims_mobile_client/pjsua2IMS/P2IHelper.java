@@ -12,9 +12,14 @@ import org.pjsip.pjsua2.VidDevManager;
 import org.pjsip.pjsua2.pj_qos_type;
 import org.pjsip.pjsua2.pjsip_transport_type_e;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.inject.Inject;
 
+import ims_mobile_client.domain.models.Message;
 import ims_mobile_client.domain.models.User;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
+
 /**
  * Class for providing pjsua2 methods amd current library state.
  * */
@@ -24,11 +29,40 @@ public class P2IHelper {
     private Endpoint endpoint;
     private volatile boolean started = false;
 
+    private P2IAccount currentAccount = null;
+    private P2ICall currentCall = null;
+    private UserRegistrationStatus lastRegStatus = UserRegistrationStatus.UNKNOWN;
+
     @Inject
     public P2IHelper() {
         loadNativeLibraries();
         startSipStack();
     }
+
+    public P2IAccount getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public void setCurrentAccount(P2IAccount currentAccount) {
+        this.currentAccount = currentAccount;
+    }
+
+    public P2ICall getCurrentCall() {
+        return currentCall;
+    }
+
+    public void setCurrentCall(P2ICall currentCall) {
+        this.currentCall = currentCall;
+    }
+
+    public UserRegistrationStatus getLastRegStatus() {
+        return lastRegStatus;
+    }
+
+    public void setLastRegStatus(UserRegistrationStatus lastRegStatus) {
+        this.lastRegStatus = lastRegStatus;
+    }
+
 
     @Override
     protected void finalize() throws Throwable {

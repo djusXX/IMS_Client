@@ -4,12 +4,12 @@ import javax.inject.Inject;
 
 import ims_mobile_client.domain.executors.PostExecutionThread;
 import ims_mobile_client.domain.executors.ThreadExecutor;
-import ims_mobile_client.domain.models.UserLoggedStatus;
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 import ims_mobile_client.domain.repository.IMSRepository;
 import ims_mobile_client.domain.usecases.FlowableUseCase;
 import io.reactivex.Flowable;
 
-public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserLoggedStatus, Void> {
+public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserRegistrationStatus, Void> {
     private final IMSRepository repository;
 
     @Inject
@@ -19,7 +19,7 @@ public class UserGetRegistrationStateUseCase extends FlowableUseCase<UserLoggedS
     }
 
     @Override
-    protected Flowable<UserLoggedStatus> buildUseCaseFlowable(Void unused) {
+    protected Flowable<UserRegistrationStatus> buildUseCaseFlowable(Void unused) {
         return repository.getRegistrationState();
     }
 

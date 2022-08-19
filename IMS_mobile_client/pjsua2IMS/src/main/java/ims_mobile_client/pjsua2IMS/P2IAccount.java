@@ -12,7 +12,12 @@ import org.pjsip.pjsua2.OnInstantMessageParam;
 import org.pjsip.pjsua2.OnRegStateParam;
 import org.pjsip.pjsua2.pjsip_status_code;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import ims_mobile_client.domain.models.UserRegistrationStatus;
 
 public class P2IAccount extends Account {
     private static final String TAG = P2IAccount.class.getSimpleName();
@@ -21,6 +26,7 @@ public class P2IAccount extends Account {
     private final P2IHelper helper;
     private final ConcurrentHashMap<String, P2IBuddy> buddies = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, P2ICall> activeCalls = new ConcurrentHashMap<>();
+    private final List<P2IMessage> messages = new ArrayList<>();
 
     public P2IAccount(P2IAccountData accountData, P2IHelper helper) {
         super();
@@ -30,6 +36,7 @@ public class P2IAccount extends Account {
 
     public void create() throws Exception {
         create(accountData.getAccountConfig(),true);
+        helper.setLastRegStatus(UserRegistrationStatus.TRYING);
     }
 
     public void createGuest() throws Exception {
@@ -124,7 +131,10 @@ public class P2IAccount extends Account {
         Log.d(TAG, "code: " + prm.getCode());
         Log.d(TAG, "reason: " + prm.getReason());
         Log.d(TAG, "expiration: " + prm.getExpiration());
-        // TODO: notify
+
+        if (prm.getExpiration() == 0) helper.setLastRegStatus(UserRegistrationStatus.UNREGISTERED);
+        else if (prm.getCode() == 200) helper.setLastRegStatus(UserRegistrationStatus.REGISTERED);
+        else helper.setLastRegStatus(UserRegistrationStatus.UNKNOWN);
     }
 
     @Override
@@ -142,7 +152,7 @@ public class P2IAccount extends Account {
             callOpParam.setStatusCode(pjsip_status_code.PJSIP_SC_RINGING);
             call.answer(callOpParam);
         } catch (Exception e) {
-
+            Log.d(TAG, "Failed while answering call");
         }
     }
 
@@ -154,6 +164,11 @@ public class P2IAccount extends Account {
         Log.d(TAG, "Contact  : " + prm.getContactUri());
         Log.d(TAG, "Mimetype : " + prm.getContentType());
         Log.d(TAG, "Body     : " + prm.getMsgBody());
-        // TODO: handle new Msg!!!
+        messages.add(new P2IMessage(prm.getFromUri(), prm.getToUri(),
+                new Date().getTime(), prm.getMsgBody()));
+    }
+
+    public List<P2IMessage> getMessages() {
+        return messages;
     }
 }

@@ -8,10 +8,13 @@ import org.pjsip.pjsua2.BuddyConfig;
 import org.pjsip.pjsua2.BuddyInfo;
 import org.pjsip.pjsua2.SendInstantMessageParam;
 
+import java.util.List;
+
 public class P2IBuddy extends Buddy {
     private static final String TAG = P2IBuddy.class.getSimpleName();
 
     private BuddyConfig buddyConfig;
+//    private final List<P2IBuddy>
 
     public P2IBuddy(BuddyConfig buddyConfig) {
         super();
