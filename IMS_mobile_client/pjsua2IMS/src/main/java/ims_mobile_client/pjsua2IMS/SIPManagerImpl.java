@@ -63,16 +63,25 @@ public class SIPManagerImpl implements SIPManager {
 
     @Override
     public Completable registerUser(User u) {
-        return null;
+        return Completable.defer(() -> {
+            helper.registerUser(u);
+            return Completable.complete();
+        });
     }
 
     @Override
     public Completable updateUserPresence(PresenceStatus presenceStatus) {
-        return null;
+        return Completable.defer(() -> {
+            helper.getCurrentAccount().setPresenceStatus(presenceStatus);
+            return Completable.complete();
+        });
     }
 
     @Override
     public Completable addNewBuddy(String buddySipUri, String buddyDisplayName) {
-        return null;
+        return Completable.defer(() -> {
+            helper.getCurrentAccount().addBuddy(buddySipUri, buddyDisplayName);
+            return Completable.complete();
+        });
     }
 }

@@ -160,7 +160,9 @@ public class P2IHelper {
         return endpoint.vidDevManager();
     }
 
+    public void registerUser(User u) {
 
+    }
 
 
 //

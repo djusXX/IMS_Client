@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import ims_mobile_client.domain.models.PresenceStatus;
 import ims_mobile_client.domain.models.UserRegistrationStatus;
 
 public class P2IAccount extends Account {
@@ -49,6 +50,10 @@ public class P2IAccount extends Account {
 
     public P2IAccountData getAccountData() {
         return accountData;
+    }
+
+    public void addBuddy(String buddySipUri, String buddyDisplayName) {
+        // TODO: implement
     }
 
     public P2IBuddy addBuddy(BuddyConfig buddyConfig) {
@@ -170,5 +175,11 @@ public class P2IAccount extends Account {
 
     public List<P2IMessage> getMessages() {
         return messages;
+    }
+
+    public void setPresenceStatus(PresenceStatus presenceStatus) {
+//        org.pjsip.pjsua2.PresenceStatus status = new org.pjsip.pjsua2.PresenceStatus();
+//        status.se
+//        setOnlineStatus();
     }
 }
