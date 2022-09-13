@@ -5,7 +5,6 @@ import android.util.Log;
 import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.AccountInfo;
 import org.pjsip.pjsua2.BuddyConfig;
-import org.pjsip.pjsua2.CallInfo;
 import org.pjsip.pjsua2.CallOpParam;
 import org.pjsip.pjsua2.OnIncomingCallParam;
 import org.pjsip.pjsua2.OnInstantMessageParam;
@@ -24,12 +23,12 @@ public class P2IAccount extends Account {
     private static final String TAG = P2IAccount.class.getSimpleName();
 
     private final P2IAccountData accountData;
-    private final P2IHelper helper;
+    private final P2IHelperImpl helper;
     private final ConcurrentHashMap<String, P2IBuddy> buddies = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, P2ICall> activeCalls = new ConcurrentHashMap<>();
     private final List<P2IMessage> messages = new ArrayList<>();
 
-    public P2IAccount(P2IAccountData accountData, P2IHelper helper) {
+    public P2IAccount(P2IAccountData accountData, P2IHelperImpl helper) {
         super();
         this.accountData = accountData;
         this.helper = helper;
@@ -44,7 +43,7 @@ public class P2IAccount extends Account {
         create(accountData.getGuestAccountConfig());
     }
 
-    public P2IHelper getHelper() {
+    public P2IHelperImpl getHelper() {
         return helper;
     }
 

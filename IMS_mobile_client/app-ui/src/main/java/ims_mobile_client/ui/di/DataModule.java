@@ -13,7 +13,7 @@ import ims_mobile_client.data.mappers.MapperProvider;
 import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.executors.ThreadExecutor;
 import ims_mobile_client.domain.repository.IMSRepository;
-import ims_mobile_client.pjsua2IMS.P2IHelper;
+import ims_mobile_client.pjsua2IMS.P2IHelperImpl;
 import ims_mobile_client.pjsua2IMS.SIPManagerImpl;
 
 @Module
@@ -33,7 +33,7 @@ public abstract class DataModule {
 
     @Provides
     @Singleton
-    public static SIPManager provideSIPManager(P2IHelper helper) {
+    public static SIPManager provideSIPManager(P2IHelperImpl helper) {
         return new SIPManagerImpl(helper);
     }
 

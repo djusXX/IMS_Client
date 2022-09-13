@@ -1,5 +1,7 @@
 package ims_mobile_client.pjsua2IMS;
 
+import android.util.Log;
+
 import org.pjsip.pjsua2.CallInfo;
 
 import javax.inject.Inject;
@@ -15,10 +17,12 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class SIPManagerImpl implements SIPManager {
-    private final P2IHelper helper;
+    private static final String TAG = SIPManagerImpl.class.getSimpleName();
+
+    private final P2IHelperImpl helper;
 
     @Inject
-    public SIPManagerImpl(P2IHelper helper) {
+    public SIPManagerImpl(P2IHelperImpl helper) {
         this.helper = helper;
     }
 
@@ -63,25 +67,30 @@ public class SIPManagerImpl implements SIPManager {
 
     @Override
     public Completable registerUser(User u) {
-        return Completable.defer(() -> {
-            helper.registerUser(u);
-            return Completable.complete();
-        });
+        Log.d(TAG, "inside method SIPManagerImpl.registerUser()");
+        helper.registerUser(u);
+        return Completable.complete();
+//        return Completable.defer(() -> {
+//            Log.d(TAG, "inside method SIPManagerImpl.registerUser.Completable.defer()");
+//            helper.registerUser(u);
+////            helper.setLastRegStatus(UserRegistrationStatus.REGISTERED);
+//            return Completable.complete();
+//        });
     }
 
     @Override
     public Completable updateUserPresence(PresenceStatus presenceStatus) {
-        return Completable.defer(() -> {
+//        return Completable.defer(() -> {
             helper.getCurrentAccount().setPresenceStatus(presenceStatus);
             return Completable.complete();
-        });
+//        });
     }
 
     @Override
     public Completable addNewBuddy(String buddySipUri, String buddyDisplayName) {
-        return Completable.defer(() -> {
+//        return Completable.defer(() -> {
             helper.getCurrentAccount().addBuddy(buddySipUri, buddyDisplayName);
             return Completable.complete();
-        });
+//        });
     }
 }

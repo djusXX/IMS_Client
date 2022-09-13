@@ -36,20 +36,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getUserRegistrationStatus().observe(getViewLifecycleOwner(), status -> {
-            if (status == UserRegistrationStatus.REGISTERED) {
-                NavHostFragment.findNavController(this).popBackStack();
-            }
-            else if (status == UserRegistrationStatus.TRYING) {
-                Toast.makeText(requireActivity(), "Trying to log user", Toast.LENGTH_SHORT).show();
-            }
-            else if (status == UserRegistrationStatus.UNKNOWN) {
-                Toast.makeText(requireActivity(), "Unknown error occurred", Toast.LENGTH_SHORT).show();
-            }
-            else if (status == UserRegistrationStatus.UNREGISTERED) {
-                Toast.makeText(requireActivity(), "Logged out successfully", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         viewModel.getUserCredentials().observe(getViewLifecycleOwner(), userCredentials -> {
             if (userCredentials != null) {
@@ -71,6 +58,20 @@ public class LoginFragment extends Fragment {
         String pcscf = binding.pcscf.getText().toString();
 
         viewModel.registerUser(name, password, displayName, realm, pcscf);
+        viewModel.getUserRegistrationStatus().observe(getViewLifecycleOwner(), status -> {
+            if (status == UserRegistrationStatus.REGISTERED) {
+                NavHostFragment.findNavController(this).popBackStack();
+            }
+            else if (status == UserRegistrationStatus.TRYING) {
+                Toast.makeText(requireActivity(), "Trying to log user", Toast.LENGTH_SHORT).show();
+            }
+            else if (status == UserRegistrationStatus.UNKNOWN) {
+                Toast.makeText(requireActivity(), "Unknown error occurred", Toast.LENGTH_SHORT).show();
+            }
+            else if (status == UserRegistrationStatus.UNREGISTERED) {
+                Toast.makeText(requireActivity(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setUserCredentials(String name, String displayName, String password, String realm, String pcscf) {

@@ -49,6 +49,8 @@ public class UserViewModel extends ViewModel {
         this.userSetPresenceUseCase = userSetPresenceUseCase;
 
 //        subscribePresence();
+//        fetchRegistrationStatus();
+//        registerUser("alice", "alice", "ALICE",  "open-ims.test", "10.0.0.9:4060");
     }
 
     @Override
@@ -68,6 +70,7 @@ public class UserViewModel extends ViewModel {
         userRegisterUseCase.execute(user);
         userCredentials.postValue(new UserCredentials(name, password, displayName, realm, pcscf));
         saveUserInStorage(name, password, displayName, realm, pcscf);
+        fetchRegistrationStatus();
     }
 
     private void saveUserInStorage(String name, String password, String displayName, String realm, String pcscf) {
@@ -101,6 +104,7 @@ public class UserViewModel extends ViewModel {
             @Override
             public void onNext(UserRegistrationStatus registrationState) {
                 userRegistrationStatus.postValue(registrationState);
+                request(1);
             }
 
             @Override
