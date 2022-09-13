@@ -22,6 +22,7 @@ import ims_mobile_client.ui.databinding.MainFragmentBinding;
 
 @AndroidEntryPoint
 public class MainFragment extends Fragment {
+    MainFragmentBinding binding;
 
     @Nullable
     @Override
@@ -33,10 +34,11 @@ public class MainFragment extends Fragment {
             }
         });
 
-        MainFragmentBinding binding = MainFragmentBinding.inflate(inflater, container, false);
+        binding = MainFragmentBinding.inflate(inflater, container, false);
         TabLayout tabLayout = binding.tabLayout;
         ViewPager2 viewPager = binding.viewPager;
-        viewPager.setAdapter(new MainPagerAdapter(this));
+        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(this);
+        viewPager.setAdapter(mainPagerAdapter);
         new TabLayoutMediator(tabLayout, viewPager, (tab, pos) -> {
             String title = (pos == 0) ? "SETTINGS" : "CHATS";
             tab.setText(title);

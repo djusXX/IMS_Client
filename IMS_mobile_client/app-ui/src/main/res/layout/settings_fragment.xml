@@ -16,10 +16,10 @@
 
         <TextView
             android:id="@+id/user_sip_uri"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
 
         <TextView
             android:id="@+id/current_presence_state"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/user_presence_label"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
@@ -53,7 +53,7 @@
 
         <Spinner
             android:id="@+id/status_type"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/status_text_label"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
@@ -79,7 +79,7 @@
 
         <EditText
             android:id="@+id/status_text"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"

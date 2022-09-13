@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import javax.inject.Inject;
+
 import ims_mobile_client.presentation.models.BuddyInfo;
 import ims_mobile_client.ui.R;
 import ims_mobile_client.ui.databinding.SingleBuddyFragmentBinding;
 
 public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.BuddyViewHolder> {
 
+    @Inject
     public BuddyListAdapter() {
         super(BuddyListAdapter.diffCallback);
     }
@@ -23,6 +26,7 @@ public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.Bu
     static class BuddyViewHolder extends RecyclerView.ViewHolder {
         final SingleBuddyFragmentBinding binding;
 
+        @Inject
         public BuddyViewHolder(SingleBuddyFragmentBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

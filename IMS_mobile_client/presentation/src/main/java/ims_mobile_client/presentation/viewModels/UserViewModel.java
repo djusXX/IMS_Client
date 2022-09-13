@@ -49,8 +49,6 @@ public class UserViewModel extends ViewModel {
         this.userSetPresenceUseCase = userSetPresenceUseCase;
 
 //        subscribePresence();
-//        fetchRegistrationStatus();
-//        registerUser("alice", "alice", "ALICE",  "open-ims.test", "10.0.0.9:4060");
     }
 
     @Override
@@ -124,6 +122,7 @@ public class UserViewModel extends ViewModel {
             @Override
             public void onNext(PresenceStatus ps) {
                 userPresence.postValue(ps);
+                request(1);
             }
 
             @Override

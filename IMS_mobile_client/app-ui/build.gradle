@@ -14,7 +14,7 @@ dependencies {
     implementation project(Modules.pjsua)
 
 
-    implementation Libs.coreSplashScreen
+    implementation Libs.viewPager2
     implementation Libs.rxAndroid
     implementation Libs.appcompat
     implementation Libs.constraintLayout
