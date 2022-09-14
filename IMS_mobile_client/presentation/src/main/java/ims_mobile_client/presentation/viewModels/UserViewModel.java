@@ -117,7 +117,7 @@ public class UserViewModel extends ViewModel {
         }, null);
     }
 
-    private void subscribePresence() {
+    public void subscribePresence() {
         userGetPresenceStateUseCase.execute(new DisposableSubscriber<PresenceStatus>() {
             @Override
             public void onNext(PresenceStatus ps) {
@@ -140,6 +140,7 @@ public class UserViewModel extends ViewModel {
     public void updatePresence(String type, String text) {
         PresenceStatus presenceStatus = new PresenceStatus(StatusType.valueOf(type), text);
         userSetPresenceUseCase.execute(presenceStatus);
+        subscribePresence();
     }
 
 }

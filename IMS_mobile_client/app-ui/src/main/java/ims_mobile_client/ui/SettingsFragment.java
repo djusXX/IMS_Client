@@ -36,7 +36,8 @@ public class SettingsFragment extends Fragment {
 
         binding.userSipUri.setText(viewModel.getUserCredentials().getValue().getSipUri());
 
-        viewModel.getUserPresence().observe(getViewLifecycleOwner(), this::setCurrentPresence);
+        viewModel.getUserPresence().observe(requireActivity(), this::setCurrentPresence);
+        viewModel.subscribePresence();
 
         binding.updateButton.setOnClickListener(v -> {
             String type = binding.statusType.getSelectedItem().toString();

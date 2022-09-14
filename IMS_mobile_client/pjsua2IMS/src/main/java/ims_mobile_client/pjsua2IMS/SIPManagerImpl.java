@@ -33,10 +33,9 @@ public class SIPManagerImpl implements SIPManager {
 
     @Override
     public Flowable<PresenceStatus> getUserPresenceState() {
-        return Flowable.defer(() -> Flowable.just(new PresenceStatus(
-                helper.getCurrentAccount().getUpdatedAccountInfo().getOnlineStatus() ? StatusType.ONLINE : StatusType.OFFLINE,
-                helper.getCurrentAccount().getUpdatedAccountInfo().getOnlineStatusText()
-        )));
+        StatusType statusType = helper.getCurrentAccount().getUpdatedAccountInfo().getOnlineStatus() ? StatusType.ONLINE : StatusType.OFFLINE;
+        String statusText = helper.getCurrentAccount().getUpdatedAccountInfo().getOnlineStatusText();
+        return Flowable.defer(() -> Flowable.just(new PresenceStatus(statusType, statusText)));
     }
 
     @Override

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ims_mobile_client.domain.models.PresenceStatus;
+import ims_mobile_client.domain.models.StatusType;
 import ims_mobile_client.domain.models.UserRegistrationStatus;
 
 public class P2IAccount extends Account {
@@ -156,7 +157,7 @@ public class P2IAccount extends Account {
             callOpParam.setStatusCode(pjsip_status_code.PJSIP_SC_RINGING);
             call.answer(callOpParam);
         } catch (Exception e) {
-            Log.d(TAG, "Failed while answering call");
+            Log.d(TAG, "Failed while answering call. ERROR: " + e);
         }
     }
 
@@ -177,8 +178,15 @@ public class P2IAccount extends Account {
     }
 
     public void setPresenceStatus(PresenceStatus presenceStatus) {
-//        org.pjsip.pjsua2.PresenceStatus status = new org.pjsip.pjsua2.PresenceStatus();
-//        status.se
-//        setOnlineStatus();
+        Log.d(TAG, "Called method setPresenceStatus()");
+        org.pjsip.pjsua2.PresenceStatus status = new org.pjsip.pjsua2.PresenceStatus();
+        status.setStatus(presenceStatus.getPresenceStatusType().ordinal());
+        status.setNote(presenceStatus.getPresenceStatusText());
+        try {
+            setOnlineStatus(status);
+        } catch (Exception e) {
+            Log.d(TAG, "Failed while setting user presence status. ERROR: " + e);
+        }
+        Log.d(TAG, "Setting user status successful");
     }
 }
