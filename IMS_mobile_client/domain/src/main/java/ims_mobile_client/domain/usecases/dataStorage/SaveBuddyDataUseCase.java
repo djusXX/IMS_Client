@@ -9,7 +9,7 @@ import ims_mobile_client.domain.repository.IMSRepository;
 import ims_mobile_client.domain.usecases.CompletableUseCase;
 import io.reactivex.Completable;
 
-public class SaveBuddyDataUseCase extends CompletableUseCase<Buddy> {
+public class SaveBuddyDataUseCase extends CompletableUseCase<SaveBuddyDataUseCase.Params> {
     private final IMSRepository repository;
 
     @Inject
@@ -19,7 +19,17 @@ public class SaveBuddyDataUseCase extends CompletableUseCase<Buddy> {
     }
 
     @Override
-    protected Completable buildUseCaseObservable(Buddy buddy) {
-        return repository.saveBuddy(buddy);
+    protected Completable buildUseCaseObservable(Params p) {
+        return repository.saveBuddy(p.buddySipUri, p.buddyDisplayName);
+    }
+
+    public static class Params {
+        public String buddySipUri;
+        public String buddyDisplayName;
+
+        public Params(String buddySipUri, String displayName) {
+            this.buddySipUri = buddySipUri;
+            this.buddyDisplayName = displayName;
+        }
     }
 }

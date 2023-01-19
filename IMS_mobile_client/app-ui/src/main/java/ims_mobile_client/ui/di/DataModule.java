@@ -6,6 +6,8 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import ims_mobile_client.data.IMSRepositoryImpl;
+import ims_mobile_client.data.dataSources.LocalDataSource;
+import ims_mobile_client.data.dataStores.DataStore;
 import ims_mobile_client.data.dataStores.DataStoreFactory;
 import ims_mobile_client.data.dataStores.DataStoreLocal;
 import ims_mobile_client.data.executor.JobExecutor;
@@ -25,10 +27,16 @@ public abstract class DataModule {
         return new JobExecutor();
     }
 
+    @Provides
+    @Singleton
+    public static DataStore provideDataStoreLocal(LocalDataSource localSource) {
+        return new DataStoreLocal(localSource);
+    }
 
     @Provides
-    public static DataStoreFactory provideDataStoreFactory(DataStoreLocal local) {
-        return new DataStoreFactory(local, null);
+    @Singleton
+    public static DataStoreFactory provideDataStoreFactory(DataStore local) {
+        return new DataStoreFactory((DataStoreLocal) local, null);
     }
 
     @Provides

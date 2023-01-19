@@ -39,5 +39,6 @@ dependencies {
     implementation Libs.hilt
     annotationProcessor Libs.hiltCompiler
     implementation Libs.rxJava
+    implementation Libs.roomRxJava
 }
 

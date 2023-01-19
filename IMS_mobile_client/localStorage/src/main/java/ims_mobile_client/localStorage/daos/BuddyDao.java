@@ -9,11 +9,12 @@ import androidx.room.Query;
 import java.util.List;
 
 import ims_mobile_client.localStorage.models.LocalBuddy;
+import io.reactivex.Completable;
 
 @Dao
 public interface BuddyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(LocalBuddy localBuddy);
+    Completable insert(LocalBuddy localBuddy);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<LocalBuddy> buddies);

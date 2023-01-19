@@ -79,6 +79,7 @@ object Libs {
     val hiltAndroidUnitTest = "com.google.dagger:hilt-android-testing:${Ver.hiltAndroid}"
     val room = "androidx.room:room-runtime:${Ver.room}"
     val roomCompiler = "androidx.room:room-compiler:${Ver.room}"
+    val roomRxJava = "androidx.room:room-rxjava2:${Ver.room}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Ver.constraintlayout}"
     val appcompat = "androidx.appcompat:appcompat:${Ver.appcompat}"
     val recyclerview = "androidx.recyclerview:recyclerview:${Ver.recyclerview}"

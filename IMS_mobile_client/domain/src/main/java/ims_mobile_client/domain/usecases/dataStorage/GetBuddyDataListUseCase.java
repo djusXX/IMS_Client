@@ -21,6 +21,6 @@ public class GetBuddyDataListUseCase extends FlowableUseCase<List<Buddy>, Void> 
 
     @Override
     protected Flowable<List<Buddy>> buildUseCaseFlowable(Void unused) {
-        return repository.getBuddiesFor();
+        return repository.getBuddyList();
     }
 }

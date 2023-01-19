@@ -6,6 +6,7 @@ import org.pjsip.pjsua2.Account;
 import org.pjsip.pjsua2.Buddy;
 import org.pjsip.pjsua2.BuddyConfig;
 import org.pjsip.pjsua2.BuddyInfo;
+import org.pjsip.pjsua2.PresenceStatus;
 import org.pjsip.pjsua2.SendInstantMessageParam;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public class P2IBuddy extends Buddy {
     private static final String TAG = P2IBuddy.class.getSimpleName();
 
     private BuddyConfig buddyConfig;
+    private String displayName;
+    private PresenceStatus status;
 //    private final List<P2IBuddy>
 
     public P2IBuddy(BuddyConfig buddyConfig) {
@@ -21,7 +24,15 @@ public class P2IBuddy extends Buddy {
         this.buddyConfig = buddyConfig;
     }
 
-    public BuddyInfo getUpdatedBuddyInfo() {
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public BuddyInfo getBuddyInfo() {
         BuddyInfo buddyInfo = null;
         try {
             buddyInfo = this.getInfo();
@@ -43,6 +54,7 @@ public class P2IBuddy extends Buddy {
 
     @Override
     public void onBuddyState() {
-        // TODO: implement!!!
+        status = getBuddyInfo().getPresStatus();
     }
+
 }

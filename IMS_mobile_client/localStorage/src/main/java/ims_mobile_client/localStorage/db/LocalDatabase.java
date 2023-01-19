@@ -15,7 +15,7 @@ import ims_mobile_client.localStorage.models.LocalUser;
 @Database(entities = {LocalUser.class, LocalCall.class, LocalMessage.class, LocalBuddy.class}, version = 1, exportSchema = false)
 public abstract class LocalDatabase extends RoomDatabase {
 
-    public static final String DB_NAME = "imsmobileclient_database";
+//    public static final String DB_NAME = "imsmobileclient_database";
 
     public abstract UserDao userDao();
     public abstract CallDao callDao();

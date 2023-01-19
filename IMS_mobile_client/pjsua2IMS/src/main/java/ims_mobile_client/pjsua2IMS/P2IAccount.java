@@ -53,11 +53,12 @@ public class P2IAccount extends Account {
     }
 
     public void addBuddy(String buddySipUri, String buddyDisplayName) {
-        // TODO: implement
-    }
+        BuddyConfig buddyConfig = new BuddyConfig();
+        buddyConfig.setUri(buddySipUri);
+        buddyConfig.setSubscribe(true);
 
-    public P2IBuddy addBuddy(BuddyConfig buddyConfig) {
         P2IBuddy buddy = new P2IBuddy(buddyConfig);
+        buddy.setDisplayName(buddyDisplayName);
 
         try {
             buddy.create(this, buddyConfig);
@@ -67,11 +68,10 @@ public class P2IAccount extends Account {
         } catch (Exception e) {
             Log.e(TAG, "FAILED to create/add buddy: " + e);
             buddy.delete();
-            return null;
+            return;
         }
 
-        buddies.put(buddyConfig.getUri(), buddy);
-        return buddy;
+        buddies.put(buddySipUri, buddy);
     }
 
     public void removeBuddy(String buddyUri) {
@@ -155,6 +155,8 @@ public class P2IAccount extends Account {
         try {
             CallOpParam callOpParam = new CallOpParam();
             callOpParam.setStatusCode(pjsip_status_code.PJSIP_SC_RINGING);
+            call.answer(callOpParam);
+            callOpParam.setStatusCode(pjsip_status_code.PJSIP_SC_OK);
             call.answer(callOpParam);
         } catch (Exception e) {
             Log.d(TAG, "Failed while answering call. ERROR: " + e);

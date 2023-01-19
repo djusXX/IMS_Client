@@ -187,29 +187,33 @@ public class P2IHelperImpl implements P2IHelper {
         Log.d(TAG, "Inside method registerUser");
         startSipStack();
 
-        if (currentAccount != null) {
-            Log.e(TAG, "Current account registered, deleting");
-            currentAccount.delete();
-            currentAccount = null;
+        if (currentAccount != null && user.getSipUri().equals(currentAccount.getAccountData().getSipUri())) {
+            Log.e(TAG, "Current account registered, skipping");
+            return;
+//            currentAccount.delete();
+//            currentAccount = null;
         }
 
-        P2IAccountData accountData = new P2IAccountData();
-        accountData.setName(user.getName());
-        accountData.setPassword(user.getPassword());
-        accountData.setRealm(user.getRealm());
-        String pcscf = user.getPcscf();
-        String host = pcscf.substring(0,pcscf.indexOf(":"));
-        String portStr = pcscf.substring(pcscf.indexOf(":") + 1);
-        int port = Integer.parseInt(portStr);
-        accountData.setHost(host);
-        accountData.setPort(port);
-
-        P2IAccount userAccount = new P2IAccount(accountData, this);
         try {
-            Log.d(TAG, "Trying to register new account");
-            userAccount.create();
-            currentAccount = userAccount;
-            AccountInfo accountInfo = userAccount.getInfo();
+            if (currentAccount == null) {
+                P2IAccountData accountData = new P2IAccountData();
+                accountData.setName(user.getName());
+                accountData.setPassword(user.getPassword());
+                accountData.setRealm(user.getRealm());
+                String pcscf = user.getPcscf();
+                String host = pcscf.substring(0,pcscf.indexOf(":"));
+                String portStr = pcscf.substring(pcscf.indexOf(":") + 1);
+                int port = Integer.parseInt(portStr);
+                accountData.setHost(host);
+                accountData.setPort(port);
+
+                P2IAccount userAccount = new P2IAccount(accountData, this);
+                Log.d(TAG, "Trying to register new account");
+                userAccount.create();
+                currentAccount = userAccount;
+            }
+
+            AccountInfo accountInfo = currentAccount.getInfo();
             setRegStatus(accountInfo.getRegStatus(), accountInfo.getRegExpiresSec());
         } catch (Exception e) {
             Log.e(TAG, "FAILED to create User SIP Account: ", e);

@@ -7,12 +7,13 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import ims_mobile_client.localStorage.models.LocalUser;
+import io.reactivex.Completable;
 
 @Dao
 public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(LocalUser localUser);
+    Completable insert(LocalUser localUser);
 
     @Delete
     void delete(LocalUser localUser);

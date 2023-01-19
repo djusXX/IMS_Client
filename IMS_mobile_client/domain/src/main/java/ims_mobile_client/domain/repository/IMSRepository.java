@@ -20,9 +20,9 @@ public interface IMSRepository {
     Completable saveUser(User user);
 
     // Buddies
-    Flowable<List<Buddy>> getBuddiesFor();
+    Flowable<List<Buddy>> getBuddyList();
     Flowable<Buddy> getBuddy(String userSipUri, String buddySipUri);
-    Completable saveBuddy(Buddy buddy);
+    Completable saveBuddy(String buddySipUri, String buddyDisplayName);
 
     // Messages
     Flowable<List<Message>> getMessagesFor(String buddySipUri);

@@ -1,6 +1,7 @@
 package ims_mobile_client.ui.buddylist;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,15 +28,21 @@ public class BuddyListFragment extends Fragment {
 
     public static final String TAG = BuddyListFragment.class.getName();
 
+    private BuddyListViewModel buddyListViewModel;
+    private BuddyListAdapter buddyListAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         BuddyListFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.buddy_list_fragment, container, false);
-        BuddyListViewModel buddyListViewModel = new ViewModelProvider(requireActivity()).get(BuddyListViewModel.class);
+        buddyListViewModel = new ViewModelProvider(requireActivity()).get(BuddyListViewModel.class);
 
-        BuddyListAdapter buddyListAdapter = new BuddyListAdapter();
+        buddyListAdapter = new BuddyListAdapter();
         binding.buddyListRecyclerView.setAdapter(buddyListAdapter);
-        buddyListViewModel.getBuddyList().observe(getViewLifecycleOwner(), buddyListAdapter::submitList);
+        buddyListViewModel.getBuddyList().observe(requireActivity(), buddyInfos -> {
+            Log.d(TAG, "new buddy list submitted: " + buddyInfos);
+            buddyListAdapter.submitList(buddyInfos);
+        });
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -56,6 +63,14 @@ public class BuddyListFragment extends Fragment {
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "Resumed BuddyListFragment");
+        buddyListViewModel.fetchSavedBuddyList();
+//        buddyListViewModel.getBuddyList().observe(requireActivity(), buddyListAdapter::submitList);
     }
 
     private void navigateToNewBuddyFragment() {

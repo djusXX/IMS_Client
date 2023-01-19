@@ -89,6 +89,7 @@ public class SIPManagerImpl implements SIPManager {
     public Completable addNewBuddy(String buddySipUri, String buddyDisplayName) {
 //        return Completable.defer(() -> {
             helper.getCurrentAccount().addBuddy(buddySipUri, buddyDisplayName);
+//            helper.getCurrentAccount().
             return Completable.complete();
 //        });
     }

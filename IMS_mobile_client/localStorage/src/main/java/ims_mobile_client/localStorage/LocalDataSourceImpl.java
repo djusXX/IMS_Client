@@ -1,5 +1,7 @@
 package ims_mobile_client.localStorage;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,10 +13,12 @@ import ims_mobile_client.data.models.MessageEntity;
 import ims_mobile_client.data.models.UserEntity;
 import ims_mobile_client.localStorage.db.LocalDatabase;
 import ims_mobile_client.localStorage.mappers.MapperProvider;
+import ims_mobile_client.localStorage.models.LocalBuddy;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class LocalDataSourceImpl implements LocalDataSource {
+    public static final String TAG = LocalDataSourceImpl.class.getName();
 
     private final LocalDatabase db;
     private final MapperProvider mappers;
@@ -40,6 +44,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public Completable addUser(UserEntity userEntity) {
+//        return db.userDao().insert(mappers.getUserMapper().mapFromEntity(userEntity));
         return Completable.defer(() -> {
             db.userDao().insert(mappers.getUserMapper().mapFromEntity(userEntity));
             return Completable.complete();
@@ -51,7 +56,8 @@ public class LocalDataSourceImpl implements LocalDataSource {
         return Flowable.defer(() -> Flowable.just(db.buddyDao().getBuddiesFor(userSipUri)))
                 .concatMap(Flowable::fromIterable)
                 .map(mappers.getBuddyMapper()::mapToEntity)
-                .toList().toFlowable();
+                .toList()
+                .toFlowable();
     }
 
     @Override
@@ -62,10 +68,15 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public Completable addBuddy(BuddyEntity buddyEntity) {
-        return Completable.defer(() -> {
-            db.buddyDao().insert(mappers.getBuddyMapper().mapFromEntity(buddyEntity));
-            return Completable.complete();
-        });
+        LocalBuddy localBuddy = mappers.getBuddyMapper().mapFromEntity(buddyEntity);
+        Log.d(TAG, "Inserting buddy to table by dao. " + localBuddy.getId() + "|" + localBuddy.getBuddySipUri());
+        return db.buddyDao().insert(localBuddy);
+
+//        return Completable.defer(() -> {
+//            LocalBuddy localBuddy = mappers.getBuddyMapper().mapFromEntity(buddyEntity);
+//            db.buddyDao().insert(localBuddy);
+//            return Completable.complete();
+//        });
     }
 
     @Override

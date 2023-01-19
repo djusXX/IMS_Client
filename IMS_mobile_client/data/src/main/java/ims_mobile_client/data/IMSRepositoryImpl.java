@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import ims_mobile_client.data.dataStores.DataStoreFactory;
 import ims_mobile_client.data.mappers.MapperProvider;
+import ims_mobile_client.data.models.BuddyEntity;
 import ims_mobile_client.data.sip.SIPManager;
 import ims_mobile_client.domain.models.Buddy;
 import ims_mobile_client.domain.models.Call;
@@ -52,11 +53,12 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Flowable<List<Buddy>> getBuddiesFor() {
+    public Flowable<List<Buddy>> getBuddyList() {
         return dataStore.getDefault().getBuddiesFor(userSipUri)
                 .concatMap(Flowable::fromIterable)
                 .map(mapper.forBuddy()::mapToDomain)
-                .toList().toFlowable();
+                .toList()
+                .toFlowable();
     }
 
     @Override
@@ -66,8 +68,9 @@ public class IMSRepositoryImpl implements IMSRepository {
     }
 
     @Override
-    public Completable saveBuddy(Buddy buddy) {
-        return dataStore.getDefault().addBuddy(mapper.forBuddy().mapFromDomain(buddy));
+    public Completable saveBuddy(String buddySipUri, String buddyDisplayName) {
+        BuddyEntity buddyEntity = new BuddyEntity(1, userSipUri, buddySipUri, buddyDisplayName);
+        return dataStore.getDefault().addBuddy(buddyEntity);
     }
 
     @Override
@@ -75,7 +78,8 @@ public class IMSRepositoryImpl implements IMSRepository {
         return dataStore.getDefault().getMessagesFor(userSipUri, buddySipUri)
                 .concatMap(Flowable::fromIterable)
                 .map(mapper.forMessage()::mapToDomain)
-                .toList().toFlowable();
+                .toList()
+                .toFlowable();
     }
 
     @Override
@@ -134,6 +138,7 @@ public class IMSRepositoryImpl implements IMSRepository {
 
     @Override
     public Completable addNewBuddy(String buddySipUri, String buddyDisplayName) {
+        saveBuddy(buddySipUri, buddyDisplayName);
         return sipManager.addNewBuddy(buddySipUri, buddyDisplayName);
     }
 

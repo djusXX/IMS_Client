@@ -1,6 +1,7 @@
 package ims_mobile_client.ui.buddylist;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -17,6 +18,7 @@ import ims_mobile_client.ui.R;
 import ims_mobile_client.ui.databinding.SingleBuddyFragmentBinding;
 
 public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.BuddyViewHolder> {
+    public static final String TAG = BuddyListAdapter.class.getName();
 
     @Inject
     public BuddyListAdapter() {
@@ -40,6 +42,7 @@ public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.Bu
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
         binding.setCallback(v -> {
+            Log.d(TAG, "Buddy view clicked");
             Bundle data = new Bundle();
             data.putString("buddySipUri", binding.getBuddy().getBuddySipUri());
             Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_conversationFragment, data);
@@ -49,6 +52,7 @@ public class BuddyListAdapter extends ListAdapter<BuddyInfo, BuddyListAdapter.Bu
 
     @Override
     public void onBindViewHolder(@NonNull BuddyViewHolder holder, int position) {
+        Log.d(TAG, "Called method onBindViewHolder()");
         holder.binding.setBuddy(getItem(position));
         holder.binding.executePendingBindings();
     }
